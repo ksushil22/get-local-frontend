@@ -1,0 +1,15 @@
+@keyframes spinAndFade {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.spinner-container {
+    animation: spinAndFade 2s linear infinite;
+}
