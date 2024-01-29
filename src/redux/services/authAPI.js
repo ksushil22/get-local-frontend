@@ -1,5 +1,5 @@
 import {rootAPI} from "./rootAPI";
-import {AUTH_TOKEN_API, REGISTER_API} from "../api_url.jsx";
+import {AUTH_TOKEN_API, REGISTER_API, VALIDATE_TOKEN} from "../api_url.jsx";
 
 export const authAPI = rootAPI.injectEndpoints({
     endpoints: builder => ({
@@ -16,11 +16,16 @@ export const authAPI = rootAPI.injectEndpoints({
                 method: 'POST',
                 body: {...credentials}
             })
+        }),
+        validateToken: builder.query({
+            query: (token) =>
+                `${process.env.BASE_API_URL}${VALIDATE_TOKEN}${token}/`
         })
     })
 });
 
 export const {
     useRegisterMutation,
-    useLoginMutation
+    useLoginMutation,
+    useValidateTokenQuery
 } = authAPI

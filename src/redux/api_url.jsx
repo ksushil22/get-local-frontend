@@ -4,4 +4,4 @@ export const AUTH_TOKEN_API = 'auth/authenticate/';
 
 export const REGISTER_API = 'auth/register/';
 
-export const GET_LOGGED_IN_USER = 'auth/user/'
+export const VALIDATE_TOKEN = 'auth/validate-token/'

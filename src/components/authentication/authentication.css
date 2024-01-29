@@ -1,0 +1,9 @@
+
+/* Set the background to fully transparent */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: none !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

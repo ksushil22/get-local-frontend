@@ -5,6 +5,7 @@ import store from './redux/store';
 import {BrowserRouter, Route, Router, Routes} from 'react-router-dom';
 import CustomSpinner from './components/util/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
+import "./index.css"
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));

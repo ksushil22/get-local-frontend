@@ -56,6 +56,10 @@ module.exports = function (webpackEnv, { mode }) {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
+                {
+                    test: /\.(png|jpg)$/,
+                    type: "asset",
+                }
             ]
         },
         resolve: {

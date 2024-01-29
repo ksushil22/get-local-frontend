@@ -15,7 +15,8 @@ export const LOADER_TYPES_ENUM = {
 export default function ({
                              display = DISPLAY_TYPES_ENUM.FULLSCREEN,
                              loaderType = LOADER_TYPES_ENUM.SPINNER,
-                             useBackground = true
+                             useBackground = true,
+                             text='Loading...'
                          }) {
     const customIndicator = <Loading3QuartersOutlined style={{fontSize: '100px'}} spin={true}/>;
     const containerStyle = (display === DISPLAY_TYPES_ENUM.FULLSCREEN)
@@ -24,7 +25,7 @@ export default function ({
 
     const displayedSpinner = (loaderType === LOADER_TYPES_ENUM.SPINNER)
         ? (
-            <Spin indicator={customIndicator} tip={'Loading...'} size="large"
+            <Spin indicator={customIndicator} tip={text} size="large"
                   style={{...loaderStyles.loader, ...loaderStyles.spinnerContainer}}>
                 <div className="loader-content" style={loaderStyles.areaContainer}/>
             </Spin>
@@ -52,7 +53,6 @@ const loaderStyles = {
         left: 0,
         width: "100vw",
         height: "100vh",
-        zIndex: 1000
     },
     centerAlign: {
         display: 'flex',
