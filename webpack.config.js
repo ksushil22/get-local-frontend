@@ -28,7 +28,8 @@ module.exports = function (webpackEnv, { mode }) {
         },
         plugins: [
             new HTMLWebpackPlugin({
-                template: './src/GetLocalsFrontend.html'
+                template: './src/GetLocalsFrontend.html',
+                favicon: './src/favicon.ico'
             }),
             new webpack.DefinePlugin({
                 "process.env": {
