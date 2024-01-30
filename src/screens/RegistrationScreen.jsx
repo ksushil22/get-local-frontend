@@ -17,7 +17,7 @@ export default function RegistrationScreen() {
                 <Image
                     style={{
                         maxHeight: '120px',
-                        padding: '10px'
+                        padding: '20px'
                     }}
                     preview={false}
                     src={require('../assets/img/GetLocals-logos/GetLocals-logos_transparent_inverse.png')}/>
@@ -26,8 +26,8 @@ export default function RegistrationScreen() {
                  style={{
                      backgroundColor: 'var(--primary-color)',
                      minHeight: secondDivsHeight,
-
-                     ...registerScreenStyles.innerDivs
+                     ...registerScreenStyles.innerDivs,
+                     paddingTop: '100px'
                  }}
             >
                 {currentState === 0 ?

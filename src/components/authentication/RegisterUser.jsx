@@ -51,8 +51,14 @@ export default function ({
 
     return (
         <div style={registerUserStyles.container}>
-            <h1>Welcome!!</h1>
-            <p>We need a few details to get started.</p>
+            <h1 style={{
+                fontWeight: '900',
+                fontSize: '50px',
+                textShadow: '0 2px 5px'
+            }}>Welcome!!</h1>
+            <p style={{
+                fontSize: 'x-large',
+            }}>We need a few details to get started.</p>
             <Form
                 form={form}
                 layout={"vertical"}

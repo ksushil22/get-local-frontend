@@ -41,7 +41,8 @@ export default function () {
             >
                 <Image
                     style={{
-                        maxHeight: '120px'
+                        maxHeight: '120px',
+                        padding: '20px'
                     }}
                     preview={false} src={require('../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')} />
                 <h1 style={{
@@ -87,7 +88,7 @@ export default function () {
 
             </Col>
             <Col xl={8} md={8} sm={24} xs={24}
-                 style={{...loginStyle.innerDivs, color: 'var(--primary-color)', minHeight: innerDivHeight, paddingTop: reactivePadding}}
+                 style={{...loginStyle.innerDivs, color: 'var(--primary-color)', minHeight: innerDivHeight}}
             >
                 <h1 style={{
                     fontWeight: '900',
@@ -125,12 +126,13 @@ const loginStyle = {
         minHeight: '100vh'
     },
     innerDivs: {
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        padding: '5%',
-        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: '10%'
+        justifyContent: 'center',
+        flex: '1',  // This ensures the innerDivs take up available vertical space
+        textAlign: 'center',
+        margin: '0'
     },
     input: {
         height: '58px',
