@@ -4,11 +4,11 @@ import {useRegisterMutation} from "../../redux/services/authAPI";
 import {useDispatch} from "react-redux";
 import {setCredentials} from "../../redux/slicers/authSlicer";
 import {useNavigate} from "react-router-dom";
+import "./authentication.css";
 
 export default function ({
                              setCurrentState,
                          }) {
-
     const [form] = Form.useForm()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -41,8 +41,6 @@ export default function ({
             if (data) {
                 dispatch(setCredentials({...data.data, username: form.getFieldValue('email')}))
                 setCurrentState(1)
-            } else {
-                console.error(error)
             }
         })
 
@@ -66,8 +64,11 @@ export default function ({
             >
                 <Form.Item
                     name={'name'}
+                    rules={rules}
                 >
-                    <Input placeholder={'Full name'} style={registerUserStyles.input}/>
+                    <div className={'hover-input'}>
+                        <Input placeholder={'Full name'} />
+                    </div>
 
                 </Form.Item>
                 <Form.Item
@@ -81,16 +82,22 @@ export default function ({
                         message: "Invalid email address format."
                     }
                 ]}>
-                    <Input placeholder={'Email'} style={registerUserStyles.input}/>
+                    <div className={'hover-input'}>
+                        <Input placeholder={'Email'}/>
+                    </div>
                 </Form.Item>
                 <Form.Item name={'password'} rules={rules}>
-                    <Input.Password
-                        visibilityToggle={false}
-                        placeholder={'Password'} style={registerUserStyles.input}/>
+                    <div className={'hover-input'}>
+                        <Input.Password
+                            visibilityToggle={false}
+                            placeholder={'Password'} />
+                    </div>
                 </Form.Item>
                 <Form.Item name={'confirmPassword'} rules={rules}>
-                    <Input
-                        placeholder={'Confirm Password'} style={registerUserStyles.input}/>
+                    <div className={'hover-input'}>
+                        <Input
+                            placeholder={'Confirm Password'} />
+                    </div>
                 </Form.Item>
                 <Form.Item>
                     <Button
@@ -114,18 +121,9 @@ export default function ({
 const registerUserStyles = {
     container: {
         color: '#f2f2f2',
-        padding: '10px'
-    },
-    input: {
-        height: '58px',
-        color: '#ece7e2',
-        maxWidth: '450px',
-        fontWeight: 500,
-        fontSize: '16px',
-        border: 'none',
-        boxShadow: 'none',
-        background: 'none'
-
+        paddingRight: '10px',
+        paddingBottom: '10px',
+        paddingLeft: '10px'
     },
     buttons: {
         width: '240px',

@@ -14,9 +14,56 @@ html, body {
     min-height: 100%;
 }
 
+.antd-error .ant-message-notice-content {
+    min-width: 20% !important;
+    background: #520202 !important;
+    color: #f2f2f2 !important;
+    border: 2px solid #520202 !important;
+}
+
 .logo {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.hover-input {
+    border-radius: 10px;
+    transition: box-shadow .5s ease-in-out;
+}
+
+.hover-input input {
+    border-radius: 10px !important;
+    border-color: #f2f2f2 !important;
+}
+
+.hover-input:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !important;
+    border-color: #f2f2f2 !important;
+}
+
+.hover-input input:focus {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !important;
+    border-color: #f2f2f2 !important;
+}
+
+.hover-input .ant-select {
+    border-radius: 10px !important;
+}
+
+.hover-input .ant-select:focus {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !important;
+    border-color: #f2f2f2 !important;
+}
+
+input{
+    height: 58px !important;
+    color: #ece7e2 !important;
+    min-width: 350px !important;
+    max-width: 450px !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    box-shadow: none !important;
+    background: none !important;
 }

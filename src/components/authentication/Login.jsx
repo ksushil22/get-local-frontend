@@ -6,6 +6,8 @@ import {useDispatch} from "react-redux";
 import { useNavigate} from "react-router-dom";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import "./authentication.css";
+import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 export default function () {
@@ -17,7 +19,6 @@ export default function () {
     const screens = useBreakpoint();
 
     const innerDivHeight = screens.md || screens.lg || screens.xl || screens.xxl ? '100vh' : '100%';
-    const reactivePadding = screens.md || screens.lg || screens.xl || screens.xxl ? '15%' : '5%';
 
     const onFinish = async () => {
         try {
@@ -25,7 +26,7 @@ export default function () {
             dispatch(setCredentials({...userData, username: form.getFieldValue("email")}));
             navigate("/");
         } catch (err) {
-            console.error(err);
+
         }
     };
 
@@ -36,8 +37,12 @@ export default function () {
 
     return (
         <Row style={loginStyle.mainContainer}>
-            <Col xl={16} md={16} sm={24} xs={24}
-                 style={{...loginStyle.innerDivs, backgroundColor: 'var(--primary-color)', color: '#ece7e2', minHeight: innerDivHeight}}
+            <Col xl={16} lg={16} md={16} sm={24} xs={24}
+                 style={{...loginStyle.innerDivs,
+                     backgroundColor: 'var(--primary-color)',
+                     color: '#ece7e2', minHeight: innerDivHeight,
+                     border: '2px solid var(--primary-background)'
+                 }}
             >
                 <Image
                     style={{
@@ -66,28 +71,33 @@ export default function () {
                             message: "Invalid email address format."
                         }
                     ]}>
-                        <Input placeholder={'Email'} style={loginStyle.input}/>
+                        <div className={'hover-input'}>
+                            <Input placeholder={'Email'}/>
+                        </div>
                     </Form.Item>
-                    <Form.Item name={'password'} rules={rules}>
-                        <Input.Password
-                            placeholder={'Password'} style={loginStyle.input}/>
+                    <Form.Item
+                        name={'password'} rules={rules}>
+                        <div className={'hover-input'}>
+                            <Input.Password
+                                visibilityToggle={false}
+                                placeholder={'Password'}/>
+                        </div>
                     </Form.Item>
                     <Form.Item>
                         <Button
                             style={{
                                 ...loginStyle.buttons,
                                 color: '#ece7e2',
-                                textShadow: '0 1px 3px'
                         }}
                             htmlType={'submit'}
                             loading={isLoggingInUser}
                         >
-                            Submit</Button>
+                            LogIn <FontAwesomeIcon icon={faArrowRightToBracket} style={{paddingLeft:'10px'}}/></Button>
                     </Form.Item>
                 </Form>
 
             </Col>
-            <Col xl={8} md={8} sm={24} xs={24}
+            <Col xl={8} lg={8} md={8} sm={24} xs={24}
                  style={{...loginStyle.innerDivs, color: 'var(--primary-color)', minHeight: innerDivHeight}}
             >
                 <h1 style={{
@@ -130,20 +140,9 @@ const loginStyle = {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        flex: '1',  // This ensures the innerDivs take up available vertical space
         textAlign: 'center',
-        margin: '0'
-    },
-    input: {
-        height: '58px',
-        color: '#ece7e2',
-        maxWidth: '450px',
-        fontWeight: 500,
-        fontSize: '16px',
-        border: 'none',
-        boxShadow: 'none',
-        background: 'none'
-
+        margin: '0',
+        padding: '20px'
     },
     buttons: {
         width: '240px',
