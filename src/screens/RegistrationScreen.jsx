@@ -42,7 +42,7 @@ export default function RegistrationScreen() {
                     <Link
                         to={"/"}
                         style={{
-                            color: '#f2f2f2',
+                            color: '#ece7e2',
                             textAlign: 'center'
                         }}
                     >Skip for now and register business later</Link>

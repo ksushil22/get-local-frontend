@@ -39,7 +39,8 @@ export default function ({
 
         registerUser(form.getFieldsValue()).then(({data, error})=> {
             if (data) {
-                dispatch(setCredentials({...data.data, username: form.getFieldValue('email')}))
+                console.log(data)
+                dispatch(setCredentials({...data, username: form.getFieldValue('email')}))
                 setCurrentState(1)
             }
         })
@@ -109,7 +110,7 @@ export default function ({
                         loading={isRegisteringUser}
                         htmlType={'submit'}
                     >
-                        Submit
+                        Register
                     </Button>
                 </Form.Item>
             </Form>
@@ -120,7 +121,7 @@ export default function ({
 
 const registerUserStyles = {
     container: {
-        color: '#f2f2f2',
+        color: '#ece7e2',
         paddingRight: '10px',
         paddingBottom: '10px',
         paddingLeft: '10px'

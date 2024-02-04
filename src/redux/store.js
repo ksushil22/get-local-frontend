@@ -11,10 +11,7 @@ export const store = configureStore({
         getDefaultMiddleware().concat(
             rootAPI.middleware,
             (store) => (next) => (action) => {
-                console.log("Dispatching action:", action);
-                const result = next(action);
-                console.log("State after action:", store.getState());
-                return result;
+                return next(action);
             }
         ),
     devTools: true,

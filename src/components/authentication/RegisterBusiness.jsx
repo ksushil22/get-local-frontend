@@ -1,14 +1,36 @@
 import React from 'react';
 import {Button, Form, Input, Select} from "antd";
+import {useGetTypesQuery, useRegisterBusinessMutation} from "../../redux/services/businessAPI";
+import CustomSpinner, {DISPLAY_TYPES_ENUM} from "../util/customSpinner/CustomSpinner";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logOut} from "../../redux/slicers/authSlicer";
 
 export default function () {
     const [form] = Form.useForm();
+    const {data: businessTypes, isLoading} = useGetTypesQuery();
+    const [registerBusiness, {isLoading: isRegisteringBusiness}] = useRegisterBusinessMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    if (isLoading) {
+        return <CustomSpinner display={DISPLAY_TYPES_ENUM.AREA}/>
+    }
+    console.log(businessTypes)
+
     const rules = [{
         required: true,
         message: 'The field is required.'
     }]
     function onFinish() {
-        console.log(form.getFieldsValue())
+        const fullLocation = `${form.getFieldValue('street')}, ${form.getFieldValue('city')}, ${form.getFieldValue('province')}`;
+        registerBusiness({
+            location: fullLocation,
+            currency: '$',
+            ...form.getFieldsValue()
+        }).then(({data, error}) => {
+            navigate('/disabled-user')
+        })
     }
 
     return <Form
@@ -17,7 +39,7 @@ export default function () {
         onFinish={onFinish}
     >
         <p style={{
-            color: '#f2f2f2',
+            color: '#ece7e2',
             fontSize: 'x-large',
         }}>Tell us more about the business...</p>
         <Form.Item
@@ -29,12 +51,13 @@ export default function () {
             </div>
         </Form.Item>
         <Form.Item
-            name={'Business Type'}
+            name={'businessType'}
             rules={rules}
         >
-            <div className={'hover-input'}>
+            <div className={'hover-input'} style={{border: '1px solid #f2f2f2', color: '#ece7e2'}}>
                 <Select
-                    options={{}}
+                    options= {businessTypes}
+                    onChange={(value) => form.setFieldValue('businessType', value)}
                     placeholder={'Business Type'}
                     style={registerBusinessStyles.input}
                 />
@@ -71,9 +94,10 @@ export default function () {
                     color: '#ece7e2',
                     textShadow: '0 1px 3px'
                 }}
+                loading={isRegisteringBusiness}
                 htmlType={'submit'}
             >
-                Submit
+                Register
             </Button>
         </Form.Item>
 
