@@ -114,6 +114,7 @@ export default function ({
                     </Button>
                 </Form.Item>
             </Form>
+            <p style={{cursor: 'pointer'}} onClick={()=> navigate('/authenticate')}>Already registered? Click here to LogIn</p>
         </div>
     )
 
