@@ -30,7 +30,7 @@ export default function ({
             </Col>
         )
         : (
-            <Skeleton active={true} paragraph={{row: 2}}/>
+            <Skeleton active={true} />
         )
     ;
     return (

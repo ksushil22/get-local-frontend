@@ -6,20 +6,21 @@ import {BrowserRouter, Route, Router, Routes} from 'react-router-dom';
 import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
+import RequireUnAuth from "./components/authentication/RequireUnAuth";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
-const DisabledUserScreen = lazy(async () => import('./screens/DisabledUserScreen'));
 
 const GetLocalsRoutes = () => {
     return (
         <Suspense fallback={<CustomSpinner />}>
             <Provider store={store}>
                 <Routes>
-                    <Route path={'/authenticate'} element={<LoginScreen />} />
-                    <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
-                    <Route path={'/disabled-user'} element={<DisabledUserScreen />} />
+                    <Route element={<RequireUnAuth />}>
+                        <Route path={'/authenticate'} element={<LoginScreen />} />
+                        <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
+                    </Route>
                     <Route element={<RequireAuth />}>
                         <Route path="/" element={<HomeScreen />} />
                     </Route>

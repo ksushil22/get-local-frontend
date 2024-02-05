@@ -38,15 +38,6 @@ export default function RegistrationScreen() {
                         setCurrentState={setCurrentState}
                     />
                 }
-                {currentState === 1 && (
-                    <Link
-                        to={"/"}
-                        style={{
-                            color: '#ece7e2',
-                            textAlign: 'center'
-                        }}
-                    >Skip for now and register business later</Link>
-                )}
             </Col>
 
         </Row>

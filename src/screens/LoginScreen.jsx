@@ -8,22 +8,6 @@ import {useDispatch} from "react-redux";
 import {logOut} from "../redux/slicers/authSlicer";
 
 export default function () {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
 
-    if (localStorage.getItem('access')) {
-        const {
-            data: isValidToken,
-            isLoading,
-            error
-        } = useValidateTokenQuery(localStorage.getItem('access'));
-        if (isLoading) {
-            return <CustomSpinner />;
-        }else if (error) {
-            dispatch(logOut())
-        }else if (isValidToken) {
-            navigate('/');
-        }
-    }
     return <Login />
 }
