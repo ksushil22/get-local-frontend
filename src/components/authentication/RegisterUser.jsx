@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Input} from "antd";
 import {useRegisterMutation} from "../../redux/services/authAPI";
 import {useDispatch} from "react-redux";
@@ -16,6 +16,23 @@ export default function ({
         required: true,
         message: 'The field is required.'
     }]
+    const [password, setPassword] = useState('');
+    const [uppercaseValid, setUppercaseValid] = useState(false);
+    const [lowercaseValid, setLowercaseValid] = useState(false);
+    const [numberValid, setNumberValid] = useState(false);
+    const [specialCharValid, setSpecialCharValid] = useState(false);
+    const [lengthValid, setLengthValid] = useState(false);
+
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+        setUppercaseValid(/[A-Z]/.test(value));
+        setLowercaseValid(/[a-z]/.test(value));
+        setNumberValid(/[0-9]/.test(value));
+        setSpecialCharValid(/[@#$%^&+=_]/.test(value));
+        setLengthValid(value.length >= 8);
+        form.setFieldValue('password', value)
+    };
 
     const [
         registerUser,
@@ -23,14 +40,17 @@ export default function ({
     ] = useRegisterMutation()
 
     function onFinish() {
+        if (!(uppercaseValid && lowercaseValid && numberValid && specialCharValid && lengthValid)) {
+            form.setFields([{
+                name: "password",
+                errors: ["Password should adhere to the above rules."]
+            }])
+            return;
+        }
         if (form.getFieldValue('password') !== form.getFieldValue('confirmPassword')) {
             form.setFields([
                 {
                     name: "confirmPassword",
-                    errors: ["Passwords do not match"]
-                },
-                {
-                    name: "password",
                     errors: ["Passwords do not match"]
                 }
             ]);
@@ -87,12 +107,47 @@ export default function ({
                         <Input placeholder={'Email'}/>
                     </div>
                 </Form.Item>
-                <Form.Item name={'password'} rules={rules}>
+                <Form.Item
+                    name={'password'} >
                     <div className={'hover-input'}>
                         <Input.Password
+                            onChange={handlePasswordChange}
                             visibilityToggle={false}
                             placeholder={'Password'} />
                     </div>
+                    <p style={{
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginBottom: 0,
+                        color: uppercaseValid ? '#a49e9d' : '#6b6766',
+                        textAlign: 'left',
+                        paddingLeft: 20
+                    }}><b>-</b> Must contain at least one uppercase letter</p>
+                    <p style={{
+                        margin: 0,
+                        color: lowercaseValid ? '#a49e9d' : '#6b6766',
+                        textAlign: 'left',
+                        paddingLeft: 20
+                    }}><b>-</b> Must contain at least one lowercase letter</p>
+                    <p style={{
+                        margin: 0,
+                        color: numberValid ? '#a49e9d' : '#6b6766',
+                        textAlign: 'left',
+                        paddingLeft: 20
+                    }}><b>-</b> Must contain at least one number</p>
+                    <p style={{
+                        margin: 0,
+                        color: specialCharValid ? '#a49e9d' : '#6b6766',
+                        textAlign: 'left',
+                        paddingLeft: 20
+                    }}><b>-</b> Must contain at least one special character</p>
+                    <p style={{
+                        margin: 0,
+                        color: lengthValid ? '#a49e9d' : '#6b6766',
+                        textAlign: 'left',
+                        paddingLeft: 20
+                    }}><b>-</b> Must be at least 8 characters long</p>
+
                 </Form.Item>
                 <Form.Item name={'confirmPassword'} rules={rules}>
                     <div className={'hover-input'}>
@@ -100,6 +155,7 @@ export default function ({
                             placeholder={'Confirm Password'} />
                     </div>
                 </Form.Item>
+                <p style={{cursor: 'pointer', color: '#ece7e2'}} onClick={()=> navigate('/authenticate')}>Already registered? Click here to LogIn</p>
                 <Form.Item>
                     <Button
                         style={{
@@ -114,7 +170,6 @@ export default function ({
                     </Button>
                 </Form.Item>
             </Form>
-            <p style={{cursor: 'pointer'}} onClick={()=> navigate('/authenticate')}>Already registered? Click here to LogIn</p>
         </div>
     )
 
