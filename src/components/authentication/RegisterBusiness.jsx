@@ -92,6 +92,16 @@ export default function () {
                     <Input placeholder={'State/Province'}/>
                 </div>
             </Form.Item>
+            <p
+                style={{
+                    color: '#ece7e2',
+                    textAlign: 'center',
+                    cursor: 'pointer'
+                }}
+                onClick={() => setIsRegistrationModalVisible(true)}
+            >
+                Skip for now and register business later
+            </p>
             <Form.Item>
                 <Button
                     style={{
@@ -107,16 +117,6 @@ export default function () {
             </Form.Item>
 
         </Form>
-        <p
-            style={{
-                color: '#ece7e2',
-                textAlign: 'center',
-                cursor: 'pointer'
-            }}
-            onClick={() => setIsRegistrationModalVisible(true)}
-        >
-            Skip for now and register business later
-        </p>
         {isRegistrationModalVisible ? <RegistrationSuccessModal isVisible={isRegistrationModalVisible}/> : null}
     </>
 
