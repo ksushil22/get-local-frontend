@@ -8,7 +8,7 @@ export default function ({
         xmlnsXlink="http://www.w3.org/1999/xlink"
         style={{
             margin: 'auto',
-            background: 'rgb(220, 208, 205)',
+            background: 'var(--primary-background)',
             display: 'block',
             shapeRendering: 'auto',
         }}

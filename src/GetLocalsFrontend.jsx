@@ -7,6 +7,7 @@ import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
+import GetLocalsLayout from "./components/util/layout/GetLocalsLayout";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -22,7 +23,9 @@ const GetLocalsRoutes = () => {
                         <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
                     </Route>
                     <Route element={<RequireAuth />}>
-                        <Route path="/" element={<HomeScreen />} />
+                        <Route element={<GetLocalsLayout />}>
+                            <Route path="/" element={<HomeScreen />} />
+                        </Route>
                     </Route>
                 </Routes>
             </Provider>
