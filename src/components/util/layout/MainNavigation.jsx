@@ -66,7 +66,7 @@ export default function () {
                 }}
                 mode={'horizontal'}
                 items={items}
-                overflowedIndicator={(<FontAwesomeIcon icon={faBars} />)}
+                overflowedIndicator={(<FontAwesomeIcon icon={faBars} color={'#fff'}/>)}
                 overflowed={1}
             />
         </div>
