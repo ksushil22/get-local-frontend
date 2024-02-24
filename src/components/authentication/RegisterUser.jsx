@@ -22,6 +22,7 @@ export default function ({
     const [numberValid, setNumberValid] = useState(false);
     const [specialCharValid, setSpecialCharValid] = useState(false);
     const [lengthValid, setLengthValid] = useState(false);
+    const [isEditingPassword, setIsEditingPassword] = useState(false);
 
     const handlePasswordChange = (e) => {
         const value = e.target.value;
@@ -32,6 +33,7 @@ export default function ({
         setSpecialCharValid(/[@#$%^&+=_]/.test(value));
         setLengthValid(value.length >= 8);
         form.setFieldValue('password', value)
+        setIsEditingPassword(true);
     };
 
     const [
@@ -115,38 +117,41 @@ export default function ({
                             visibilityToggle={false}
                             placeholder={'Password'} />
                     </div>
-                    <p style={{
-                        marginLeft: 0,
-                        marginRight: 0,
-                        marginBottom: 0,
-                        color: uppercaseValid ? '#a49e9d' : '#6b6766',
-                        textAlign: 'left',
-                        paddingLeft: 20
-                    }}><b>-</b> Must contain at least one uppercase letter</p>
-                    <p style={{
-                        margin: 0,
-                        color: lowercaseValid ? '#a49e9d' : '#6b6766',
-                        textAlign: 'left',
-                        paddingLeft: 20
-                    }}><b>-</b> Must contain at least one lowercase letter</p>
-                    <p style={{
-                        margin: 0,
-                        color: numberValid ? '#a49e9d' : '#6b6766',
-                        textAlign: 'left',
-                        paddingLeft: 20
-                    }}><b>-</b> Must contain at least one number</p>
-                    <p style={{
-                        margin: 0,
-                        color: specialCharValid ? '#a49e9d' : '#6b6766',
-                        textAlign: 'left',
-                        paddingLeft: 20
-                    }}><b>-</b> Must contain at least one special character</p>
-                    <p style={{
-                        margin: 0,
-                        color: lengthValid ? '#a49e9d' : '#6b6766',
-                        textAlign: 'left',
-                        paddingLeft: 20
-                    }}><b>-</b> Must be at least 8 characters long</p>
+                    <div
+                        className={`expandable-element ${isEditingPassword && (!uppercaseValid || !lowercaseValid || !numberValid || !specialCharValid || !lengthValid) ? 'expanded' : ''}`}>
+                        <p style={{
+                            marginLeft: 0,
+                            marginRight: 0,
+                            marginBottom: 0,
+                            color: uppercaseValid ? '#a49e9d' : '#6b6766',
+                            textAlign: 'left',
+                            paddingLeft: 20
+                        }}><b>-</b> Must contain at least one uppercase letter</p>
+                        <p style={{
+                            margin: 0,
+                            color: lowercaseValid ? '#a49e9d' : '#6b6766',
+                            textAlign: 'left',
+                            paddingLeft: 20
+                        }}><b>-</b> Must contain at least one lowercase letter</p>
+                        <p style={{
+                            margin: 0,
+                            color: numberValid ? '#a49e9d' : '#6b6766',
+                            textAlign: 'left',
+                            paddingLeft: 20
+                        }}><b>-</b> Must contain at least one number</p>
+                        <p style={{
+                            margin: 0,
+                            color: specialCharValid ? '#a49e9d' : '#6b6766',
+                            textAlign: 'left',
+                            paddingLeft: 20
+                        }}><b>-</b> Must contain at least one special character</p>
+                        <p style={{
+                            margin: 0,
+                            color: lengthValid ? '#a49e9d' : '#6b6766',
+                            textAlign: 'left',
+                            paddingLeft: 20
+                        }}><b>-</b> Must be at least 8 characters long</p>
+                    </div>
 
                 </Form.Item>
                 <Form.Item name={'confirmPassword'} rules={rules}>

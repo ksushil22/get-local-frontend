@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
 
-        const access = localStorage.getItem("access")
+        const access = sessionStorage.getItem("access")
         if(access && access!==undefined) {
             headers.set("Authorization", `Bearer ${access}`);
         }
@@ -24,7 +24,7 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
     let result = await baseQuery(args, api, extraOption)
 
     if(result?.error?.status === 401) {
-        localStorage.setItem("access", "")
+        sessionStorage.setItem("access", "")
 
         // send refresh token to get new access token
         const refreshResult = await baseQuery(
@@ -32,7 +32,7 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
                 url: REFRESH_TOKEN_API,
                 method: 'POST',
                 body: {
-                    refreshToken: localStorage.getItem("refresh"),
+                    refreshToken: sessionStorage.getItem("refresh"),
                 },
             },
             api,
@@ -44,7 +44,7 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
             const user = api.getState().auth.username
 
             //  store the new token
-            refreshResult.data['refresh'] = localStorage.getItem("refresh")
+            refreshResult.data['refresh'] = sessionStorage.getItem("refresh")
 
             api.dispatch(setCredentials({...refreshResult.data, user}))
 

@@ -8,12 +8,12 @@ import {logOut} from "../../redux/slicers/authSlicer";
 export default function () {
     const dispatch = useDispatch();
 
-    if (localStorage.getItem('access')) {
+    if (sessionStorage.getItem('access')) {
         const {
             data: isValidToken,
             isLoading,
             error
-        } = useValidateTokenQuery(localStorage.getItem('access'));
+        } = useValidateTokenQuery(sessionStorage.getItem('access'));
         if (isLoading) {
             return <CustomSpinner />;
         }else if (error) {

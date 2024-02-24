@@ -8,6 +8,7 @@ import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
 import GetLocalsLayout from "./components/util/layout/GetLocalsLayout";
+import {UserProfileProvider} from "./context/UserProfile";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -35,9 +36,11 @@ const GetLocalsRoutes = () => {
 
 const RenderedApp = () => {
     return (
-        <BrowserRouter>
-            <GetLocalsRoutes />
-        </BrowserRouter>
+        <UserProfileProvider>
+            <BrowserRouter>
+                <GetLocalsRoutes />
+            </BrowserRouter>
+        </UserProfileProvider>
     );
 };
 

@@ -19,10 +19,10 @@ const authSlice = createSlice({
             state.token = token;
             state.name = name;
 
-            // set the token in localStorage
+            // set the token in sessionStorage
             if(token) {
-                localStorage.setItem("access", token.access)
-                localStorage.setItem("refresh", token.refresh)
+                sessionStorage.setItem("access", token.access)
+                sessionStorage.setItem("refresh", token.refresh)
             }
         },
         logOut: (state, action) => {
@@ -30,8 +30,8 @@ const authSlice = createSlice({
             state.token.access = null;
             state.token.refresh = null;
             state.name=''
-            localStorage.removeItem("access")
-            localStorage.removeItem("refresh")
+            sessionStorage.removeItem("access")
+            sessionStorage.removeItem("refresh")
         },
     },
 });

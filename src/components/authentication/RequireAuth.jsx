@@ -8,7 +8,7 @@ const RequireAuth = () => {
     const dispatch = useDispatch();
 
     //check if we have a token
-    const token = localStorage?.getItem("access");
+    const token = sessionStorage?.getItem("access");
     const location = useLocation();
 
     // useEffect hook to listen to the history and scroll the user to the top of the page when they change components
