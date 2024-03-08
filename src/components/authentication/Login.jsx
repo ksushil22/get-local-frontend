@@ -3,7 +3,7 @@ import {Button, Col, Form, Image, Input, Row} from "antd";
 import {useLoginMutation} from "../../redux/services/authAPI";
 import {setCredentials} from "../../redux/slicers/authSlicer";
 import {useDispatch} from "react-redux";
-import { useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import "./authentication.css";
 import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +11,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 export default function () {
-    const [loginMutation, {isLoading: isLoggingInUser}] = useLoginMutation()
+    const [loginMutation, {isLoading: isLoggingInUser}] = useLoginMutation();
     const dispatch = useDispatch();
-
-    const [form] = Form.useForm()
-    const navigate = useNavigate()
+    const location = useLocation();
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
     const screens = useBreakpoint();
 
     const innerDivHeight = screens.md || screens.lg || screens.xl || screens.xxl ? '100vh' : '100%';
@@ -23,10 +23,12 @@ export default function () {
     const onFinish = async () => {
         try {
             const userData = await loginMutation(form.getFieldsValue()).unwrap();
-            dispatch(setCredentials({...userData, username: form.getFieldValue("email")}));
-            navigate("/");
-        } catch (err) {
+            await dispatch(setCredentials({...userData, username: form.getFieldValue("email")}));
 
+            const {from} = location.state || {from: {pathname: "/"}};
+            navigate(from);
+        } catch (err) {
+            console.error(err)
         }
     };
 
@@ -38,7 +40,8 @@ export default function () {
     return (
         <Row style={loginStyle.mainContainer}>
             <Col xl={16} lg={16} md={16} sm={24} xs={24}
-                 style={{...loginStyle.innerDivs,
+                 style={{
+                     ...loginStyle.innerDivs,
                      backgroundColor: 'var(--primary-color)',
                      color: '#ece7e2', minHeight: innerDivHeight,
                      border: '2px solid var(--primary-background)'
@@ -49,7 +52,7 @@ export default function () {
                         maxHeight: '120px',
                         padding: '20px'
                     }}
-                    preview={false} src={require('../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')} />
+                    preview={false} src={require('../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
                 <h1 style={{
                     fontWeight: '900',
                     fontSize: '50px',
@@ -88,11 +91,11 @@ export default function () {
                             style={{
                                 ...loginStyle.buttons,
                                 color: '#ece7e2',
-                        }}
+                            }}
                             htmlType={'submit'}
                             loading={isLoggingInUser}
                         >
-                            LogIn <FontAwesomeIcon icon={faArrowRightToBracket} style={{paddingLeft:'10px'}}/></Button>
+                            LogIn <FontAwesomeIcon icon={faArrowRightToBracket} style={{paddingLeft: '10px'}}/></Button>
                     </Form.Item>
                 </Form>
 
@@ -112,10 +115,12 @@ export default function () {
                     color: 'var(--primary-color)'
                 }}>You are just one step away...</p>
                 <Button
-                    style={{...loginStyle.buttons,
-                        color:'var(--primary-color)', marginTop: '20px',
+                    style={{
+                        ...loginStyle.buttons,
+                        color: 'var(--primary-color)',
+                        marginTop: '20px',
                         textShadow: '0 1px 3px'
-                }}
+                    }}
                     onClick={() => navigate('/authenticate/registration')}>
                     Register
                 </Button>
@@ -128,7 +133,7 @@ export default function () {
 }
 
 const loginStyle = {
-    mainContainer : {
+    mainContainer: {
         margin: '0',
         display: 'flex',
         justifyContent: 'center',

@@ -8,12 +8,11 @@ export default function ({
         xmlnsXlink="http://www.w3.org/1999/xlink"
         style={{
             margin: 'auto',
-            background: 'var(--primary-background)',
             display: 'block',
             shapeRendering: 'auto',
         }}
-        width="200px"
-        height="200px"
+        width="120px"
+        height="120px"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
     >

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 :root {
     --primary-color: #614044;
     --primary-background: #dedede;
@@ -12,6 +14,7 @@ html, body {
 
 body {
     animation: fadeInAnimation ease 2s;
+    font-family: 'Montserrat', sans-serif
 }
 
 @-webkit-keyframes fadeIn {
@@ -90,6 +93,12 @@ input{
 }
 
 .ant-select-selection-placeholder {
+    color: #b2b0af !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+}
+
+::placeholder {
     color: #b2b0af !important;
     font-weight: 500 !important;
     font-size: 16px !important;

@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Layout, Row, Skeleton, Spin} from "antd";
+import {Col, Row, Skeleton} from "antd";
 import CustomIndicator from "./CustomIndicator";
 
 export const DISPLAY_TYPES_ENUM = {
@@ -11,17 +11,22 @@ export const LOADER_TYPES_ENUM = {
     SKELETON: 0,
     SPINNER: 1
 };
+export const SPINNERS = {
+    CUSTOM: 0,
+    SKELETON: 1
+};
 export default function ({
                              display = DISPLAY_TYPES_ENUM.FULLSCREEN,
                              loaderType = LOADER_TYPES_ENUM.SPINNER,
                              useBackground = true,
-                             text = "Loading..."
+                             text = "Loading...",
+                             spinner = SPINNERS.CUSTOM
                          }) {
     const containerStyle = (display === DISPLAY_TYPES_ENUM.FULLSCREEN)
         ? {...loaderStyles.centerAlign}
         : {...loaderStyles.areaContainer};
 
-    const displayedSpinner = (display === DISPLAY_TYPES_ENUM.FULLSCREEN)
+    const displayedSpinner = (spinner === SPINNERS.CUSTOM)
         ? (
             <Col>
                 <Row>
@@ -30,7 +35,10 @@ export default function ({
             </Col>
         )
         : (
-            <Skeleton active={true} />
+            <Skeleton active={true}
+                      paragraph={{
+                          rows: 6,
+                      }} style={{marginLeft: 30, marginRight: 30}}/>
         )
     ;
     return (

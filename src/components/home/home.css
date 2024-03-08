@@ -1,0 +1,24 @@
+.ant-dropdown-menu-item{
+    height: 50px !important
+}
+
+.ant-input-outlined {
+    border: 2px solid #b0b0b0;
+    transition: box-shadow 0.5s ease; /* Add transition for smooth effect */
+    box-shadow: none; /* Initially, no box shadow */
+}
+
+.ant-input-outlined:hover,
+.ant-input-outlined:focus {
+    border: 2px solid #b0b0b0;
+    outline: none; /* Optional: Remove default focus outline */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add box shadow when focused */
+}
+
+.ant-input-outlined:focus {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); /* Add box shadow when focused */
+}
+
+.about-us-form {
+    min-height: 365px;
+}

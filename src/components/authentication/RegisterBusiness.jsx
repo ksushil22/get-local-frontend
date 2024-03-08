@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Input, Select} from "antd";
 import {useGetTypesQuery, useRegisterBusinessMutation} from "../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY_TYPES_ENUM} from "../util/customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logOut} from "../../redux/slicers/authSlicer";
@@ -16,7 +16,10 @@ export default function () {
     const [isRegistrationModalVisible, setIsRegistrationModalVisible] = useState(false);
 
     if (isLoading) {
-        return <CustomSpinner display={DISPLAY_TYPES_ENUM.AREA}/>
+        return <CustomSpinner
+            display={DISPLAY_TYPES_ENUM.AREA}
+            spinner={SPINNERS.SKELETON}
+        />
     }
 
     const rules = [{

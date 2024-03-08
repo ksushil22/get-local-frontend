@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setCredentials, logOut } from "../slicers/authSlicer.js";
+import {logOut, setCredentials} from "../slicers/authSlicer.js";
 import { REFRESH_TOKEN_API } from "../api_url.jsx";
 import {message} from "antd";
 
@@ -16,7 +16,8 @@ const baseQuery = fetchBaseQuery({
         headers.set("Access-Control-Allow-Origin", 'true')
 
         return headers
-    }
+    },
+    parseText: true
 })
 
 const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Button, Form, Input} from "antd";
 import {useRegisterMutation} from "../../redux/services/authAPI";
 import {useDispatch} from "react-redux";
-import {setCredentials} from "../../redux/slicers/authSlicer";
 import {useNavigate} from "react-router-dom";
 import "./authentication.css";
 
@@ -61,7 +60,6 @@ export default function ({
 
         registerUser(form.getFieldsValue()).then(({data, error})=> {
             if (data) {
-                console.log(data)
                 dispatch(setCredentials({...data, username: form.getFieldValue('email')}))
                 setCurrentState(1)
             }

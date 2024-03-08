@@ -62,7 +62,7 @@ export default function () {
                     display: 'flex',
                     justifyContent: 'flex-end',
                     alignItems: 'center',
-                    width: '30%'
+                    width: '25%'
                 }}
                 mode={'horizontal'}
                 items={items}
