@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {Modal, Upload} from "antd";
+import {Button, Upload} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import ModalPopup from "../ModalPopup";
-import "./upload.css"
-import {faUpload} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "./upload.css";
+import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -15,70 +14,121 @@ const getBase64 = (file) =>
         reader.onerror = (error) => reject(error);
     });
 
+
 /**
  *
  * @param style
  * @param maxUploads - max number of uploads: could be either 1 or 8, or upto you
  * @param accept - MIME types for Upload to accept file types.
+ * @param type - Type of image that belongs to the business: CAROUSEL, MENU, etc
+ * @param listType - picture-card, picture
  * @returns {JSX.Element}
  */
-export default function ({style= {}, maxUploads=1, accept=''}) {
-    const businessId = useSelector((state)=> state.business.businessId)
+export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU", listType = 'picture-card'}) {
+    const businessId = useSelector((state) => state.business.businessId)
     const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
+    const [previewImage, setPreviewImage] = useState("");
+    const [previewTitle, setPreviewTitle] = useState("");
     const [fileList, setFileList] = useState([]);
-    const handleCancel = () => setPreviewOpen(false);
+    const [deleteFile, setDeleteFile] = useState(false);
+    const [deleteUid, setDeleteUid] = useState("")
+    const [deletionApproved, setDeletionApproved] = useState(false); // New state variable
+    const {
+        data: images,
+        isLoading: loadingImages
+    } = useGetBusinessImagesQuery({businessId, type});
+    const[deleteImage] = useDeleteImageMutation();
+    const handleCancel = () => {
+        setPreviewOpen(false)
+        setDeleteFile(false)
+        setDeletionApproved(false); // Reset deletion approval status
+    };
+
+    useEffect(() => {
+        if (images) {
+            const formattedImages = images.map((image) => ({
+                uid: image.id,
+                name: image.name,
+                status: 'done',
+                url: `data:${image.extension};base64,${image.image}`,
+            }));
+            setFileList(formattedImages);
+            console.log(formattedImages)
+        }
+    }, [images])
+
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
         setPreviewImage(file.url || file.preview);
         setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf("/") + 1));
     };
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-    const uploadButton = (
-        <button
-            style={{
-                border: 0,
-                background: 'none',
-                cursor: 'pointer'
-            }}
-            type="button"
-        >
-            <FontAwesomeIcon icon={faUpload} />
-        </button>
-    );
+
+    const handleChange = ({ file: file, fileList: newFileList }) => {
+        if (file.status !== 'removed') {
+            // Proceed with making changes to the file
+            setFileList(newFileList);
+        }
+    };
+
+    const handleCustomFileChange = () => {
+        setFileList(fileList.filter(file => file.uid !== deleteUid));
+    }
+
+    const handleDelete = async () => {
+        setDeletionApproved(true); // Set deletion approval status
+        deleteImage(deleteUid).then(({data, error}) => {
+            if (data) {
+                handleCustomFileChange();
+            }
+        });
+        setDeleteFile(false)
+        setPreviewOpen(false)
+
+    }
+
     return (
         <div style={style}>
             <Upload
+                action={`${process.env.BASE_API_URL}business/${businessId}/upload/${type}/`}
+                headers={{
+                    'Authorization': `Bearer ${sessionStorage.getItem("access")}`
+                }}
                 accept={accept}
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture-card"
+                listType={listType}
                 fileList={fileList}
                 onPreview={handlePreview}
                 onChange={handleChange}
-                progress={{
-                    strokeColor: {
-                        '0%': '#dedede',
-                        '100%': '#614044',
-                    },
-                    strokeWidth: 3,
+                onRemove={(file) => {
+                    handlePreview(file)
+                    setDeleteUid(file.uid)
+                    setDeleteFile(true)
                 }}
-                style={{
-                    cursor: 'pointer'
-                }}
+                style={{cursor: "pointer"}}
             >
-                {fileList.length >= maxUploads ? null : uploadButton}
+                {fileList.length >= maxUploads ? null : (
+                    <div>
+                        <PlusOutlined/>
+                        <div style={{marginTop: 8}}>Upload</div>
+                    </div>
+                )}
             </Upload>
             <ModalPopup
-                type={'success'}
-                visible={previewOpen} title={previewTitle} footer={null} handleCancel={handleCancel}>
+                type={deleteFile ? "warning" : "success"}
+                visible={previewOpen || deleteFile}
+                title={deleteFile ? `Delete: ${previewTitle}` : previewTitle}
+                footer={null}
+                showCancel={deleteFile}
+                handleCancel={handleCancel}
+                submitButtonText={deleteFile? 'Delete' : null}
+                handleOk={deleteFile ? handleDelete: null}
+            >
                 <img
                     alt="example"
                     style={{
-                        width: '100%',
+                        width: "100%",
                     }}
                     src={previewImage}
                 />
@@ -86,3 +136,4 @@ export default function ({style= {}, maxUploads=1, accept=''}) {
         </div>
     );
 }
+

@@ -1,5 +1,5 @@
 import {rootAPI} from "./rootAPI";
-import {GET_BUSINESS, GET_BUSINESS_TYPES, REGISTER_BUSINESS, UPDATE_ABOUT_US} from "../api_url";
+import {BUSINESS_UPLOAD, GET_BUSINESS, GET_BUSINESS_TYPES, REGISTER_BUSINESS, UPDATE_ABOUT_US} from "../api_url";
 
 const BASE_URL = process.env.BASE_API_URL;
 
@@ -18,11 +18,27 @@ export const businessAPI = rootAPI.injectEndpoints({
         getBusiness: builder.query({
             query: (id) => `${BASE_URL}${GET_BUSINESS}${id}/`
         }),
+        getBusinessImages: builder.query({
+            query: ({businessId, type}) => `${BASE_URL}${GET_BUSINESS}${businessId}/images/${type}/`
+        }),
         updateAboutUs: builder.mutation({
             query: (data) => ({
                 url: `${BASE_URL}${UPDATE_ABOUT_US}${data.id}/`,
                 method: 'PUT',
                 params: {aboutUs: data.aboutUs}
+            })
+        }),
+        uploadBusinessFile: builder.mutation({
+            query: (data) => ({
+                url: `${BASE_URL}${BUSINESS_UPLOAD}`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        deleteImage: builder.mutation({
+            query: (id) => ({
+                url: `${BASE_URL}${GET_BUSINESS}image/${id}/`,
+                method: 'DELETE'
             })
         })
     })
@@ -32,5 +48,8 @@ export const {
     useGetTypesQuery,
     useRegisterBusinessMutation,
     useLazyGetBusinessQuery,
-    useUpdateAboutUsMutation
+    useGetBusinessImagesQuery,
+    useUpdateAboutUsMutation,
+    useUploadBusinessFileMutation,
+    useDeleteImageMutation
 } = businessAPI

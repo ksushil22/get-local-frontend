@@ -1,6 +1,6 @@
-import React, {memo} from 'react'
+import React from 'react'
 import {Layout} from "antd";
-import {Content, Footer, Header} from "antd/es/layout/layout";
+import {Content, Footer} from "antd/es/layout/layout";
 import {Outlet} from "react-router-dom";
 import MainNavigation from "./MainNavigation";
 import "./layout.css"
@@ -15,19 +15,21 @@ export default function GetLocalsLayout() {
         <Layout style={{
             minHeight: '100vh',
         }}>
-            <MainNavigation />
+            <MainNavigation/>
             <Content
                 style={{
-                background: '#fff',
-                padding: 20,
-                marginLeft: padding,
-                marginRight: padding,
-                boxShadow: '0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19)'
-            }}>
-                <Outlet />
+                    background: '#fff',
+                    padding: 20,
+                    marginLeft: padding,
+                    marginRight: padding,
+                    boxShadow: '0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19)'
+                }}>
+                <Outlet/>
             </Content>
-            <Footer style={{backgroundColor: '#fff'}}>
-                asdfsadf
+            <Footer>
+                <div >
+                        asdlfkjasldjf
+                </div>
             </Footer>
         </Layout>
     )

@@ -81,6 +81,8 @@ const mainNavigation = {
         background: 'var(--primary-color)',
         height: 70,
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        position: 'fixed',
+        zIndex: 1
     }
 }

@@ -26,16 +26,16 @@ function ModalPopup(
 
     switch (type) {
         case "info":
-            icon = <InfoCircleOutlined style={{ color: '#37A3FF' }} />;
+            icon = <InfoCircleOutlined style={{ color: 'var(--primary-color)' }} />;
             break;
         case "success":
             icon = <CheckCircleOutlined style={{ color: 'green' }} />;
             break;
         case "warning":
-            icon = <ExclamationCircleOutlined style={{ color: 'yellow' }} />;
+            icon = <ExclamationCircleOutlined style={{ color: 'red' }} />;
             break;
         default:
-            icon = <InfoCircleOutlined style={{ color: '#37A3FF' }} />;
+            icon = <InfoCircleOutlined style={{ color: 'var(--primary-color)' }} />;
             break;
     }
     const customFooter = (handleOk || handleCancel || footer) ? (

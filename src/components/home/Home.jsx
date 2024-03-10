@@ -85,12 +85,10 @@ export default function Home() {
                     fontSize: 20
                 }}>Upload Carousel Pictures <CustomPopover content={"We suggest uploading authentic pictures clicked by you. This will be displayed" +
                     " on the very top."}/> </p>
-                <UploadPictures style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    width: '100%'
-                }} maxUploads={3} accept="image/png, image/jpeg"/>
+                <UploadPictures
+                    type={"CAROUSEL"}
+                    maxUploads={3}
+                    accept="image/png, image/jpeg"/>
             </div>
         </Row>
     );
