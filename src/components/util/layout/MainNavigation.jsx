@@ -16,12 +16,12 @@ export default function () {
 
     const items = [
         {
-            label: (<Link to={"/"}>Home</Link>),
+            label: (<Link to={"/business-admin/home"}>Home</Link>),
             key: 'home',
             icon: <FontAwesomeIcon icon={faHouseUser} />,
         },
         {
-            label: (<Link to={'/menu-items'}>Menu</Link>),
+            label: (<Link to={'/business-admin/menu-items'}>Menu</Link>),
             key: 'menu',
             icon: <FontAwesomeIcon icon={faBookOpen} />,
         },
@@ -82,7 +82,5 @@ const mainNavigation = {
         height: 70,
         paddingLeft: 20,
         paddingRight: 20,
-        position: 'fixed',
-        zIndex: 1
     }
 }

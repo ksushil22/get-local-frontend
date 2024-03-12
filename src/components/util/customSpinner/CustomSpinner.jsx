@@ -6,18 +6,12 @@ export const DISPLAY_TYPES_ENUM = {
     FULLSCREEN: 0,
     AREA: 1
 };
-
-export const LOADER_TYPES_ENUM = {
-    SKELETON: 0,
-    SPINNER: 1
-};
 export const SPINNERS = {
     CUSTOM: 0,
     SKELETON: 1
 };
 export default function ({
                              display = DISPLAY_TYPES_ENUM.FULLSCREEN,
-                             loaderType = LOADER_TYPES_ENUM.SPINNER,
                              useBackground = true,
                              text = "Loading...",
                              spinner = SPINNERS.CUSTOM

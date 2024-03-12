@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import {BrowserRouter, Route, Router, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Router, Routes} from 'react-router-dom';
 import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
@@ -12,19 +12,22 @@ import GetLocalsLayout from "./components/util/layout/GetLocalsLayout";
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
+const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
 
 const GetLocalsRoutes = () => {
     return (
         <Suspense fallback={<CustomSpinner />}>
             <Provider store={store}>
                 <Routes>
+                    <Route path={"*"} element={<Navigate to={"/authenticate"}/>} />
                     <Route element={<RequireUnAuth />}>
                         <Route path={'/authenticate'} element={<LoginScreen />} />
                         <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
                     </Route>
                     <Route element={<RequireAuth />}>
                         <Route element={<GetLocalsLayout />}>
-                            <Route path="/" element={<HomeScreen />} />
+                            <Route path="/business-admin/home" element={<HomeScreen />} />
+                            <Route path="/business-admin/menu-items" element={<MenuScreen />} />
                         </Route>
                     </Route>
                 </Routes>

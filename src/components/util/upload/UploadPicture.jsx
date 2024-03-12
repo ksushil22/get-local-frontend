@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {Button, Upload} from "antd";
+import {Upload} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import ModalPopup from "../ModalPopup";
 import "./upload.css";
 import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
+import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../customSpinner/CustomSpinner";
+import ImgCrop from 'antd-img-crop';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -32,16 +36,14 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
     const [fileList, setFileList] = useState([]);
     const [deleteFile, setDeleteFile] = useState(false);
     const [deleteUid, setDeleteUid] = useState("")
-    const [deletionApproved, setDeletionApproved] = useState(false); // New state variable
     const {
         data: images,
         isLoading: loadingImages
     } = useGetBusinessImagesQuery({businessId, type});
-    const[deleteImage] = useDeleteImageMutation();
+    const [deleteImage] = useDeleteImageMutation();
     const handleCancel = () => {
         setPreviewOpen(false)
         setDeleteFile(false)
-        setDeletionApproved(false); // Reset deletion approval status
     };
 
     useEffect(() => {
@@ -66,7 +68,7 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf("/") + 1));
     };
 
-    const handleChange = ({ file: file, fileList: newFileList }) => {
+    const handleChange = ({file: file, fileList: newFileList}) => {
         if (file.status !== 'removed') {
             // Proceed with making changes to the file
             setFileList(newFileList);
@@ -78,7 +80,6 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
     }
 
     const handleDelete = async () => {
-        setDeletionApproved(true); // Set deletion approval status
         deleteImage(deleteUid).then(({data, error}) => {
             if (data) {
                 handleCustomFileChange();
@@ -89,32 +90,40 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
 
     }
 
+    if (loadingImages) {
+        return <CustomSpinner
+            spinner={SPINNERS.SKELETON}
+            display={DISPLAY_TYPES_ENUM.AREA}/>
+    }
+
     return (
         <div style={style}>
-            <Upload
-                action={`${process.env.BASE_API_URL}business/${businessId}/upload/${type}/`}
-                headers={{
-                    'Authorization': `Bearer ${sessionStorage.getItem("access")}`
-                }}
-                accept={accept}
-                listType={listType}
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-                onRemove={(file) => {
-                    handlePreview(file)
-                    setDeleteUid(file.uid)
-                    setDeleteFile(true)
-                }}
-                style={{cursor: "pointer"}}
-            >
-                {fileList.length >= maxUploads ? null : (
-                    <div>
-                        <PlusOutlined/>
-                        <div style={{marginTop: 8}}>Upload</div>
-                    </div>
-                )}
-            </Upload>
+            <ImgCrop aspectSlider={true} >
+                <Upload
+                    action={`${process.env.BASE_API_URL}business/${businessId}/upload/${type}/`}
+                    headers={{
+                        'Authorization': `Bearer ${sessionStorage.getItem("access")}`
+                    }}
+                    accept={accept}
+                    listType={listType}
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    onChange={handleChange}
+                    onRemove={(file) => {
+                        handlePreview(file)
+                        setDeleteUid(file.uid)
+                        setDeleteFile(true)
+                    }}
+                    style={{cursor: "pointer"}}
+                >
+                    {fileList.length >= maxUploads ? null : (
+                        <div>
+                            <div style={{marginTop: 8}}>Upload</div>
+                            <FontAwesomeIcon icon={faCloudArrowUp} fontSize={"larger"}/>
+                        </div>
+                    )}
+                </Upload>
+            </ImgCrop>
             <ModalPopup
                 type={deleteFile ? "warning" : "success"}
                 visible={previewOpen || deleteFile}
@@ -122,8 +131,8 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
                 footer={null}
                 showCancel={deleteFile}
                 handleCancel={handleCancel}
-                submitButtonText={deleteFile? 'Delete' : null}
-                handleOk={deleteFile ? handleDelete: null}
+                submitButtonText={deleteFile ? 'Delete' : null}
+                handleOk={deleteFile ? handleDelete : null}
             >
                 <img
                     alt="example"

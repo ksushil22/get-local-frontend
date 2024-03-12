@@ -25,7 +25,7 @@ export default function () {
             const userData = await loginMutation(form.getFieldsValue()).unwrap();
             await dispatch(setCredentials({...userData, username: form.getFieldValue("email")}));
 
-            const {from} = location.state || {from: {pathname: "/"}};
+            const {from} = location.state || {from: {pathname: "/business-admin/home"}};
             navigate(from);
         } catch (err) {
             console.error(err)
