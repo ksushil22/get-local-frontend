@@ -51,7 +51,7 @@ export default function () {
                     padding: 10,
                     cursor: 'pointer'
                 }}
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/business-admin/home')}
                 preview={false}
                 src={require('../../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
             <Menu

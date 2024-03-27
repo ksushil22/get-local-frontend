@@ -57,7 +57,7 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
         }
     } else if (result?.error) {
         message.open({
-            content: result.error.data,
+            content: result.error?.data,
             duration: 2.5,
             className: 'antd-error'
         })

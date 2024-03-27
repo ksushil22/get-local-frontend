@@ -40,6 +40,52 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${GET_BUSINESS}image/${id}/`,
                 method: 'DELETE'
             })
+        }),
+        getBusinessItemCategories: builder.query({
+            query: (id) => `${BASE_URL}${GET_BUSINESS}${id}/item-category/`,
+            providesTags: ['categories']
+        }),
+        createBusinessItemCategory: builder.mutation({
+            query: ({businessId, category}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/`,
+                method: 'POST',
+                params: {
+                    name: category
+                }
+            }),
+            invalidatesTags: ['categories']
+        }),
+        getMenuItems: builder.query({
+            query: ({businessId, categoryId}) => `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
+            transformResponse: (items) => {
+                const transformedData = [];
+                items?.map((item) => {
+                    const image = item.image;
+                    transformedData.push({
+                        'id': item.id,
+                        'name': item.name,
+                        'ingredients': item.ingredients,
+                        'description': item.description,
+                        'price': item.price,
+                        'image':{
+                            uid: image.id,
+                            name: image.name,
+                            status: 'done',
+                            url: `data:${image.extension};base64,${image.image}`
+                        }
+                    })
+                })
+                return transformedData;
+            },
+            providesTags: ['menu-items']
+        }),
+        createOrUpdateMenuItem: builder.mutation({
+            query: ({businessId, categoryId, itemDTO}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
+                method: 'PUT',
+                body: {...itemDTO}
+            }),
+            invalidatesTags: ['menu-items']
         })
     })
 });
@@ -51,5 +97,9 @@ export const {
     useGetBusinessImagesQuery,
     useUpdateAboutUsMutation,
     useUploadBusinessFileMutation,
-    useDeleteImageMutation
+    useDeleteImageMutation,
+    useGetBusinessItemCategoriesQuery,
+    useCreateBusinessItemCategoryMutation,
+    useGetMenuItemsQuery,
+    useCreateOrUpdateMenuItemMutation
 } = businessAPI

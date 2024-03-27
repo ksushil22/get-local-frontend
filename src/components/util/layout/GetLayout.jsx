@@ -6,7 +6,7 @@ import MainNavigation from "./MainNavigation";
 import "./layout.css"
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
-export default function GetLocalsLayout() {
+export default function GetLayout() {
 
     const screens = useBreakpoint();
     const padding = screens.lg || screens.xl || screens.xxl ? '12%' : '0';

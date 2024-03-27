@@ -15,22 +15,11 @@
     height: 100%;
 }
 
-.ant-upload-list-picture-card {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 200px !important;
-}
-
 .ant-upload-list-item-container {
     border-radius: 4px !important;
     background-color: var(--primary-background) !important;
-    height: 200px !important;
-    width: 200px !important;
 }
 .ant-upload-select{
-    height: 200px !important;
-    width: 200px !important;
     font-size: large !important;
     font-weight: bold !important;
 }

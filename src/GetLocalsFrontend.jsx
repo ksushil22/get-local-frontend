@@ -7,7 +7,8 @@ import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
-import GetLocalsLayout from "./components/util/layout/GetLocalsLayout";
+import GetLayout from "./components/util/layout/GetLayout";
+import {ConfigProvider} from "antd";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -25,7 +26,7 @@ const GetLocalsRoutes = () => {
                         <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
                     </Route>
                     <Route element={<RequireAuth />}>
-                        <Route element={<GetLocalsLayout />}>
+                        <Route element={<GetLayout />}>
                             <Route path="/business-admin/home" element={<HomeScreen />} />
                             <Route path="/business-admin/menu-items" element={<MenuScreen />} />
                         </Route>
@@ -39,7 +40,9 @@ const GetLocalsRoutes = () => {
 const RenderedApp = () => {
     return (
         <BrowserRouter>
-            <GetLocalsRoutes />
+            <ConfigProvider theme={{token: {fontFamily: 'Montserrat'}}}>
+                <GetLocalsRoutes />
+            </ConfigProvider>
         </BrowserRouter>
     );
 };

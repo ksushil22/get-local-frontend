@@ -23,23 +23,33 @@ const getBase64 = (file) =>
  *
  * @param style
  * @param maxUploads - max number of uploads: could be either 1 or 8, or upto you
+ * @param setUploadImageId - for setting up the image id for further use.
  * @param accept - MIME types for Upload to accept file types.
  * @param type - Type of image that belongs to the business: CAROUSEL, MENU, etc
  * @param listType - picture-card, picture
+ * @param initialFileList - initial images.
  * @returns {JSX.Element}
  */
-export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU", listType = 'picture-card'}) {
+export default function ({
+                             style = {},
+                             maxUploads = 1,
+                             setUploadImageId = null,
+                             accept = '',
+                             type = "MENU",
+                             listType = 'picture-card',
+                             initialFileList= []
+                         }) {
     const businessId = useSelector((state) => state.business.businessId)
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [previewTitle, setPreviewTitle] = useState("");
-    const [fileList, setFileList] = useState([]);
+    const [fileList, setFileList] = useState(initialFileList);
     const [deleteFile, setDeleteFile] = useState(false);
     const [deleteUid, setDeleteUid] = useState("")
     const {
         data: images,
         isLoading: loadingImages
-    } = useGetBusinessImagesQuery({businessId, type});
+    } = useGetBusinessImagesQuery({businessId, type}, {skip: type === "MENU"});
     const [deleteImage] = useDeleteImageMutation();
     const handleCancel = () => {
         setPreviewOpen(false)
@@ -55,7 +65,6 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
                 url: `data:${image.extension};base64,${image.image}`,
             }));
             setFileList(formattedImages);
-            console.log(formattedImages)
         }
     }, [images])
 
@@ -73,6 +82,9 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
             // Proceed with making changes to the file
             setFileList(newFileList);
         }
+        if (file.status === 'done' && setUploadImageId) {
+            setUploadImageId(file.response.message)
+        }
     };
 
     const handleCustomFileChange = () => {
@@ -83,6 +95,9 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
         deleteImage(deleteUid).then(({data, error}) => {
             if (data) {
                 handleCustomFileChange();
+                if (setUploadImageId) {
+                    setUploadImageId(null)
+                }
             }
         });
         setDeleteFile(false)
@@ -98,32 +113,30 @@ export default function ({style = {}, maxUploads = 1, accept = '', type = "MENU"
 
     return (
         <div style={style}>
-            <ImgCrop aspectSlider={true} >
-                <Upload
-                    action={`${process.env.BASE_API_URL}business/${businessId}/upload/${type}/`}
-                    headers={{
-                        'Authorization': `Bearer ${sessionStorage.getItem("access")}`
-                    }}
-                    accept={accept}
-                    listType={listType}
-                    fileList={fileList}
-                    onPreview={handlePreview}
-                    onChange={handleChange}
-                    onRemove={(file) => {
-                        handlePreview(file)
-                        setDeleteUid(file.uid)
-                        setDeleteFile(true)
-                    }}
-                    style={{cursor: "pointer"}}
-                >
-                    {fileList.length >= maxUploads ? null : (
-                        <div>
-                            <div style={{marginTop: 8}}>Upload</div>
-                            <FontAwesomeIcon icon={faCloudArrowUp} fontSize={"larger"}/>
-                        </div>
-                    )}
-                </Upload>
-            </ImgCrop>
+            <Upload
+                action={`${process.env.BASE_API_URL}business/${businessId}/upload/${type}/`}
+                headers={{
+                    'Authorization': `Bearer ${sessionStorage.getItem("access")}`
+                }}
+                accept={accept}
+                listType={listType}
+                fileList={fileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+                onRemove={(file) => {
+                    handlePreview(file)
+                    setDeleteUid(file.uid)
+                    setDeleteFile(true)
+                }}
+                style={{cursor: "pointer"}}
+            >
+                {fileList.length >= maxUploads ? null : (
+                    <div>
+                        <div style={{marginTop: 8}}>Upload</div>
+                        <FontAwesomeIcon icon={faCloudArrowUp} fontSize={"larger"}/>
+                    </div>
+                )}
+            </Upload>
             <ModalPopup
                 type={deleteFile ? "warning" : "success"}
                 visible={previewOpen || deleteFile}

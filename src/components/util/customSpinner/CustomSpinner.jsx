@@ -14,7 +14,8 @@ export default function ({
                              display = DISPLAY_TYPES_ENUM.FULLSCREEN,
                              useBackground = true,
                              text = "Loading...",
-                             spinner = SPINNERS.CUSTOM
+                             spinner = SPINNERS.CUSTOM,
+                             skeletonRows = 6
                          }) {
     const containerStyle = (display === DISPLAY_TYPES_ENUM.FULLSCREEN)
         ? {...loaderStyles.centerAlign}
@@ -31,7 +32,7 @@ export default function ({
         : (
             <Skeleton active={true}
                       paragraph={{
-                          rows: 6,
+                          rows: skeletonRows,
                       }} style={{marginLeft: 30, marginRight: 30}}/>
         )
     ;

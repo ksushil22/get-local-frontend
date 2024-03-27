@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/src/fonts/Montserrat-VariableFont_wght.ttf') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
 
 :root {
     --primary-color: #614044;
@@ -10,11 +15,11 @@ html, body {
     min-width: 100%;
     margin: 0;
     background: var(--primary-background);
+    font-family: 'Montserrat', sans-serif
 }
 
 body {
-    animation: fadeInAnimation ease 2s;
-    font-family: 'Montserrat', sans-serif
+    animation: fadeIn ease-in .8s;
 }
 
 @-webkit-keyframes fadeIn {
@@ -28,15 +33,6 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 
 #root {
