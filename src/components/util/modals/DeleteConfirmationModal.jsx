@@ -17,6 +17,6 @@ export default function ({
         showCancel={true}
         disableScreenTouch={true}
     >
-        <p>Are you Sure you want to proceed with the deletion process?</p>
+        <h2>Are you sure?</h2>
     </ModalPopup>
 }

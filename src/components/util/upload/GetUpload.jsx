@@ -28,17 +28,19 @@ const getBase64 = (file) =>
  * @param type - Type of image that belongs to the business: CAROUSEL, MENU, etc
  * @param listType - picture-card, picture
  * @param initialFileList - initial images.
+ * @param updateInitialList - do we need to update the initial List or not
  * @returns {JSX.Element}
  */
 export default function ({
-                             style = {},
-                             maxUploads = 1,
-                             setUploadImageId = null,
-                             accept = '',
-                             type = "MENU",
-                             listType = 'picture-card',
-                             initialFileList= []
-                         }) {
+     style = {},
+     maxUploads = 1,
+     setUploadImageId = null,
+     accept = '',
+     type = "MENU",
+     listType = 'picture-card',
+     initialFileList = null,
+     updateInitialList = false
+}) {
     const businessId = useSelector((state) => state.business.businessId)
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -57,10 +59,10 @@ export default function ({
     };
 
     useEffect(() => {
-        if (initialFileList && initialFileList.length > 0) {
+        if (updateInitialList) {
             setFileList(initialFileList);
         }
-    }, [initialFileList]);
+    }, [initialFileList, updateInitialList, setFileList]);
 
     useEffect(() => {
         if (images) {

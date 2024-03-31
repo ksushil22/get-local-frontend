@@ -54,7 +54,11 @@ export default function ({categoryId, editing = false}) {
         <Form.Item
             rules={rules}
             name={"imageId"}>
-            <GetUpload maxUploads={1} setUploadImageId={setUploadedImageId} initialFileList={updateImageFile}/>
+            <GetUpload
+                updateInitialList={true}
+                maxUploads={1}
+                setUploadImageId={setUploadedImageId}
+                initialFileList={updateImageFile}/>
         </Form.Item>
         <Form.Item
             name={"name"}
@@ -144,7 +148,8 @@ export default function ({categoryId, editing = false}) {
         }).then(({data, error}) => {
             if (data) {
                 form.resetFields();
-                setUpdateItemId(null)
+                setUpdateItemId(null);
+                setUpdateImageFile([])
             }
         });
     }
@@ -156,16 +161,16 @@ export default function ({categoryId, editing = false}) {
         form.resetFields();
     }
 
-    async function setupUpdateItem(item) {
+    function setupUpdateItem(item) {
 
         form.resetFields();
         form.setFieldsValue(item);
 
 
-        await setUpdateItemId(item.id);
+        setUpdateItemId(item.id);
         if (item.image) {
-            await setUploadedImageId(item.image.uid);
-            await setUpdateImageFile([item.image]);
+            setUploadedImageId(item.image.uid);
+            setUpdateImageFile([item.image]);
             form.setFieldValue('imageId', item.image.uid);
         }
 
