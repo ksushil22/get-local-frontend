@@ -55,12 +55,18 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
             // if refresh token is also invalid set the credentials to null and navigate user to login page
             api.dispatch(logOut())
         }
-    } else if (result?.error) {
+    } else if(result?.error?.status === 409) {
         message.open({
             content: result.error?.data,
             duration: 2.5,
             className: 'antd-error'
-        })
+        });
+    }else if (result?.error) {
+        message.open({
+            content: result.error?.data,
+            duration: 2.5,
+            className: 'antd-error'
+        });
     }
     return result
 }

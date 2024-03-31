@@ -55,24 +55,35 @@ export const businessAPI = rootAPI.injectEndpoints({
             }),
             invalidatesTags: ['categories']
         }),
+        deleteBusinessItemCategory: builder.mutation({
+            query: ({businessId, categoryId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['categories']
+        }),
         getMenuItems: builder.query({
             query: ({businessId, categoryId}) => `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
             transformResponse: (items) => {
                 const transformedData = [];
                 items?.map((item) => {
-                    const image = item.image;
+                    let image = item.image;
+                    if (image) {
+                        image = {
+                            uid: image?.id,
+                            name: image?.name,
+                            status: 'done',
+                            url: `data:${image?.extension};base64,${image?.image}`
+                        }
+                    }
                     transformedData.push({
                         'id': item.id,
                         'name': item.name,
+                        'displayName': item.name+" - "+item.currency+item.price,
                         'ingredients': item.ingredients,
                         'description': item.description,
                         'price': item.price,
-                        'image':{
-                            uid: image.id,
-                            name: image.name,
-                            status: 'done',
-                            url: `data:${image.extension};base64,${image.image}`
-                        }
+                        'image': image
                     })
                 })
                 return transformedData;
@@ -84,6 +95,13 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
                 method: 'PUT',
                 body: {...itemDTO}
+            }),
+            invalidatesTags: ['menu-items']
+        }),
+        deleteMenuItem: builder.mutation({
+            query: ({itemId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}item/${itemId}/`,
+                method: 'DELETE'
             }),
             invalidatesTags: ['menu-items']
         })
@@ -100,6 +118,8 @@ export const {
     useDeleteImageMutation,
     useGetBusinessItemCategoriesQuery,
     useCreateBusinessItemCategoryMutation,
+    useDeleteBusinessItemCategoryMutation,
     useGetMenuItemsQuery,
-    useCreateOrUpdateMenuItemMutation
+    useCreateOrUpdateMenuItemMutation,
+    useDeleteMenuItemMutation
 } = businessAPI

@@ -2,7 +2,7 @@ import React from "react";
 import {Col, Divider, Modal, Row} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleCheck} from "@fortawesome/free-solid-svg-icons";
-import ModalPopup from "../util/ModalPopup";
+import ModalPopup from "../util/modals/ModalPopup";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logOut} from "../../redux/slicers/authSlicer";

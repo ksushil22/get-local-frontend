@@ -4,6 +4,7 @@ import {useRegisterMutation} from "../../redux/services/authAPI";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import "./authentication.css";
+import {setCredentials} from "../../redux/slicers/authSlicer";
 
 export default function ({
                              setCurrentState,

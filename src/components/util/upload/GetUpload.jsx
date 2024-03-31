@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Upload} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import ModalPopup from "../ModalPopup";
+import ModalPopup from "../modals/ModalPopup";
 import "./upload.css";
 import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../customSpinner/CustomSpinner";
@@ -43,18 +43,24 @@ export default function ({
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [previewTitle, setPreviewTitle] = useState("");
-    const [fileList, setFileList] = useState(initialFileList);
+    const [fileList, setFileList] = useState([]);
     const [deleteFile, setDeleteFile] = useState(false);
-    const [deleteUid, setDeleteUid] = useState("")
+    const [deleteUid, setDeleteUid] = useState("");
     const {
         data: images,
         isLoading: loadingImages
     } = useGetBusinessImagesQuery({businessId, type}, {skip: type === "MENU"});
     const [deleteImage] = useDeleteImageMutation();
     const handleCancel = () => {
-        setPreviewOpen(false)
-        setDeleteFile(false)
+        setPreviewOpen(false);
+        setDeleteFile(false);
     };
+
+    useEffect(() => {
+        if (initialFileList && initialFileList.length > 0) {
+            setFileList(initialFileList);
+        }
+    }, [initialFileList]);
 
     useEffect(() => {
         if (images) {
@@ -66,7 +72,7 @@ export default function ({
             }));
             setFileList(formattedImages);
         }
-    }, [images])
+    }, [images]);
 
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
@@ -78,14 +84,25 @@ export default function ({
     };
 
     const handleChange = ({file: file, fileList: newFileList}) => {
-        if (file.status !== 'removed') {
-            // Proceed with making changes to the file
+        if (file.status !== 'removed' && file.status === 'uploading') {
             setFileList(newFileList);
         }
-        if (file.status === 'done' && setUploadImageId) {
-            setUploadImageId(file.response.message)
+        if (file.status === 'done') {
+            const fileList = newFileList.filter(item => !item.uid.startsWith('rc-upload'))
+            getBase64(file.originFileObj).then(result => {
+                fileList.push({
+                    uid: file.response.message,
+                    status: 'done',
+                    url: result,
+                    name: file.name
+                });
+                setFileList(fileList)
+            })
+            if (setUploadImageId)
+                setUploadImageId(file.response.message);
         }
     };
+
 
     const handleCustomFileChange = () => {
         setFileList(fileList.filter(file => file.uid !== deleteUid));
