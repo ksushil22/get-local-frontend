@@ -2,23 +2,34 @@ import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import {BrowserRouter, Route, Router, Routes} from 'react-router-dom';
-import CustomSpinner from './components/util/CustomSpinner';
+import {BrowserRouter, Navigate, Route, Router, Routes} from 'react-router-dom';
+import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
+import "./index.css"
+import RequireUnAuth from "./components/authentication/RequireUnAuth";
+import GetLayout from "./components/util/layout/GetLayout";
+import {ConfigProvider} from "antd";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
+const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
 
 const GetLocalsRoutes = () => {
     return (
         <Suspense fallback={<CustomSpinner />}>
             <Provider store={store}>
                 <Routes>
-                    <Route path={'/authenticate'} element={<LoginScreen />} />
-                    <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
+                    <Route path={"*"} element={<Navigate to={"/authenticate"}/>} />
+                    <Route element={<RequireUnAuth />}>
+                        <Route path={'/authenticate'} element={<LoginScreen />} />
+                        <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
+                    </Route>
                     <Route element={<RequireAuth />}>
-                        <Route path="/" element={<HomeScreen />} />
+                        <Route element={<GetLayout />}>
+                            <Route path="/business-admin/home" element={<HomeScreen />} />
+                            <Route path="/business-admin/menu-items" element={<MenuScreen />} />
+                        </Route>
                     </Route>
                 </Routes>
             </Provider>
@@ -29,7 +40,9 @@ const GetLocalsRoutes = () => {
 const RenderedApp = () => {
     return (
         <BrowserRouter>
-            <GetLocalsRoutes />
+            <ConfigProvider theme={{token: {fontFamily: 'Montserrat'}}}>
+                <GetLocalsRoutes />
+            </ConfigProvider>
         </BrowserRouter>
     );
 };

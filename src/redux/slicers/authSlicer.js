@@ -1,36 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    username: sessionStorage.getItem("username") || null,
+    name: sessionStorage.getItem("name") || null,
+    token: {
+        access: sessionStorage.getItem("access") || null,
+        refresh: sessionStorage.getItem("refresh") || null
+    }
+};
 
 const authSlice = createSlice({
-    name: "getLocalAuth",
-    initialState: { username: null, name:null, token: {access: null, refresh: null} },
+    name: "auth",
+    initialState,
     reducers: {
         setCredentials: (state, action) => {
-            // set the token and user name here
-            const token = {
-                access: action.payload.access,
-                refresh: action.payload.refresh,
-            };
-
-            const { username, name } = action.payload;
+            const { username, name, access, refresh } = action.payload;
 
             state.username = username;
-            state.token = token;
             state.name = name;
+            state.token.access = access;
+            state.token.refresh = refresh;
 
-            // set the token in localStorage
-            if(token) {
-                localStorage.setItem("access", token.access)
-                localStorage.setItem("refresh", token.refresh)
-            }
+            sessionStorage.setItem("username", username);
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("access", access);
+            sessionStorage.setItem("refresh", refresh);
         },
-        logOut: (state, action) => {
+        logOut: (state) => {
             state.username = null;
+            state.name = null;
             state.token.access = null;
             state.token.refresh = null;
-            state.name=''
-            localStorage.removeItem("access")
-            localStorage.removeItem("refresh")
+
+            sessionStorage.removeItem("username");
+            sessionStorage.removeItem("name");
+            sessionStorage.removeItem("access");
+            sessionStorage.removeItem("refresh");
         },
     },
 });
@@ -40,4 +45,3 @@ export const { setCredentials, logOut } = authSlice.actions;
 export default authSlice.reducer;
 
 export const selectUser = (state) => state.auth.username;
-export const selectToken = (state) => state.auth.token;

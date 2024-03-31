@@ -1,0 +1,34 @@
+.ant-tabs-tab {
+    color: black !important;
+}
+
+.ant-tabs-tab-active > .ant-tabs-tab-btn {
+    color: black !important;
+}
+
+input {
+    min-width: 50px !important;
+    max-width: 100px !important;
+    color: black !important;
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #a1a1a1 !important;
+    max-height: 30px !important;
+
+}
+
+.form-item-input {
+    min-width: 100px !important;
+    max-width: 500px !important;
+}
+
+.form-item-area {
+    max-width: 500px !important;
+}
+
+.item-card {
+    display: flex;
+    padding: 20px;
+    transition: all .2s ease-in-out;
+    overflow: hidden;
+}

@@ -28,7 +28,8 @@ module.exports = function (webpackEnv, { mode }) {
         },
         plugins: [
             new HTMLWebpackPlugin({
-                template: './src/GetLocalsFrontend.html'
+                template: './src/GetLocalsFrontend.html',
+                favicon: './src/favicon.ico'
             }),
             new webpack.DefinePlugin({
                 "process.env": {
@@ -56,6 +57,10 @@ module.exports = function (webpackEnv, { mode }) {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
+                {
+                    test: /\.(png|jpg)$/,
+                    type: "asset",
+                }
             ]
         },
         resolve: {
