@@ -112,9 +112,9 @@ export default function ({categoryId, editing = false}) {
                 }}
                 key={item.id}
                 actions={editing ? [
-                    <IconText icon={<FontAwesomeIcon icon={faEdit}/>} text="Edit" key={item.id + "edit"}
+                    <IconText icon={<FontAwesomeIcon icon={faEdit}/>} text="Edit" key={item.id}
                               callback={() => setupUpdateItem(item)}/>,
-                    <IconText icon={<FontAwesomeIcon icon={faTrash}/>} text={"Delete"} key={item.id + "delete"}
+                    <IconText icon={<FontAwesomeIcon icon={faTrash}/>} text={"Delete"} key={item.id}
                               callback={() => setDeleteItemId(item.id)}/>
                 ] : null}
                 extra={
@@ -181,7 +181,6 @@ export default function ({categoryId, editing = false}) {
             style={{
                 cursor: 'pointer'
             }}
-            loading={isDeletingItem}
             onClick={callback}>
             {icon}
             {text}
