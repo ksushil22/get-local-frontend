@@ -1,10 +1,14 @@
 import React from "react";
 import ModalPopup from "./ModalPopup";
+import {Typography} from "antd";
+
+const {Text} = Typography
 
 export default function ({
     visible,
     handleOk,
-    handleCancel
+    handleCancel,
+    children
 }) {
     return <ModalPopup
         visible={visible}
@@ -18,5 +22,7 @@ export default function ({
         disableScreenTouch={true}
     >
         <h2>Are you sure?</h2>
+        <Text type="danger">Deletion of the item is irreversible.</Text>
+        {children}
     </ModalPopup>
 }

@@ -2,18 +2,51 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {
     useCreateOrUpdateMenuItemMutation,
-    useDeleteBusinessItemCategoryMutation, useDeleteMenuItemMutation,
+    useDeleteBusinessItemCategoryMutation,
+    useDeleteMenuItemMutation,
     useGetMenuItemsQuery
 } from "../../redux/services/businessAPI";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import GetUpload from "../util/upload/GetUpload";
-import {Button, Form, Input, InputNumber, List, Space} from "antd";
-import {EditOutlined} from "@ant-design/icons";
+import {Badge, Button, Form, Input, List, Space} from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExclamation, faTrash} from "@fortawesome/free-solid-svg-icons";
 import DeleteConfirmationModal from "../util/modals/DeleteConfirmationModal";
+import "./businessMenu.css"
 
+const ListItemCard = ({item, cardMargin, IconText, setupUpdateItem, setDeleteItemId, editing}) => {
+    return <List.Item
+        className={"item-card"}
+        style={{
+            marginRight: cardMargin,
+            marginLeft: cardMargin
+        }}
+        colStyle={{
+            border: '1px solid red'
+        }}
+        key={item.id}
+        actions={editing ? [
+            <IconText icon={<FontAwesomeIcon icon={faEdit}/>} text="Edit" key={item.id}
+                      callback={() => setupUpdateItem(item)}/>,
+            <IconText icon={<FontAwesomeIcon icon={faTrash}/>} text={"Delete"} key={item.id}
+                      callback={() => setDeleteItemId(item.id)}/>
+        ] : null}
+        extra={
+            <img
+                width={100}
+                alt={item.image?.name}
+                src={item.image?.url}
+            />
+        }
+    >
+        <List.Item.Meta
+            title={item.displayName}
+            description={item.ingredients}
+        />
+        <p>{item.description}</p>
+    </List.Item>
+}
 
 export default function ({categoryId, editing = false}) {
     const [uploadedImageId, setUploadedImageId] = useState('');
@@ -104,34 +137,14 @@ export default function ({categoryId, editing = false}) {
         size="large"
         dataSource={items}
         renderItem={(item) => (
-            <List.Item
-                className={"item-card"}
-                style={{
-                    marginRight: cardMargin,
-                    marginLeft: cardMargin
-                }}
-                key={item.id}
-                actions={editing ? [
-                    <IconText icon={<FontAwesomeIcon icon={faEdit}/>} text="Edit" key={item.id}
-                              callback={() => setupUpdateItem(item)}/>,
-                    <IconText icon={<FontAwesomeIcon icon={faTrash}/>} text={"Delete"} key={item.id}
-                              callback={() => setDeleteItemId(item.id)}/>
-                ] : null}
-                extra={
-                    <img
-                        width={100}
-                        alt={item.image?.name}
-                        src={item.image?.url}
-                    />
-                }
-            >
-                <List.Item.Meta
-                    title={item.displayName}
-                    description={item.ingredients}
-                />
-                <p>{item.description}</p>
-            </List.Item>
-        )}
+                <ListItemCard
+                    item={item}
+                    cardMargin={cardMargin}
+                    IconText={IconText}
+                    setupUpdateItem={setupUpdateItem}
+                    setDeleteItemId={setDeleteItemId}
+                    editing={editing}
+                />)}
         locale={{
             emptyText: <>
                 <FontAwesomeIcon icon={faExclamation} size={"5x"}/>
@@ -239,7 +252,7 @@ const menuStyles = {
         float: 'right',
         width: '150px',
         height: '50px',
-        background: '#f54242',
+        background: 'var(--primary-warning)',
         color: 'white',
         borderRadius: '5px',
         border: 'none',

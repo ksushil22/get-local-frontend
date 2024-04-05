@@ -32,7 +32,7 @@ function ModalPopup(
             icon = <CheckCircleOutlined style={{ color: 'green' }} />;
             break;
         case "warning":
-            icon = <ExclamationCircleOutlined style={{ color: 'red' }} />;
+            icon = <ExclamationCircleOutlined style={{ color: 'var(--primary-warning)' }} />;
             break;
         default:
             icon = <InfoCircleOutlined style={{ color: 'var(--primary-color)' }} />;
@@ -41,12 +41,19 @@ function ModalPopup(
     const customFooter = (handleOk || handleCancel || footer) ? (
         <div>
             {footer}
-            {handleCancel && showCancel ? <Button type={"text"} onClick={handleCancel}>
-                Cancel
-            </Button>: null}
-            {handleOk ? <Button type={"default"} onClick={handleOk}>
-                {submitButtonText ? submitButtonText : 'Submit'}
-            </Button> : null}
+            {handleCancel && showCancel ?
+                <Button type={"text"} onClick={handleCancel}>
+                    Cancel
+                </Button>: null}
+            {handleOk ?
+                <Button type={"default"}
+                        style={{
+                            backgroundColor: type  === "warning" ? "var(--primary-warning)" : "white",
+                            color: type === "warning" ? "white" : "black"
+                        }}
+                        onClick={handleOk}>
+                    {submitButtonText ? submitButtonText : 'Submit'}
+                 </Button> : null}
 
         </div>
     ): null
