@@ -7,13 +7,14 @@ import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
-import GetLayout from "./components/util/layout/GetLayout";
+import GetLayout from "./components/layout/GetLayout";
 import {ConfigProvider} from "antd";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
 const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
+const ReviewScreen = lazy(async () => import('./screens/ReviewScreen'));
 
 const GetLocalsRoutes = () => {
     return (
@@ -27,8 +28,11 @@ const GetLocalsRoutes = () => {
                     </Route>
                     <Route element={<RequireAuth />}>
                         <Route element={<GetLayout />}>
-                            <Route path="/business-admin/home" element={<HomeScreen />} />
-                            <Route path="/business-admin/menu-items" element={<MenuScreen />} />
+                            <Route path={"/business-admin/"}>
+                                <Route path="home/" element={<HomeScreen />} />
+                                <Route path="menu-items/" element={<MenuScreen />} />
+                                <Route path="reviews/" element={<ReviewScreen />} />
+                            </Route>
                         </Route>
                     </Route>
                 </Routes>

@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {
     useCreateOrUpdateMenuItemMutation,
-    useDeleteBusinessItemCategoryMutation, useDeleteMenuItemMutation,
+    useDeleteBusinessItemCategoryMutation,
+    useDeleteMenuItemMutation,
     useGetMenuItemsQuery
 } from "../../redux/services/businessAPI";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import GetUpload from "../util/upload/GetUpload";
-import {Button, Form, Input, InputNumber, List, Space} from "antd";
-import {EditOutlined} from "@ant-design/icons";
+import {Button, Form, Image, Input, List, Space} from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExclamation, faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -55,6 +55,7 @@ export default function ({categoryId, editing = false}) {
             rules={rules}
             name={"imageId"}>
             <GetUpload
+                accept="image/png, image/jpeg"
                 updateInitialList={true}
                 maxUploads={1}
                 setUploadImageId={setUploadedImageId}
@@ -118,8 +119,8 @@ export default function ({categoryId, editing = false}) {
                               callback={() => setDeleteItemId(item.id)}/>
                 ] : null}
                 extra={
-                    <img
-                        width={100}
+                    <Image
+                        style={{width: 200}}
                         alt={item.image?.name}
                         src={item.image?.url}
                     />
