@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {Image, Menu} from "antd";
-import {AppstoreOutlined, MailOutlined, SettingOutlined} from "@ant-design/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faBookOpen, faHouseUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faBookOpen, faFaceSmile, faHouseUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logOut} from "../../../redux/slicers/authSlicer";
@@ -28,9 +27,9 @@ export default function () {
             icon: <FontAwesomeIcon icon={faBookOpen} />,
         },
         {
-            label: (<Link to={'/business-admin/review'}>Review</Link>),
-            key: 'review',
-            icon: <FontAwesomeIcon icon={faBookOpen} />,
+            label: (<Link to={'/business-admin/reviews'}>Reviews</Link> ),
+            key: 'reviews',
+            icon: <FontAwesomeIcon icon={faFaceSmile} />
         },
         {
             label: (
@@ -60,7 +59,7 @@ export default function () {
                 }}
                 onClick={() => navigate('/business-admin/home')}
                 preview={false}
-                src={require('../../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
+                src={require('../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
             <Menu
                 selectedKeys={[activeNavigationMenu]}
                 theme={'light'}

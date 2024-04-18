@@ -7,7 +7,7 @@ import CustomSpinner from './components/util/customSpinner/CustomSpinner';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
-import GetLayout from "./components/util/layout/GetLayout";
+import GetLayout from "./components/layout/GetLayout";
 import {ConfigProvider} from "antd";
 import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
 
@@ -30,9 +30,9 @@ const GetLocalsRoutes = () => {
                     <Route element={<RequireAuth />}>
                         <Route element={<GetLayout />}>
                             <Route path={"/business-admin/"}>
-                                <Route path="home" element={<HomeScreen />} />
-                                <Route path="menu-items" element={<MenuScreen />} />
-                                <Route path="review" element={<ReviewScreen />} />
+                                <Route path="home/" element={<HomeScreen />} />
+                                <Route path="menu-items/" element={<MenuScreen />} />
+                                <Route path="reviews/" element={<ReviewScreen />} />
                             </Route>
                         </Route>
                     </Route>

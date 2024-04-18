@@ -8,7 +8,7 @@ import {
 } from "../../redux/services/businessAPI";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import GetUpload from "../util/upload/GetUpload";
-import {Badge, Button, Form, Input, List, Space} from "antd";
+import {Badge, Button, Image, Form, Input, List, Space} from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExclamation, faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -88,6 +88,7 @@ export default function ({categoryId, editing = false}) {
             rules={rules}
             name={"imageId"}>
             <GetUpload
+                accept="image/png, image/jpeg"
                 updateInitialList={true}
                 maxUploads={1}
                 setUploadImageId={setUploadedImageId}
