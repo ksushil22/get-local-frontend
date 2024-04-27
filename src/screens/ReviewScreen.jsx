@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {ActiveNavigationMenuContext} from "../context/ActiveNavigationProvider";
 import {NAVIGATION_ROUTES} from "../components/util/Constants";
+import BusinessReview from "../components/businessReview/BusinessReview";
 
 export default function () {
 
@@ -9,5 +10,7 @@ export default function () {
     useEffect(() => {
         updateActiveNavigationMenu(NAVIGATION_ROUTES.get(2))
     }, []);
+
+    return <BusinessReview />
 
 }

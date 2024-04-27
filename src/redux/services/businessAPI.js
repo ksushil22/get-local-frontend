@@ -104,6 +104,12 @@ export const businessAPI = rootAPI.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: ['menu-items']
+        }),
+        getBusinessReviews: builder.query({
+            query:({businessId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/reviews/`,
+                method: 'GET'
+            })
         })
     })
 });
@@ -121,5 +127,6 @@ export const {
     useDeleteBusinessItemCategoryMutation,
     useGetMenuItemsQuery,
     useCreateOrUpdateMenuItemMutation,
-    useDeleteMenuItemMutation
+    useDeleteMenuItemMutation,
+    useGetBusinessReviewsQuery
 } = businessAPI

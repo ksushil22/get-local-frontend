@@ -8,6 +8,7 @@ import {useLazyGetBusinessQuery} from "../../redux/services/businessAPI";
 import GetUpload from "../util/upload/GetUpload";
 import CustomPopover from "../util/CustomPopover";
 import BusinessSelector from "../util/BusinessSelector";
+import BusinessHeading from "../util/BusinessHeading";
 
 export default function Home() {
     const {data: userProfileData, isLoading} = useUserProfileQuery();
@@ -27,15 +28,7 @@ export default function Home() {
 
     return (
         <Row>
-            <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                <div>
-                    <BusinessSelector />
-                </div>
-
-                <div>
-                    <h1 style={homeStyle.heading}>Welcome {user ? user.name.split(' ')[0] : ''}!</h1>
-                </div>
-            </div>
+            <BusinessHeading heading={`Welcome ${user ? user.name.split(' ')[0] : ''} !`} />
             <AboutUs aboutUs={businessData?.aboutUs} isLoading={loadingBusinessData}/>
             <div style={{
                 width: '100%'

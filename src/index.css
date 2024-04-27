@@ -123,3 +123,7 @@ input{
     display: none;
 }
 
+.ant-image-preview-operations-operation {
+    display: none;
+}
+
