@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {Upload} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+import {Typography, Upload} from "antd";
 import ModalPopup from "../modals/ModalPopup";
 import "./upload.css";
 import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../customSpinner/CustomSpinner";
-import ImgCrop from 'antd-img-crop';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
+
+const {Text} = Typography;
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -32,15 +32,15 @@ const getBase64 = (file) =>
  * @returns {JSX.Element}
  */
 export default function ({
-     style = {},
-     maxUploads = 1,
-     setUploadImageId = null,
-     accept = '',
-     type = "MENU",
-     listType = 'picture-card',
-     initialFileList = null,
-     updateInitialList = false
-}) {
+                             style = {},
+                             maxUploads = 1,
+                             setUploadImageId = null,
+                             accept = '',
+                             type = "MENU",
+                             listType = 'picture-card',
+                             initialFileList = null,
+                             updateInitialList = false
+                         }) {
     const businessId = useSelector((state) => state.business.businessId)
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -173,6 +173,7 @@ export default function ({
                     }}
                     src={previewImage}
                 />
+                {deleteFile && (<Text type="danger">Deletion of the item is irreversible.</Text>)}
             </ModalPopup>
         </div>
     );

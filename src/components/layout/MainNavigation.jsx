@@ -1,18 +1,17 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Image, Menu} from "antd";
-import {AppstoreOutlined, MailOutlined, SettingOutlined} from "@ant-design/icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faBookOpen, faHouseUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faBookOpen, faFaceSmile, faHouseUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {logOut} from "../../../redux/slicers/authSlicer";
-import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import {ActiveNavigationMenuContext} from "../../context/ActiveNavigationProvider";
+import {logOut} from "../../redux/slicers/authSlicer";
 
 
 export default function () {
-    const [current, setCurrent] = useState('mail');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { updateActiveNavigationMenu, activeNavigationMenu } = useContext(ActiveNavigationMenuContext);
 
     const items = [
         {
@@ -24,6 +23,11 @@ export default function () {
             label: (<Link to={'/business-admin/menu-items'}>Menu</Link>),
             key: 'menu',
             icon: <FontAwesomeIcon icon={faBookOpen} />,
+        },
+        {
+            label: (<Link to={'/business-admin/reviews'}>Reviews</Link> ),
+            key: 'reviews',
+            icon: <FontAwesomeIcon icon={faFaceSmile} />
         },
         {
             label: (
@@ -53,8 +57,9 @@ export default function () {
                 }}
                 onClick={() => navigate('/business-admin/home')}
                 preview={false}
-                src={require('../../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
+                src={require('../../assets/img/GetLocals-logos/GetLocals-logos_transparent.png')}/>
             <Menu
+                selectedKeys={[activeNavigationMenu]}
                 theme={'light'}
                 style={{
                     flex:1,
@@ -68,6 +73,7 @@ export default function () {
                 items={items}
                 overflowedIndicator={(<FontAwesomeIcon icon={faBars} color={'#fff'}/>)}
                 overflowed={1}
+                onClick={(item) => updateActiveNavigationMenu(item.key)}
             />
         </div>
     );

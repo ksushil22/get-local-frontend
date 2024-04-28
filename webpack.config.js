@@ -43,7 +43,7 @@ module.exports = function (webpackEnv, { mode }) {
         module: {
             rules: [
                 {
-                    test: /.(js|jsx)$/,
+                    test: /.(js|jsx|ts|tsx)$/,
                     exclude: /node_modules/,
                     use: {
                         loader: "babel-loader",
@@ -64,7 +64,7 @@ module.exports = function (webpackEnv, { mode }) {
             ]
         },
         resolve: {
-            extensions: ['.js', '.jsx']
+            extensions: ['.js', '.jsx', '.ts', '.tsx']
         },
         devServer: {
             historyApiFallback:true

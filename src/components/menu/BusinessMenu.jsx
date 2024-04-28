@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateBusinessItemCategoryMutation, useGetBusinessItemCategoriesQuery } from "../../redux/services/businessAPI";
 import CustomSpinner, { DISPLAY_TYPES_ENUM } from "../util/customSpinner/CustomSpinner";
-import BusinessSelector from "../util/BusinessSelector";
 import { Button, Form, Input, Row, Tabs } from "antd";
 import './businessMenu.css'
+import BusinessHeading from "../util/BusinessHeading";
 
 // Lazy load components for each tab
 const LazyTabContent = React.lazy(() => import('./MenuList'));
@@ -90,14 +90,7 @@ export default function BusinessMenu({editing}) {
 
     return (
         <Row>
-            <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
-                <div>
-                    <BusinessSelector />
-                </div>
-                <div>
-                    <h1 style={businessMenuStyles.heading}>Menu Items</h1>
-                </div>
-            </div>
+            <BusinessHeading heading={"Menu Items"} />
             <div style={{ width: '100%', marginTop: 20 }}>
                 <Tabs
                     onChange={onChange}
@@ -108,14 +101,4 @@ export default function BusinessMenu({editing}) {
             </div>
         </Row>
     );
-}
-
-const businessMenuStyles = {
-    heading: {
-        fontWeight: 'bolder',
-        fontSize: '2.5em',
-        paddingLeft: '30px',
-        color: '#605f5f',
-        margin: 0
-    }
 }

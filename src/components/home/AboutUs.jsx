@@ -48,7 +48,7 @@ export default function ({aboutUs, isLoading=true}) {
 
     return (
         <div style={{width: "100%"}}>
-            <p style={AboutUsStyle.headings}>About the business <CustomPopover content={"We believe there is a story about every business. Let people know about your passion."}/></p>
+            <p style={AboutUsStyle.headings}>About the business <CustomPopover content={"We believe there is a story behind every business. Let people know about your passion."}/></p>
             <div style={{marginTop: 15}}>
                 <Form
                     className={"about-us-form"}
