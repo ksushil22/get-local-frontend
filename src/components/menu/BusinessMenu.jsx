@@ -66,7 +66,7 @@ export default function BusinessMenu({editing}) {
     const getCreateCategoriesForm = (
         <Form onFinish={createCategory} form={form} layout={"inline"}>
             <Form.Item name={"category"}>
-                <Input placeholder={"Category"} />
+                <Input rootClassName={"input-menu"} placeholder={"Category"} />
             </Form.Item>
             <Form.Item>
                 <Button

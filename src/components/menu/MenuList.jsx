@@ -98,7 +98,7 @@ export default function ({categoryId, editing = false}) {
         <Form.Item
             name={"name"}
             rules={rules}>
-            <Input autoComplete={"off"} rootClassName={'form-item-input'} placeholder={"Item Name"}/>
+            <Input autoComplete={"off"} rootClassName={'form-item-input input-menu'} placeholder={"Item Name"}/>
         </Form.Item>
         <Form.Item
             name={"price"}
@@ -107,14 +107,14 @@ export default function ({categoryId, editing = false}) {
                     pattern: /^[0-9]+(?:\.[0-9]+)?$/,
                     message: 'Please enter a valid number!',
                 }]}>
-            <Input autoComplete={"off"} rootClassName={'form-item-input'} placeholder={"Item's Price"}/>
+            <Input autoComplete={"off"} rootClassName={'form-item-input input-menu'} placeholder={"Item's Price"}/>
         </Form.Item>
         <Form.Item
             name={"ingredients"}>
-            <Input autoComplete={"off"} rootClassName={'form-item-input'} placeholder={"Item's Ingredients"}/>
+            <Input autoComplete={"off"} rootClassName={'form-item-input input-menu'} placeholder={"Item's Ingredients"}/>
         </Form.Item>
         <Form.Item name={'description'}>
-            <Input autoComplete={"off"} rootClassName={'form-item-input'} placeholder={"Item's Description"}/>
+            <Input autoComplete={"off"} rootClassName={'form-item-input input-menu'} placeholder={"Item's Description"}/>
 
         </Form.Item>
         <Form.Item>

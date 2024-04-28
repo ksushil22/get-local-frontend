@@ -6,7 +6,7 @@
     color: black !important;
 }
 
-input {
+.input-menu {
     min-width: 50px !important;
     max-width: 100px !important;
     color: black !important;
