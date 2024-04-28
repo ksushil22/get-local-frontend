@@ -33,10 +33,11 @@ const ListItemCard = ({item, cardMargin, IconText, setupUpdateItem, setDeleteIte
                       callback={() => setDeleteItemId(item.id)}/>
         ] : null}
         extra={
-            <img
-                width={100}
+            <Image
+                width={200}
                 alt={item.image?.name}
                 src={item.image?.url}
+                loading={"lazy"}
             />
         }
     >

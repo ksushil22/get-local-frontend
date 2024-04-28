@@ -3,13 +3,14 @@ import BusinessHeading from "../util/BusinessHeading";
 import {useGetBusinessReviewsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
-import {Image, List, Row} from "antd";
+import {Image, List, Row, Space} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {faExclamation, faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {GET_BUSINESS} from "../../redux/api_url";
 import "./businessReview.css"
 import GetRating from "../util/GetRating";
+import CustomPopover from "../util/CustomPopover";
 
 const BASE_URL = process.env.BASE_API_URL;
 
@@ -66,6 +67,33 @@ const ReviewCards = ({item, businessId}) => {
         colStyle={{
             border: '1px solid red'
         }}
+        actions={[
+            <Space
+                style={{
+                    cursor: 'pointer'
+                }}
+                title={item.email}
+                onClick={() => {
+                    window.location.href = `mailto:${item.email}`
+                }}>
+                <FontAwesomeIcon icon={faReply} /> Reply
+            </Space>,
+            <Space
+                title={item.phone}
+                style={{
+                    cursor: item.phone ? 'pointer' : 'not-allowed'
+                }}
+                onClick={() => {
+                    if (item.phone) {
+                        window.location.href = `tel:${item.phone}`
+                    }
+                }}>
+                <FontAwesomeIcon icon={faPhone}  /> Call
+            </Space>,
+            <Space>
+                {item.date}
+            </Space>
+        ]}
         extra={
         <div>
             <Image
@@ -75,6 +103,7 @@ const ReviewCards = ({item, businessId}) => {
                 style={{
                     borderRadius: '5px'
                 }}
+                loading={"lazy"}
             />
         </div>
 
@@ -82,12 +111,7 @@ const ReviewCards = ({item, businessId}) => {
         key={item.id}
     >
         <List.Item.Meta
-            title={<p style={{
-                margin: 0,
-                fontWeight: 'bolder',
-                fontSize: 'x-large',
-                color: 'gray'
-            }}>{item.fullName}</p>}
+            title={item.fullName}
             description={
                 <GetRating readOnly={true} initialRating={item.rating} onSelect={() => {}}/>}
         />
