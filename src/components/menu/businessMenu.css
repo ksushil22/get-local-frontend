@@ -32,3 +32,12 @@ input {
     transition: all .2s ease-in-out;
     overflow: hidden;
 }
+
+.custom-badge {
+    background: none;
+}
+
+.custom-badge > .ant-ribbon-corner {
+    color: white;
+    filter: none;
+}

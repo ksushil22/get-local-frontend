@@ -9,6 +9,7 @@ import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
 import GetLayout from "./components/layout/GetLayout";
 import {ConfigProvider} from "antd";
+import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -44,9 +45,11 @@ const GetLocalsRoutes = () => {
 const RenderedApp = () => {
     return (
         <BrowserRouter>
-            <ConfigProvider theme={{token: {fontFamily: 'Montserrat'}}}>
-                <GetLocalsRoutes />
-            </ConfigProvider>
+            <ActiveNavigationMenuProvider>
+                <ConfigProvider theme={{token: {fontFamily: 'Montserrat'}}}>
+                    <GetLocalsRoutes />
+                </ConfigProvider>
+            </ActiveNavigationMenuProvider>
         </BrowserRouter>
     );
 };

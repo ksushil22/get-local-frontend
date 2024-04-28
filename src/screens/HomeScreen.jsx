@@ -1,10 +1,15 @@
-import React from "react";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {logOut} from "../redux/slicers/authSlicer";
+import React, {useContext, useEffect} from "react";
 import Home from "../components/home/Home";
+import {ActiveNavigationMenuContext} from "../context/ActiveNavigationProvider";
+import {NAVIGATION_ROUTES} from "../components/util/Constants";
 
 export default function () {
+
+    const {updateActiveNavigationMenu} = useContext(ActiveNavigationMenuContext);
+
+    useEffect(() => {
+        updateActiveNavigationMenu(NAVIGATION_ROUTES.get(0))
+    }, []);
 
     return <Home />
 }

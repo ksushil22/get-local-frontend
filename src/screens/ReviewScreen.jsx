@@ -1,5 +1,16 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import {ActiveNavigationMenuContext} from "../context/ActiveNavigationProvider";
+import {NAVIGATION_ROUTES} from "../components/util/Constants";
+import BusinessReview from "../components/businessReview/BusinessReview";
 
 export default function () {
-    return <>ehy</>
+
+    const {updateActiveNavigationMenu} = useContext(ActiveNavigationMenuContext);
+
+    useEffect(() => {
+        updateActiveNavigationMenu(NAVIGATION_ROUTES.get(2))
+    }, []);
+
+    return <BusinessReview />
+
 }

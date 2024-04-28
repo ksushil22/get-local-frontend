@@ -8,6 +8,7 @@
 :root {
     --primary-color: #614044;
     --primary-background: #dedede;
+    --primary-warning: #f54242
 }
 
 html, body {
@@ -111,3 +112,18 @@ input{
     font-weight: 500 !important;
     font-size: 16px !important;
 }
+
+.no-visible-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.no-visible-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.ant-image-preview-operations-operation {
+    display: none;
+}
+
