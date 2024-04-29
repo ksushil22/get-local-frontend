@@ -59,7 +59,7 @@ body {
     transition: box-shadow .5s ease-in-out;
 }
 
-.hover-input input {
+.hover-input .authentication {
     border-radius: 10px !important;
     border-color: #ece7e2 !important;
 }
@@ -78,7 +78,7 @@ body {
     border-radius: 10px !important;
 }
 
-input{
+.authentication {
     height: 58px !important;
     color: #ece7e2 !important;
     min-width: 350px !important;

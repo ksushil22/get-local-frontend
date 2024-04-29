@@ -9,6 +9,7 @@ import GetUpload from "../util/upload/GetUpload";
 import CustomPopover from "../util/CustomPopover";
 import BusinessSelector from "../util/BusinessSelector";
 import BusinessHeading from "../util/BusinessHeading";
+import Timings from "./Timings";
 
 export default function Home() {
     const {data: userProfileData, isLoading} = useUserProfileQuery();
@@ -43,6 +44,7 @@ export default function Home() {
                     maxUploads={3}
                     accept="image/png, image/jpeg"/>
             </div>
+            <Timings />
         </Row>
     );
 }
