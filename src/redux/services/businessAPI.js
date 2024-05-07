@@ -110,6 +110,18 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${GET_BUSINESS}${businessId}/reviews/`,
                 method: 'GET'
             })
+        }),
+        getBusinessTimings: builder.query({
+            query:({businessId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timings/`,
+                method: 'GET'
+            })
+        }),
+        updateBusinessTimings: builder.mutation({
+            query: () => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timing/`,
+                method: 'PUT'
+            })
         })
     })
 });
@@ -128,5 +140,7 @@ export const {
     useGetMenuItemsQuery,
     useCreateOrUpdateMenuItemMutation,
     useDeleteMenuItemMutation,
-    useGetBusinessReviewsQuery
+    useGetBusinessReviewsQuery,
+    useGetBusinessTimingsQuery,
+    useUpdateBusinessTimingsMutation
 } = businessAPI

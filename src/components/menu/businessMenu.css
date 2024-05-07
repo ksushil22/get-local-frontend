@@ -17,6 +17,11 @@
 
 }
 
+.input-menu:focus {
+    border: none;
+    box-shadow: none;
+}
+
 .form-item-input {
     min-width: 100px !important;
     max-width: 500px !important;
@@ -40,4 +45,8 @@
 .custom-badge > .ant-ribbon-corner {
     color: white;
     filter: none;
+}
+
+.item-tab > div .ant-tabs-ink-bar {
+    background: var(--primary-color) !important;
 }
