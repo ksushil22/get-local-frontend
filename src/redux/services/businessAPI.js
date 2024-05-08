@@ -118,9 +118,10 @@ export const businessAPI = rootAPI.injectEndpoints({
             })
         }),
         updateBusinessTimings: builder.mutation({
-            query: () => ({
+            query: ({businessId, timings}) => ({
                 url: `${BASE_URL}${GET_BUSINESS}${businessId}/timing/`,
-                method: 'PUT'
+                method: 'PUT',
+                body: timings
             })
         })
     })

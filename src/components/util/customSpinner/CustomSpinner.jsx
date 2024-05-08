@@ -33,7 +33,7 @@ export default function ({
             <Skeleton active={true}
                       paragraph={{
                           rows: skeletonRows,
-                      }} style={{marginLeft: 30, marginRight: 30}}/>
+                      }}/>
         )
     ;
     return (

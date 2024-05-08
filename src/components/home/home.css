@@ -39,11 +39,34 @@
     display: none;
 }
 
-.time-picker-timing:focus-within{
+.ant-picker-focused,
+.ant-picker-focused:focus-within{
     border: 1px solid var(--primary-color) !important;
-    box-shadow: 0 0 2px ;
+    box-shadow: 0 0 5px ;
 }
 
 .time-switch.ant-switch-checked {
     background: var(--primary-color) !important;
+}
+
+.time-picker-timing > div .ant-picker-ok > .ant-btn {
+    width: 5.2em;
+    border-radius: 5px;
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color)
+}
+
+.time-picker-timing > div .ant-picker-ok > .ant-btn:hover {
+    background: var(--primary-color);
+    filter: brightness(80%);
+}
+
+.time-picker-timing > div .ant-picker-time-panel-cell.ant-picker-time-panel-cell-selected {
+    border-radius: 2px !important;
+}
+
+.time-picker-timing > div .ant-picker-time-panel-cell.ant-picker-time-panel-cell-selected > .ant-picker-time-panel-cell-inner {
+    color: var(--primary-background) !important;
+    background: var(--primary-color) !important;
+    filter: brightness(220%) !important;
 }

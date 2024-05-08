@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Form, Switch, TimePicker} from "antd";
 import dayjs from "dayjs"
-import {useGetBusinessTimingsQuery} from "../../redux/services/businessAPI";
+import {useGetBusinessTimingsQuery, useUpdateBusinessTimingsMutation} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import "./home.css"
@@ -9,6 +9,7 @@ import "./home.css"
 const TimingsForm = () => {
 
     const businessId = useSelector(state => state.business.businessId)
+    const [updateTiming, {isLoading: updatingTiming}] = useUpdateBusinessTimingsMutation()
     const [currentData, setCurrentData] = useState({
         'monday': null,
         'tuesday': null,
@@ -32,7 +33,15 @@ const TimingsForm = () => {
         if (businessTimings) {
             const data = {};
             for (const [key, value] of Object.entries(businessTimings)) {
-                data[key] = value.split("-").map(timeString => dayjs(timeString, 'hh:mm A'))
+                if (value){
+                    if (value === "CLOSED") {
+                        data[key] = null;
+                    } else{
+                        data[key] = value.split("-").map(timeString => dayjs(timeString, 'hh:mm A'));
+                    }
+                } else {
+                    data[key] = defaultTimingString.split("-").map(timeString => dayjs(timeString, 'hh:mm A'));
+                }
             }
             setCurrentData(data)
         }
@@ -62,26 +71,34 @@ const TimingsForm = () => {
     }
 
     const handleSubmitTime = () => {
-        const dto = {};
+        const updatedTiming = {};
+        let proceed = true;
 
         for (const [key, value] of Object.entries(currentData)) {
             if (value) {
-                dto[key] = handleGetFormattedTime(value);
+                updatedTiming[key] = handleGetFormattedTime(value);
             } else {
                 if (!key.includes("switch")) {
                     if (form.getFieldValue`${key}_switch`) {
+                        proceed = false;
                         form.setFields([{
                             name: key,
                             errors: ["Please select a time range"]
                         }]);
                     } else{
-                        dto[key] = 'CLOSED'
+                        updatedTiming[key] = 'CLOSED'
                     }
                 }
             }
         }
+        if (proceed) {
+            updateTiming({
+                businessId: businessId,
+                timings: updatedTiming
+            })
+        }
 
-        console.log(dto);
+        console.log(updatedTiming);
     };
 
     const handleGetFormattedTime = (value) => {
@@ -117,21 +134,19 @@ const TimingsForm = () => {
                                 style={{ marginBottom: 0 }}
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', float: 'right'}}>
-                                    <div>
-                                        <TimePicker.RangePicker
-                                            rootClassName={'time-picker-timing'}
-                                            style={{ marginRight: 10 }}
-                                            use12Hours
-                                            format="h:mm A"
-                                            value={currentData[day]}
-                                            defaultValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
-                                            disabled={currentData[day] === null}
-                                            onChange={(data) => setCurrentData({
-                                                ...currentData,
-                                                [day]: data
-                                            })}
-                                        />
-                                    </div>
+                                    <TimePicker.RangePicker
+                                        rootClassName={'time-picker-timing'}
+                                        style={{ marginRight: 10 }}
+                                        use12Hours
+                                        format="h:mm A"
+                                        value={currentData[day]}
+                                        defaultValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
+                                        disabled={currentData[day] === null}
+                                        onChange={(data) => setCurrentData({
+                                            ...currentData,
+                                            [day]: data
+                                        })}
+                                    />
                                     <Form.Item
                                         style={{ marginBottom: 0 }}
                                         name={`${day}_switch`}
@@ -159,7 +174,15 @@ const TimingsForm = () => {
                         </div>
                     ))}
                     <Form.Item>
-                        <Button htmlType="submit">Submit</Button>
+                        <Button
+                            style={{
+                                background: 'var(--primary-color)',
+                                filter: 'brightness(110%)',
+                                color: 'var(--primary-background)',
+                                width: 150,
+                                border: '1px solid var(--primary-color)'
+                            }}
+                            htmlType="submit" loading={updatingTiming}>Update</Button>
                     </Form.Item>
                 </Form>
 
