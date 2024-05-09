@@ -67,6 +67,5 @@
 
 .time-picker-timing > div .ant-picker-time-panel-cell.ant-picker-time-panel-cell-selected > .ant-picker-time-panel-cell-inner {
     color: var(--primary-background) !important;
-    background: var(--primary-color) !important;
-    filter: brightness(220%) !important;
+    background: gray !important;
 }

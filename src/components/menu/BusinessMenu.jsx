@@ -119,8 +119,12 @@ export default function BusinessMenu({editing}) {
                             marginTop: 20
                         }}>
                             <Empty
-                                description={'No category created...'}
-                                image={<FontAwesomeIcon icon={faExclamation} size={"5x"} color={"gray"}/>}
+                                style={{
+                                }}
+                                description={<p style={{
+                                    color: "rgba(0, 0, 0, 0.25)"
+                                }}>No category created...</p>}
+                                image={<FontAwesomeIcon icon={faExclamation} color={"rgba(0, 0, 0, 0.25)"}/>}
                             />
                         </div>
                     </div>
