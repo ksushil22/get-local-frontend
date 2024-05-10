@@ -69,3 +69,21 @@
     color: var(--primary-background) !important;
     background: gray !important;
 }
+
+.timing-select > .ant-select-selector {
+    border: 1px solid var(--primary-color) !important;
+}
+/**/
+.timing-select > div .ant-select-item-option-selected > .ant-select-item-option-content {
+    background: transparent;
+    color: var(--primary-background);
+    font-weight: normal;
+}
+
+.timing-select > div .ant-select-item-option-selected {
+    background: gray !important;
+}
+
+.timing-select > div .ant-select-selection-item {
+    color: black !important;
+}

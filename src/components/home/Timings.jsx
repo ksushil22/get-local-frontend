@@ -1,10 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {Button, Form, Switch, TimePicker} from "antd";
+import {Button, Form, Select, Switch, TimePicker} from "antd";
 import dayjs from "dayjs"
-import {useGetBusinessTimingsQuery, useUpdateBusinessTimingsMutation} from "../../redux/services/businessAPI";
+import {
+    useGetBusinessOperationStatusQuery,
+    useGetBusinessTimingsQuery, useUpdateBusinessOperationStatusMutation,
+    useUpdateBusinessTimingsMutation
+} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import "./home.css"
+import CustomPopover from "../util/CustomPopover";
 
 const TimingsForm = () => {
 
@@ -26,17 +31,31 @@ const TimingsForm = () => {
         data: businessTimings,
         isLoading: isLoadingBusinessTimings,
         refetch: refetchTimings
-    } = useGetBusinessTimingsQuery({businessId}, {skip: businessId === null})
-    const [form] = Form.useForm();
+    } = useGetBusinessTimingsQuery({businessId}, {skip: businessId === null});
 
+    const {
+        data: businessOperationStatus,
+        isLoading: loadingBusinessOperationStatus,
+        refetch: refetchOperationStatus
+    } = useGetBusinessOperationStatusQuery({
+        businessId: businessId,
+        tomorrow: true
+    }, {skip: businessId === null});
+
+    const[
+        updateBusinessOperationStatus,
+        {isLoading: updatingBusinessOperationStatus}
+    ] =     useUpdateBusinessOperationStatusMutation()
+
+    const [form] = Form.useForm();
     useEffect(() => {
         if (businessTimings) {
             const data = {};
             for (const [key, value] of Object.entries(businessTimings)) {
-                if (value){
+                if (value) {
                     if (value === "CLOSED") {
                         data[key] = null;
-                    } else{
+                    } else {
                         data[key] = value.split("-").map(timeString => dayjs(timeString, 'hh:mm A'));
                     }
                 } else {
@@ -48,12 +67,9 @@ const TimingsForm = () => {
     }, [businessTimings])
 
     useEffect(() => {
-        console.log(currentData)
-    }, [currentData])
-
-    useEffect(() => {
         if (businessId) {
             refetchTimings()
+            refetchOperationStatus();
         }
     }, [businessId])
 
@@ -85,7 +101,7 @@ const TimingsForm = () => {
                             name: key,
                             errors: ["Please select a time range"]
                         }]);
-                    } else{
+                    } else {
                         updatedTiming[key] = 'CLOSED'
                     }
                 }
@@ -117,76 +133,102 @@ const TimingsForm = () => {
     };
 
     return (
-        isLoadingBusinessTimings ?
+        (isLoadingBusinessTimings) ?
             <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY_TYPES_ENUM.AREA}/> :
             (
-                <Form
-                    style={{ marginLeft: 20 }}
-                    form={form}
-                    onFinish={handleSubmitTime}
-                >
-                    {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => (
-                        <div key={day} style={{ marginBottom: 10 }}>
-                            <Form.Item
-                                label={`${day.charAt(0).toUpperCase() + day.slice(1)}:`}
-                                name={day}
-                                initialValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
-                                style={{ marginBottom: 0 }}
-                            >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', float: 'right'}}>
-                                    <TimePicker.RangePicker
-                                        rootClassName={'time-picker-timing'}
-                                        style={{ marginRight: 10 }}
-                                        use12Hours
-                                        format="h:mm A"
-                                        value={currentData[day]}
-                                        defaultValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
-                                        disabled={currentData[day] === null}
-                                        onChange={(data) => setCurrentData({
-                                            ...currentData,
-                                            [day]: data
-                                        })}
-                                    />
-                                    <Form.Item
-                                        style={{ marginBottom: 0 }}
-                                        name={`${day}_switch`}
-                                        valuePropName="checked"
-                                    >
-                                        <Switch
-                                            rootClassName={"time-switch"}
-                                            defaultChecked={businessTimings[day] !== 'CLOSED'} onChange={(value) => {
-                                            if (!value) {
-                                                console.log(day)
-                                                setCurrentData({
-                                                    ...currentData,
-                                                    [day]: null
-                                                })
-                                            } else {
-                                                setCurrentData({
-                                                    ...currentData,
-                                                    [day]: defaultTimingString.split("-").map(timeString => dayjs(timeString, 'hh:mm A'))
-                                                })
-                                            }
-                                        }}/>
-                                    </Form.Item>
-                                </div>
-                            </Form.Item>
-                        </div>
-                    ))}
-                    <Form.Item>
-                        <Button
+                <div className={"timings-container"}>
+                    <div style={{
+                        marginBottom: 20
+                    }}>Business operation status for tomorrow? <CustomPopover
+                        content={"Only change this if tomorrow's status is different from usual. This will not affect any future timings."}/>
+                        <Select
+                            rootClassName={"timing-select"}
+                            defaultValue={businessOperationStatus?.value}
+                            disabled={updatingBusinessOperationStatus}
+                            options={[{
+                                label: "Open",
+                                value: 'OPEN'
+                            }, {
+                                label: "Closed",
+                                value: 'CLOSED'
+                            }]}
                             style={{
-                                background: 'var(--primary-color)',
-                                filter: 'brightness(110%)',
-                                color: 'var(--primary-background)',
-                                width: 150,
-                                border: '1px solid var(--primary-color)'
+                                marginLeft: 10,
+                                minWidth: 150
                             }}
-                            htmlType="submit" loading={updatingTiming}>Update</Button>
-                    </Form.Item>
-                </Form>
-
-
+                            onChange={(value, option) => {
+                                console.log(value, option)
+                                updateBusinessOperationStatus({businessId: businessId, status: value})
+                            }}
+                        />
+                    </div>
+                    <Form
+                        style={{marginLeft: 20}}
+                        form={form}
+                        onFinish={handleSubmitTime}
+                    >
+                        {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => (
+                            <div key={day} style={{marginBottom: 10}}>
+                                <Form.Item
+                                    label={`${day.charAt(0).toUpperCase() + day.slice(1)}:`}
+                                    name={day}
+                                    initialValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
+                                    style={{marginBottom: 0}}
+                                >
+                                    <div style={{display: 'flex', justifyContent: 'space-between', float: 'right'}}>
+                                        <TimePicker.RangePicker
+                                            rootClassName={'time-picker-timing'}
+                                            style={{marginRight: 10}}
+                                            use12Hours
+                                            format="h:mm A"
+                                            value={currentData[day]}
+                                            defaultValue={businessTimings[day].split("-").map(timeString => dayjs(timeString, 'hh:mm A'))}
+                                            disabled={currentData[day] === null}
+                                            onChange={(data) => setCurrentData({
+                                                ...currentData,
+                                                [day]: data
+                                            })}
+                                        />
+                                        <Form.Item
+                                            style={{marginBottom: 0}}
+                                            name={`${day}_switch`}
+                                            valuePropName="checked"
+                                        >
+                                            <Switch
+                                                rootClassName={"time-switch"}
+                                                defaultChecked={businessTimings[day] !== 'CLOSED'}
+                                                onChange={(value) => {
+                                                    if (!value) {
+                                                        console.log(day)
+                                                        setCurrentData({
+                                                            ...currentData,
+                                                            [day]: null
+                                                        })
+                                                    } else {
+                                                        setCurrentData({
+                                                            ...currentData,
+                                                            [day]: defaultTimingString.split("-").map(timeString => dayjs(timeString, 'hh:mm A'))
+                                                        })
+                                                    }
+                                                }}/>
+                                        </Form.Item>
+                                    </div>
+                                </Form.Item>
+                            </div>
+                        ))}
+                        <Form.Item>
+                            <Button
+                                style={{
+                                    background: 'var(--primary-color)',
+                                    filter: 'brightness(110%)',
+                                    color: 'var(--primary-background)',
+                                    width: 150,
+                                    border: '1px solid var(--primary-color)'
+                                }}
+                                htmlType="submit" loading={updatingTiming}>Update</Button>
+                        </Form.Item>
+                    </Form>
+                </div>
             )
     );
 };

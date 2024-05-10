@@ -11,8 +11,6 @@ export default function () {
     const [form] = Form.useForm();
     const {data: businessTypes, isLoading} = useGetTypesQuery();
     const [registerBusiness, {isLoading: isRegisteringBusiness}] = useRegisterBusinessMutation();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [isRegistrationModalVisible, setIsRegistrationModalVisible] = useState(false);
 
     if (isLoading) {
@@ -64,6 +62,7 @@ export default function () {
             >
                 <div className={'hover-input'} style={{border: '1px solid #f2f2f2', color: '#ece7e2'}}>
                     <Select
+                        rootClassName={"authentication-select"}
                         options={businessTypes}
                         onChange={(value) => form.setFieldValue('businessType', value)}
                         placeholder={'Business Type'}
