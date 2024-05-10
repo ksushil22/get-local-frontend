@@ -89,7 +89,7 @@ export default function ({
                     rules={rules}
                 >
                     <div className={'hover-input'}>
-                        <Input placeholder={'Full name'} />
+                        <Input rootClassName={"authentication"} placeholder={'Full name'} />
                     </div>
 
                 </Form.Item>
@@ -105,13 +105,14 @@ export default function ({
                     }
                 ]}>
                     <div className={'hover-input'}>
-                        <Input placeholder={'Email'}/>
+                        <Input rootClassName={"authentication"} placeholder={'Email'}/>
                     </div>
                 </Form.Item>
                 <Form.Item
                     name={'password'} >
                     <div className={'hover-input'}>
                         <Input.Password
+                            rootClassName={"authentication"}
                             onChange={handlePasswordChange}
                             visibilityToggle={false}
                             placeholder={'Password'} />
@@ -156,6 +157,7 @@ export default function ({
                 <Form.Item name={'confirmPassword'} rules={rules}>
                     <div className={'hover-input'}>
                         <Input
+                            rootClassName={"authentication"}
                             placeholder={'Confirm Password'} />
                     </div>
                 </Form.Item>

@@ -110,6 +110,33 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${GET_BUSINESS}${businessId}/reviews/`,
                 method: 'GET'
             })
+        }),
+        getBusinessTimings: builder.query({
+            query:({businessId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timings/`,
+                method: 'GET'
+            })
+        }),
+        updateBusinessTimings: builder.mutation({
+            query: ({businessId, timings}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timing/`,
+                method: 'PUT',
+                body: timings
+            })
+        }),
+        getBusinessOperationStatus: builder.query({
+            query: ({businessId, tomorrow}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/business-operation-status/`,
+                method: 'GET',
+                params: {tomorrow: tomorrow, today: !tomorrow}
+            })
+        }),
+        updateBusinessOperationStatus: builder.mutation({
+            query: ({businessId, status}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/business-operation-status/`,
+                method: 'PUT',
+                params: {status: status}
+            })
         })
     })
 });
@@ -128,5 +155,9 @@ export const {
     useGetMenuItemsQuery,
     useCreateOrUpdateMenuItemMutation,
     useDeleteMenuItemMutation,
-    useGetBusinessReviewsQuery
+    useGetBusinessReviewsQuery,
+    useGetBusinessTimingsQuery,
+    useUpdateBusinessTimingsMutation,
+    useGetBusinessOperationStatusQuery,
+    useUpdateBusinessOperationStatusMutation,
 } = businessAPI

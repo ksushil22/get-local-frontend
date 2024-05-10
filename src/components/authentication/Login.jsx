@@ -75,13 +75,14 @@ export default function () {
                         }
                     ]}>
                         <div className={'hover-input'}>
-                            <Input placeholder={'Email'}/>
+                            <Input rootClassName={"authentication"} placeholder={'Email'}/>
                         </div>
                     </Form.Item>
                     <Form.Item
                         name={'password'} rules={rules}>
                         <div className={'hover-input'}>
                             <Input.Password
+                                rootClassName={"authentication"}
                                 visibilityToggle={false}
                                 placeholder={'Password'}/>
                         </div>

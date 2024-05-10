@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateBusinessItemCategoryMutation, useGetBusinessItemCategoriesQuery } from "../../redux/services/businessAPI";
 import CustomSpinner, { DISPLAY_TYPES_ENUM } from "../util/customSpinner/CustomSpinner";
-import { Button, Form, Input, Row, Tabs } from "antd";
+import {Button, Empty, Form, Input, Row, Tabs} from "antd";
 import './businessMenu.css'
 import BusinessHeading from "../util/BusinessHeading";
+import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 // Lazy load components for each tab
 const LazyTabContent = React.lazy(() => import('./MenuList'));
@@ -20,6 +22,7 @@ export default function BusinessMenu({editing}) {
     const [form] = Form.useForm();
 
     useEffect(() => {
+        console.log(categories)
         if (categories) {
             const initialTabContent = {};
             categories.forEach(category => {
@@ -66,7 +69,7 @@ export default function BusinessMenu({editing}) {
     const getCreateCategoriesForm = (
         <Form onFinish={createCategory} form={form} layout={"inline"}>
             <Form.Item name={"category"}>
-                <Input rootClassName={"input-menu"} placeholder={"Category"} />
+                <Input autoComplete={"off"} rootClassName={"input-menu"} placeholder={"Category"} />
             </Form.Item>
             <Form.Item>
                 <Button
@@ -91,14 +94,44 @@ export default function BusinessMenu({editing}) {
     return (
         <Row>
             <BusinessHeading heading={"Menu Items"} />
-            <div style={{ width: '100%', marginTop: 20 }}>
-                <Tabs
-                    onChange={onChange}
-                    activeKey={activeKey}
-                    tabBarStyle={{ border: 'none' }}
-                    tabBarExtraContent={editing ? getCreateCategoriesForm : null}
-                    items={items} />
+            <div style={{width: '100%', marginTop: 20}}>
+                {categories && categories.length > 0 ?
+
+                    <Tabs
+                        rootClassName={"item-tab"}
+                        onChange={onChange}
+                        activeKey={activeKey}
+                        tabBarStyle={{border: 'none'}}
+                        tabBarExtraContent={editing ? getCreateCategoriesForm : null}
+                        items={items}/>
+                     :
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
+                        <div style={{
+                            marginTop: 20,
+                            marginLeft: 'auto'
+                        }}>
+                            {getCreateCategoriesForm}
+                        </div>
+                        <div style={{
+                            marginTop: 20
+                        }}>
+                            <Empty
+                                style={{
+                                }}
+                                description={<p style={{
+                                    color: "rgba(0, 0, 0, 0.25)"
+                                }}>No category created...</p>}
+                                image={<FontAwesomeIcon icon={faExclamation} color={"rgba(0, 0, 0, 0.25)"}/>}
+                            />
+                        </div>
+                    </div>
+
+                }
             </div>
+
         </Row>
     );
 }

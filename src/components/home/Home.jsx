@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {useUserProfileQuery} from "../../redux/services/authAPI";
 import {Row} from "antd";
@@ -9,6 +9,8 @@ import GetUpload from "../util/upload/GetUpload";
 import CustomPopover from "../util/CustomPopover";
 import BusinessSelector from "../util/BusinessSelector";
 import BusinessHeading from "../util/BusinessHeading";
+import Timings from "./Timings";
+import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
 
 export default function Home() {
     const {data: userProfileData, isLoading} = useUserProfileQuery();
@@ -43,6 +45,7 @@ export default function Home() {
                     maxUploads={3}
                     accept="image/png, image/jpeg"/>
             </div>
+            <Timings businessId={businessId}/>
         </Row>
     );
 }

@@ -56,6 +56,7 @@ export default function ({aboutUs, isLoading=true}) {
                     onFinish={handleUpdate}>
                     <Form.Item name={'textarea'}>
                         <Input.TextArea
+                            rootClassName={"about-us"}
                             style={{
                                 width: "100% !important",
                                 minHeight: "300px",

@@ -11,8 +11,6 @@ export default function () {
     const [form] = Form.useForm();
     const {data: businessTypes, isLoading} = useGetTypesQuery();
     const [registerBusiness, {isLoading: isRegisteringBusiness}] = useRegisterBusinessMutation();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [isRegistrationModalVisible, setIsRegistrationModalVisible] = useState(false);
 
     if (isLoading) {
@@ -55,7 +53,7 @@ export default function () {
                 rules={rules}
             >
                 <div className={'hover-input'}>
-                    <Input placeholder={'Business Name'}/>
+                    <Input rootClassName={"authentication"} placeholder={'Business Name'}/>
                 </div>
             </Form.Item>
             <Form.Item
@@ -64,6 +62,7 @@ export default function () {
             >
                 <div className={'hover-input'} style={{border: '1px solid #f2f2f2', color: '#ece7e2'}}>
                     <Select
+                        rootClassName={"authentication-select"}
                         options={businessTypes}
                         onChange={(value) => form.setFieldValue('businessType', value)}
                         placeholder={'Business Type'}
@@ -76,7 +75,7 @@ export default function () {
                 rules={rules}
             >
                 <div className={'hover-input'}>
-                    <Input placeholder={'Street Address'}/>
+                    <Input rootClassName={"authentication"} placeholder={'Street Address'}/>
                 </div>
             </Form.Item>
             <Form.Item
@@ -84,7 +83,7 @@ export default function () {
                 rules={rules}
             >
                 <div className={'hover-input'}>
-                    <Input placeholder={'City'}/>
+                    <Input rootClassName={"authentication"} placeholder={'City'}/>
                 </div>
             </Form.Item>
             <Form.Item
@@ -92,7 +91,7 @@ export default function () {
                 rules={rules}
             >
                 <div className={'hover-input'}>
-                    <Input placeholder={'State/Province'}/>
+                    <Input rootClassName={"authentication"} placeholder={'State/Province'}/>
                 </div>
             </Form.Item>
             <p

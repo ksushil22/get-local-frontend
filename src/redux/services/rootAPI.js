@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {logOut, setCredentials} from "../slicers/authSlicer.js";
 import { REFRESH_TOKEN_API } from "../api_url.jsx";
-import {message} from "antd";
+import {message, notification} from "antd";
 
 
 const baseQuery = fetchBaseQuery({
@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: (headers, {getState}) => {
 
         const access = sessionStorage.getItem("access")
-        if(access && access!==undefined) {
+        if(access) {
             headers.set("Authorization", `Bearer ${access}`);
         }
         headers.set("Access-Control-Allow-Origin", 'true')
@@ -24,7 +24,14 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
 
     let result = await baseQuery(args, api, extraOption)
 
-    if(result?.error?.status === 401) {
+    if (result?.data?.message){
+        notification.success({
+            message: "Success!",
+            description: result.data.message,
+            duration: 2
+
+        })
+    }else if(result?.error?.status === 401) {
         sessionStorage.setItem("access", "")
 
         // send refresh token to get new access token
@@ -55,12 +62,6 @@ const baseQueryWithReauth = async(args, api, extraOption, overrideRoute) => {
             // if refresh token is also invalid set the credentials to null and navigate user to login page
             api.dispatch(logOut())
         }
-    } else if(result?.error?.status === 409) {
-        message.open({
-            content: result.error?.data,
-            duration: 2.5,
-            className: 'antd-error'
-        });
     }else if (result?.error) {
         message.open({
             content: result.error?.data,
