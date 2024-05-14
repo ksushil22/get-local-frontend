@@ -5,9 +5,10 @@ import {useGetAllContactRequestsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {GET_BUSINESS} from "../../redux/api_url";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
 import NoDataGIF from "../util/NoDataGIF";
+import ContactRequestModal from "./ContactRequestModal";
+
+import './contactRequest.css'
 
 
 const BASE_URL = process.env.BASE_API_URL;
@@ -36,21 +37,25 @@ const ContactRequest = () => {
             }}
             className={"contact-request-card"}
             key={item.id}
+            style={{
+                cursor: 'pointer'
+            }}
             extra={
-                <Image
-                    width={200}
-                    alt={item.fullName}
-                    src={`${BASE_URL}${GET_BUSINESS}free/${businessId}/image/${item.imageId}`}
-                    style={{
-                        borderRadius: '5px'
-                    }}
-                    loading={"lazy"}
-                />
+                item?.imageId && (
+                    <Image
+                        preview={false}
+                        width={200}
+                        alt={item.fullName}
+                        src={`${BASE_URL}${GET_BUSINESS}free/${businessId}/image/${item.imageId}/`}
+                        style={{
+                            borderRadius: '5px'
+                        }}
+                        loading={"lazy"}/>)
             }
         >
             <List.Item.Meta
                 title={item.fullName}
-                description={item.message}
+                description={item.subject}
             />
         </List.Item>
     }
@@ -75,6 +80,12 @@ const ContactRequest = () => {
                 }}
             />
         }
+        <ContactRequestModal
+            visible={isModalVisible}
+            setVisible={setIsModalVisible}
+            request={modalData}
+            setRequest={setModalData}
+        />
 
     </Row>
 }
