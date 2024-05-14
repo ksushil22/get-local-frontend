@@ -250,7 +250,7 @@ export default function ({categoryId, editing = false}) {
 const menuStyles = {
     deleteCategoryButton: {
         float: 'right',
-        width: '150px',
+        minWidth: '150px',
         height: '50px',
         background: 'var(--primary-warning)',
         color: 'white',
@@ -259,10 +259,10 @@ const menuStyles = {
         boxShadow: '0 5px 10px 0 rgba(245, 66, 66,0.24),0 5px 10px 0 rgba(245, 66, 66,0.19)'
     },
     formButton: {
-        width: '240px',
-        height: '50px',
+        minWidth: '140px',
+        height: '40px',
         fontWeight: 'bolder',
-        fontSize: '25px',
+        fontSize: '20px',
         color: 'black',
         background: 'none',
         borderRadius: '5px',

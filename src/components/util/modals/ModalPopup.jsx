@@ -48,8 +48,9 @@ function ModalPopup(
             {handleOk ?
                 <Button type={"default"}
                         style={{
-                            backgroundColor: type  === "warning" ? "var(--primary-warning)" : "white",
-                            color: type === "warning" ? "white" : "black"
+                            backgroundColor: type === "warning" ? "var(--primary-warning)" : "var(--primary-color)",
+                            color: "white",
+                            border: type === "warning" ? "var(--primary-warning)" : "1px solid var(--primary-color)"
                         }}
                         onClick={handleOk}>
                     {submitButtonText ? submitButtonText : 'Submit'}
