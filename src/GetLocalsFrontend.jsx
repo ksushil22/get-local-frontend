@@ -16,6 +16,7 @@ const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
 const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
 const ReviewScreen = lazy(async () => import('./screens/ReviewScreen'));
+const ContactRequestScreen = lazy(async () => import('./screens/ContactRequestScreen'));
 
 const GetLocalsRoutes = () => {
     return (
@@ -33,9 +34,11 @@ const GetLocalsRoutes = () => {
                                 <Route path="home/" element={<HomeScreen />} />
                                 <Route path="menu-items/" element={<MenuScreen />} />
                                 <Route path="reviews/" element={<ReviewScreen />} />
+                                <Route path={"contact-request/"} element={<ContactRequestScreen />} />
                             </Route>
                         </Route>
                     </Route>
+                    <Route path="/" element={<Navigate to="/business-admin/home/" replace />} />
                 </Routes>
             </Provider>
         </Suspense>

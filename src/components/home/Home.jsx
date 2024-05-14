@@ -10,7 +10,7 @@ import CustomPopover from "../util/CustomPopover";
 import BusinessSelector from "../util/BusinessSelector";
 import BusinessHeading from "../util/BusinessHeading";
 import Timings from "./Timings";
-import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 
 export default function Home() {
     const {data: userProfileData, isLoading} = useUserProfileQuery();

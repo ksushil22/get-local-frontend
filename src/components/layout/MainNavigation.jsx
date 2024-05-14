@@ -1,7 +1,14 @@
 import React, {useContext, useState} from "react";
 import {Image, Menu} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faBookOpen, faFaceSmile, faHouseUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import {
+    faBars,
+    faBookOpen,
+    faCommentDots,
+    faFaceSmile,
+    faHouseUser,
+    faRightFromBracket
+} from "@fortawesome/free-solid-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {ActiveNavigationMenuContext} from "../../context/ActiveNavigationProvider";
@@ -15,18 +22,23 @@ export default function () {
 
     const items = [
         {
-            label: (<Link to={"/business-admin/home"}>Home</Link>),
+            label: (<Link to={"/business-admin/home/"}>Home</Link>),
             key: 'home',
             icon: <FontAwesomeIcon icon={faHouseUser} />,
         },
         {
-            label: (<Link to={'/business-admin/menu-items'}>Menu</Link>),
+            label: (<Link to={'/business-admin/menu-items/'}>Menu</Link>),
             key: 'menu',
             icon: <FontAwesomeIcon icon={faBookOpen} />,
         },
         {
-            label: (<Link to={'/business-admin/reviews'}>Reviews</Link> ),
+            label: (<Link to={'/business-admin/reviews/'}>Reviews</Link> ),
             key: 'reviews',
+            icon: <FontAwesomeIcon icon={faCommentDots} />
+        },
+        {
+            label: (<Link to={'/business-admin/contact-request/'}>Contact Requests</Link> ),
+            key: 'contact_requests',
             icon: <FontAwesomeIcon icon={faFaceSmile} />
         },
         {
