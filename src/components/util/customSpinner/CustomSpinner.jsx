@@ -2,7 +2,7 @@ import React from "react";
 import {Col, Row, Skeleton} from "antd";
 import CustomIndicator from "./CustomIndicator";
 
-export const DISPLAY_TYPES_ENUM = {
+export const DISPLAY = {
     FULLSCREEN: 0,
     AREA: 1
 };
@@ -11,13 +11,13 @@ export const SPINNERS = {
     SKELETON: 1
 };
 export default function ({
-                             display = DISPLAY_TYPES_ENUM.FULLSCREEN,
+                             display = DISPLAY.FULLSCREEN,
                              useBackground = true,
                              text = "Loading...",
                              spinner = SPINNERS.CUSTOM,
                              skeletonRows = 6
                          }) {
-    const containerStyle = (display === DISPLAY_TYPES_ENUM.FULLSCREEN)
+    const containerStyle = (display === DISPLAY.FULLSCREEN)
         ? {...loaderStyles.centerAlign}
         : {...loaderStyles.areaContainer};
 

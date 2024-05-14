@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Form, Input} from "antd";
 import "./home.css";
-import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {useUpdateAboutUsMutation} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomPopover from "../util/CustomPopover";
@@ -19,7 +19,7 @@ export default function ({aboutUs, isLoading=true}) {
     
 
     if (isLoading)
-        return <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY_TYPES_ENUM.AREA}/>
+        return <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
 
 
     const handleUpdate = () => {

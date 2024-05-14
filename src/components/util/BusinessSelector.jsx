@@ -4,7 +4,7 @@ import {DownOutlined} from "@ant-design/icons";
 import {useUserProfileQuery} from "../../redux/services/authAPI";
 import {setCurrentBusiness} from "../../redux/slicers/businessSlicer";
 import {useDispatch, useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "./customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY, SPINNERS} from "./customSpinner/CustomSpinner";
 
 export default function BusinessSelector() {
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export default function BusinessSelector() {
         onClick: handleMenuClick,
     };
     if (isLoading) {
-        return <CustomSpinner display={DISPLAY_TYPES_ENUM.AREA} spinner={SPINNERS.SKELETON} skeletonRows={11}/>
+        return <CustomSpinner display={DISPLAY.AREA} spinner={SPINNERS.SKELETON} skeletonRows={11}/>
     }
 
     return (

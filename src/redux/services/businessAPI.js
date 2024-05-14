@@ -137,6 +137,12 @@ export const businessAPI = rootAPI.injectEndpoints({
                 method: 'PUT',
                 params: {status: status}
             })
+        }),
+        getAllContactRequests: builder.query({
+            query: ({businessId}) => ({
+                url: `${BASE_URL}${GET_BUSINESS}${businessId}/contact-requests/`,
+                method: 'GET'
+            })
         })
     })
 });
@@ -160,4 +166,5 @@ export const {
     useUpdateBusinessTimingsMutation,
     useGetBusinessOperationStatusQuery,
     useUpdateBusinessOperationStatusMutation,
+    useGetAllContactRequestsQuery
 } = businessAPI

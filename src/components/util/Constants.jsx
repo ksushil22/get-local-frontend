@@ -4,5 +4,6 @@ export const NAVIGATION_ROUTES = new Map([
     [0, "home"],
     [1, "menu"],
     [2, "reviews"],
-    [3, "logout"]
+    [3, "contact_requests"],
+    [4, "logout"]
 ]);

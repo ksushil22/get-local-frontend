@@ -6,7 +6,7 @@ import {
     useDeleteMenuItemMutation,
     useGetMenuItemsQuery
 } from "../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import GetUpload from "../util/upload/GetUpload";
 import {Badge, Button, Image, Form, Input, List, Space} from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
@@ -14,6 +14,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faExclamation, faTrash} from "@fortawesome/free-solid-svg-icons";
 import DeleteConfirmationModal from "../util/modals/DeleteConfirmationModal";
 import "./businessMenu.css"
+import NoDataGIF from "../util/NoDataGIF";
 
 const ListItemCard = ({item, cardMargin, IconText, setupUpdateItem, setDeleteItemId, editing}) => {
     return <List.Item
@@ -148,10 +149,7 @@ export default function ({categoryId, editing = false}) {
                     editing={editing}
                 />)}
         locale={{
-            emptyText: <>
-                <FontAwesomeIcon icon={faExclamation} size={"5x"}/>
-                <p>No Item Available</p>
-            </>
+            emptyText: <NoDataGIF message={"No Item Available."}/>
         }}
     />)
 
@@ -215,7 +213,7 @@ export default function ({categoryId, editing = false}) {
         }
         {
             isLoadingItems ?
-                <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY_TYPES_ENUM.AREA}/> :
+                <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/> :
                 menuList
         }
         {

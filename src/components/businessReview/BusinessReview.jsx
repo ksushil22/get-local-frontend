@@ -2,7 +2,7 @@ import React from 'react'
 import BusinessHeading from "../util/BusinessHeading";
 import {useGetBusinessReviewsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY_TYPES_ENUM, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {Image, List, Row, Space} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamation, faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ import {GET_BUSINESS} from "../../redux/api_url";
 import "./businessReview.css"
 import GetRating from "../util/GetRating";
 import CustomPopover from "../util/CustomPopover";
+import NoDataGIF from "../util/NoDataGIF";
 
 const BASE_URL = process.env.BASE_API_URL;
 
@@ -22,7 +23,7 @@ const BusinessReview = () => {
         isLoading: loadingReviews
     } = useGetBusinessReviewsQuery({businessId: businessId})
     if (loadingReviews) {
-        return <CustomSpinner spinner={SPINNERS.CUSTOM} display={DISPLAY_TYPES_ENUM.FULLSCREEN}/>
+        return <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
     }
 
     return (
@@ -43,10 +44,7 @@ const BusinessReview = () => {
                         businessId={businessId}
                     />)}
                 locale={{
-                    emptyText: <>
-                        <FontAwesomeIcon icon={faExclamation} size={"5x"}/>
-                        <p>No Review Available</p>
-                    </>
+                    emptyText: <NoDataGIF message={"No Review available."} />
                 }}
             />
         </Row>
@@ -95,7 +93,6 @@ const ReviewCards = ({item, businessId}) => {
             </Space>
         ]}
         extra={
-        <div>
             <Image
                 width={200}
                 alt={item.fullName}
@@ -104,10 +101,7 @@ const ReviewCards = ({item, businessId}) => {
                     borderRadius: '5px'
                 }}
                 loading={"lazy"}
-            />
-        </div>
-
-        }
+            />}
         key={item.id}
     >
         <List.Item.Meta

@@ -6,9 +6,6 @@ import {useValidateTokenQuery} from "../../redux/services/authAPI";
 import CustomSpinner from "../util/customSpinner/CustomSpinner";
 
 const RequireAuth = () => {
-
-    const dispatch = useDispatch();
-
     //check if we have a token
     const token = sessionStorage?.getItem("access");
     const location = useLocation();
