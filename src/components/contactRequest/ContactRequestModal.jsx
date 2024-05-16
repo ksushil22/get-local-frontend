@@ -1,7 +1,7 @@
 import React from "react";
 import ModalPopup from "../util/modals/ModalPopup";
 import {Col, Image, Row} from "antd";
-import {GET_BUSINESS} from "../../redux/api_url";
+import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
 import {useSelector} from "react-redux";
 
 const BASE_URL = process.env.BASE_API_URL;
@@ -23,6 +23,7 @@ const ContactRequestModal = ({
         }}
         disableScreenTouch={false}
         showCancel={false}
+        showTitleIcon={false}
     >
         <Row style={{
             textAlign: 'left'
@@ -34,7 +35,7 @@ const ContactRequestModal = ({
                     <Image
                         width={200}
                         alt={request?.fullName}
-                        src={`${BASE_URL}${GET_BUSINESS}free/${businessId}/image/${request?.imageId}/`}
+                        src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${request?.imageId}/`}
                         style={{
                             borderRadius: '5px'
                         }}

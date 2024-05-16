@@ -5,12 +5,11 @@ import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {Image, List, Row, Space} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation, faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
+import {faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import {GET_BUSINESS} from "../../redux/api_url";
+import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
 import "./businessReview.css"
 import GetRating from "../util/GetRating";
-import CustomPopover from "../util/CustomPopover";
 import NoDataGIF from "../util/NoDataGIF";
 
 const BASE_URL = process.env.BASE_API_URL;
@@ -96,7 +95,7 @@ const ReviewCards = ({item, businessId}) => {
             <Image
                 width={200}
                 alt={item.fullName}
-                src={`${BASE_URL}${GET_BUSINESS}free/${businessId}/image/${item.imageId}`}
+                src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}`}
                 style={{
                     borderRadius: '5px'
                 }}

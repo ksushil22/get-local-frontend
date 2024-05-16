@@ -1,53 +1,46 @@
 import {rootAPI} from "./rootAPI";
-import {BUSINESS_UPLOAD, GET_BUSINESS, GET_BUSINESS_TYPES, REGISTER_BUSINESS, UPDATE_ABOUT_US} from "../api_url";
+import {BUSINESS_API, PUBLIC_BUSINESS_API} from "../api_url";
 
 const BASE_URL = process.env.BASE_API_URL;
 
 export const businessAPI = rootAPI.injectEndpoints({
     endpoints: builder => ({
         getTypes: builder.query({
-            query: () => `${BASE_URL}${GET_BUSINESS_TYPES}`
+            query: () => `${BASE_URL}${PUBLIC_BUSINESS_API}types/`
         }),
         registerBusiness: builder.mutation({
             query: credentials => ({
-                url: `${BASE_URL}${REGISTER_BUSINESS}`,
+                url: `${BASE_URL}${BUSINESS_API}register/`,
                 method: 'POST',
                 body: {...credentials}
             })
         }),
         getBusiness: builder.query({
-            query: (id) => `${BASE_URL}${GET_BUSINESS}${id}/`
+            query: (id) => `${BASE_URL}${BUSINESS_API}${id}/`
         }),
         getBusinessImages: builder.query({
-            query: ({businessId, type}) => `${BASE_URL}${GET_BUSINESS}${businessId}/images/${type}/`
+            query: ({businessId, type}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/images/${type}/`
         }),
         updateAboutUs: builder.mutation({
             query: (data) => ({
-                url: `${BASE_URL}${UPDATE_ABOUT_US}${data.id}/`,
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}about-us/${data.id}/`,
                 method: 'PUT',
                 params: {aboutUs: data.aboutUs}
             })
         }),
-        uploadBusinessFile: builder.mutation({
-            query: (data) => ({
-                url: `${BASE_URL}${BUSINESS_UPLOAD}`,
-                method: 'POST',
-                body: data
-            })
-        }),
         deleteImage: builder.mutation({
             query: (id) => ({
-                url: `${BASE_URL}${GET_BUSINESS}image/${id}/`,
+                url: `${BASE_URL}${BUSINESS_API}image/${id}/`,
                 method: 'DELETE'
             })
         }),
         getBusinessItemCategories: builder.query({
-            query: (id) => `${BASE_URL}${GET_BUSINESS}${id}/item-category/`,
+            query: (id) => `${BASE_URL}${PUBLIC_BUSINESS_API}${id}/item-category/`,
             providesTags: ['categories']
         }),
         createBusinessItemCategory: builder.mutation({
             query: ({businessId, category}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/item-category/`,
                 method: 'POST',
                 params: {
                     name: category
@@ -57,13 +50,13 @@ export const businessAPI = rootAPI.injectEndpoints({
         }),
         deleteBusinessItemCategory: builder.mutation({
             query: ({businessId, categoryId}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/item-category/${categoryId}/`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['categories']
         }),
         getMenuItems: builder.query({
-            query: ({businessId, categoryId}) => `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
+            query: ({businessId, categoryId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/item-category/${categoryId}/item/`,
             transformResponse: (items) => {
                 const transformedData = [];
                 items?.map((item) => {
@@ -92,7 +85,7 @@ export const businessAPI = rootAPI.injectEndpoints({
         }),
         createOrUpdateMenuItem: builder.mutation({
             query: ({businessId, categoryId, itemDTO}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/item-category/${categoryId}/item/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/item-category/${categoryId}/item/`,
                 method: 'PUT',
                 body: {...itemDTO}
             }),
@@ -100,47 +93,47 @@ export const businessAPI = rootAPI.injectEndpoints({
         }),
         deleteMenuItem: builder.mutation({
             query: ({itemId}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}item/${itemId}/`,
+                url: `${BASE_URL}${BUSINESS_API}item/${itemId}/`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['menu-items']
         }),
         getBusinessReviews: builder.query({
             query:({businessId}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/reviews/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/reviews/`,
                 method: 'GET'
             })
         }),
         getBusinessTimings: builder.query({
             query:({businessId}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timings/`,
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/timings/`,
                 method: 'GET'
             })
         }),
         updateBusinessTimings: builder.mutation({
             query: ({businessId, timings}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/timing/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/timing/`,
                 method: 'PUT',
                 body: timings
             })
         }),
         getBusinessOperationStatus: builder.query({
             query: ({businessId, tomorrow}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/business-operation-status/`,
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/business-operation-status/`,
                 method: 'GET',
                 params: {tomorrow: tomorrow, today: !tomorrow}
             })
         }),
         updateBusinessOperationStatus: builder.mutation({
             query: ({businessId, status}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/business-operation-status/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/business-operation-status/`,
                 method: 'PUT',
                 params: {status: status}
             })
         }),
         getAllContactRequests: builder.query({
             query: ({businessId}) => ({
-                url: `${BASE_URL}${GET_BUSINESS}${businessId}/contact-requests/`,
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/contact-requests/`,
                 method: 'GET'
             })
         })
@@ -153,7 +146,6 @@ export const {
     useLazyGetBusinessQuery,
     useGetBusinessImagesQuery,
     useUpdateAboutUsMutation,
-    useUploadBusinessFileMutation,
     useDeleteImageMutation,
     useGetBusinessItemCategoriesQuery,
     useCreateBusinessItemCategoryMutation,

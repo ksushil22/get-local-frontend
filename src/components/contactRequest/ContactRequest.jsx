@@ -4,7 +4,7 @@ import BusinessHeading from "../util/BusinessHeading";
 import {useGetAllContactRequestsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
-import {GET_BUSINESS} from "../../redux/api_url";
+import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
 import NoDataGIF from "../util/NoDataGIF";
 import ContactRequestModal from "./ContactRequestModal";
 
@@ -46,7 +46,7 @@ const ContactRequest = () => {
                         preview={false}
                         width={200}
                         alt={item.fullName}
-                        src={`${BASE_URL}${GET_BUSINESS}free/${businessId}/image/${item.imageId}/`}
+                        src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}/`}
                         style={{
                             borderRadius: '5px'
                         }}
@@ -55,8 +55,9 @@ const ContactRequest = () => {
         >
             <List.Item.Meta
                 title={item.fullName}
-                description={item.subject}
+                description={<p>&nbsp;{item.subject}</p>}
             />
+            {item.message}
         </List.Item>
     }
 
