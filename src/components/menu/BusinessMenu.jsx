@@ -7,6 +7,7 @@ import './businessMenu.css'
 import BusinessHeading from "../util/BusinessHeading";
 import {faExclamation} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import NoDataGIF from "../util/NoDataGIF";
 
 // Lazy load components for each tab
 const LazyTabContent = React.lazy(() => import('./MenuList'));
@@ -115,18 +116,8 @@ export default function BusinessMenu({editing}) {
                         }}>
                             {getCreateCategoriesForm}
                         </div>
-                        <div style={{
-                            marginTop: 20
-                        }}>
-                            <Empty
-                                style={{
-                                }}
-                                description={<p style={{
-                                    color: "rgba(0, 0, 0, 0.25)"
-                                }}>No category created...</p>}
-                                image={<FontAwesomeIcon icon={faExclamation} color={"rgba(0, 0, 0, 0.25)"}/>}
-                            />
-                        </div>
+
+                        <NoDataGIF message={"No Category created"} />
                     </div>
 
                 }
