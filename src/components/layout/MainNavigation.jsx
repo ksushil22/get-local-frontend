@@ -14,51 +14,50 @@ import {useDispatch} from "react-redux";
 import {ActiveNavigationMenuContext} from "../../context/ActiveNavigationProvider";
 import {logOut} from "../../redux/slicers/authSlicer";
 
-const items = [
-    {
-        label: (<Link to={"/business-admin/home/"}>Home</Link>),
-        key: 'home',
-        icon: <FontAwesomeIcon icon={faHouseUser} />,
-    },
-    {
-        label: (<Link to={'/business-admin/menu-items/'}>Menu</Link>),
-        key: 'menu',
-        icon: <FontAwesomeIcon icon={faBookOpen} />,
-    },
-    {
-        label: (<Link to={'/business-admin/reviews/'}>Reviews</Link> ),
-        key: 'reviews',
-        icon: <FontAwesomeIcon icon={faCommentDots} />
-    },
-    {
-        label: (<Link to={'/business-admin/contact-request/'}>Contact Requests</Link> ),
-        key: 'contact_requests',
-        icon: <FontAwesomeIcon icon={faFaceSmile} />
-    },
-    {
-        label: (<Link to={"/business-admin/employee-info/"}>Employee Info</Link>),
-        key: 'employee-info',
-        icon: <FontAwesomeIcon icon={faUser} />
-    },
-    {
-        label: (
-            <Link to={'/authenticate'}
-                  onClick={() => {
-                      dispatch(logOut())
-                      navigate('/authenticate')
-                  }}
-            >Logout</Link>
-        ),
-        key: 'logout',
-        icon: <FontAwesomeIcon icon={faRightFromBracket} />
-    },
-];
-
 export default function () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { updateActiveNavigationMenu, activeNavigationMenu } = useContext(ActiveNavigationMenuContext);
 
+    const items = [
+        {
+            label: (<Link to={"/business-admin/home/"}>Home</Link>),
+            key: 'home',
+            icon: <FontAwesomeIcon icon={faHouseUser}/>,
+        },
+        {
+            label: (<Link to={'/business-admin/menu-items/'}>Menu</Link>),
+            key: 'menu',
+            icon: <FontAwesomeIcon icon={faBookOpen}/>,
+        },
+        {
+            label: (<Link to={'/business-admin/reviews/'}>Reviews</Link>),
+            key: 'reviews',
+            icon: <FontAwesomeIcon icon={faCommentDots}/>
+        },
+        {
+            label: (<Link to={'/business-admin/contact-request/'}>Contact Requests</Link>),
+            key: 'contact_requests',
+            icon: <FontAwesomeIcon icon={faFaceSmile}/>
+        },
+        {
+            label: (<Link to={"/business-admin/employee-info/"}>Employee Info</Link>),
+            key: 'employee-info',
+            icon: <FontAwesomeIcon icon={faUser}/>
+        },
+        {
+            label: (
+                <Link to={'/authenticate'}
+                      onClick={() => {
+                          dispatch(logOut())
+                          navigate('/authenticate/')
+                      }}
+                >Logout</Link>
+            ),
+            key: 'logout',
+            icon: <FontAwesomeIcon icon={faRightFromBracket}/>
+        },
+    ];
     return (
         <div style={mainNavigation.container}>
             <Image

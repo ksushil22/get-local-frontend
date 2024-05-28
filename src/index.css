@@ -127,3 +127,7 @@ body {
     display: none;
 }
 
+.ant-select-selection-item {
+    color: black !important;
+}
+
