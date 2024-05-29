@@ -4,6 +4,7 @@ const NoDataGIF = ({
                        message = "No Data Available"
                    }) => {
     return <div style={{
+        inherit: 'initial',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -837,7 +838,8 @@ const NoDataGIF = ({
                 </g>
             </svg>
             <p style={{
-                color: 'gray'
+                color: 'gray',
+                textAlign: 'center'
             }}>{message}</p>
         </div>
     </div>

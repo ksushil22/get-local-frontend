@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {Form, Input} from "antd";
+import {Button, Form, Input} from "antd";
 import "./home.css";
 import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
 import {useUpdateAboutUsMutation} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
 import CustomPopover from "../util/CustomPopover";
+import {LoadingOutlined} from "@ant-design/icons";
 
 export default function ({aboutUs, isLoading=true}) {
     const [data, setData] = useState("");
     const [buttonVisible, setButtonVisible] = useState(false);
     const [form] = Form.useForm();
-    const [updateBusiness, {isLoading: isRegisteringBusiness}] = useUpdateAboutUsMutation();
+    const [updateBusiness, {isLoading: isUpdatingBusinessAbout}] = useUpdateAboutUsMutation();
     const businessId = useSelector((state)=> state.business.businessId)
     useEffect(() => {
         setData(aboutUs);
@@ -79,10 +80,10 @@ export default function ({aboutUs, isLoading=true}) {
                         </button>
                         <button
                             type={"button"}
-                            style={{...AboutUsStyle.button, float: "right"}}
+                            style={{...AboutUsStyle.button, float: "right", zIndex: -99}}
                             onClick={handleUpdate}
                         >
-                            Update
+                            {isUpdatingBusinessAbout && <LoadingOutlined style={{marginRight: 20}} spin={true}/> }Update
                         </button>
                     </div>
                 </Form>

@@ -7,13 +7,12 @@ import {
     faCommentDots,
     faFaceSmile,
     faHouseUser,
-    faRightFromBracket
+    faRightFromBracket, faUser
 } from "@fortawesome/free-solid-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {ActiveNavigationMenuContext} from "../../context/ActiveNavigationProvider";
 import {logOut} from "../../redux/slicers/authSlicer";
-
 
 export default function () {
     const dispatch = useDispatch();
@@ -24,37 +23,41 @@ export default function () {
         {
             label: (<Link to={"/business-admin/home/"}>Home</Link>),
             key: 'home',
-            icon: <FontAwesomeIcon icon={faHouseUser} />,
+            icon: <FontAwesomeIcon icon={faHouseUser}/>,
         },
         {
             label: (<Link to={'/business-admin/menu-items/'}>Menu</Link>),
             key: 'menu',
-            icon: <FontAwesomeIcon icon={faBookOpen} />,
+            icon: <FontAwesomeIcon icon={faBookOpen}/>,
         },
         {
-            label: (<Link to={'/business-admin/reviews/'}>Reviews</Link> ),
+            label: (<Link to={'/business-admin/reviews/'}>Reviews</Link>),
             key: 'reviews',
-            icon: <FontAwesomeIcon icon={faCommentDots} />
+            icon: <FontAwesomeIcon icon={faCommentDots}/>
         },
         {
-            label: (<Link to={'/business-admin/contact-request/'}>Contact Requests</Link> ),
+            label: (<Link to={'/business-admin/contact-request/'}>Contact Requests</Link>),
             key: 'contact_requests',
-            icon: <FontAwesomeIcon icon={faFaceSmile} />
+            icon: <FontAwesomeIcon icon={faFaceSmile}/>
+        },
+        {
+            label: (<Link to={"/business-admin/employee-info/"}>Employee Info</Link>),
+            key: 'employee-info',
+            icon: <FontAwesomeIcon icon={faUser}/>
         },
         {
             label: (
                 <Link to={'/authenticate'}
                       onClick={() => {
                           dispatch(logOut())
-                          navigate('/authenticate')
+                          navigate('/authenticate/')
                       }}
                 >Logout</Link>
             ),
             key: 'logout',
-            icon: <FontAwesomeIcon icon={faRightFromBracket} />
+            icon: <FontAwesomeIcon icon={faRightFromBracket}/>
         },
     ];
-
     return (
         <div style={mainNavigation.container}>
             <Image

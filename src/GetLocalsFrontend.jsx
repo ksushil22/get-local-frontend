@@ -17,6 +17,7 @@ const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
 const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
 const ReviewScreen = lazy(async () => import('./screens/ReviewScreen'));
 const ContactRequestScreen = lazy(async () => import('./screens/ContactRequestScreen'));
+const EmployeeInfoScreen = lazy(async () => import('./screens/EmployeeInfoScreen'));
 
 const GetLocalsRoutes = () => {
     return (
@@ -35,6 +36,7 @@ const GetLocalsRoutes = () => {
                                 <Route path="menu-items/" element={<MenuScreen />} />
                                 <Route path="reviews/" element={<ReviewScreen />} />
                                 <Route path={"contact-request/"} element={<ContactRequestScreen />} />
+                                <Route path={"employee-info/"} element={<EmployeeInfoScreen />} />
                             </Route>
                         </Route>
                     </Route>

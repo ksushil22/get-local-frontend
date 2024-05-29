@@ -23,7 +23,7 @@ export const businessAPI = rootAPI.injectEndpoints({
         }),
         updateAboutUs: builder.mutation({
             query: (data) => ({
-                url: `${BASE_URL}${PUBLIC_BUSINESS_API}about-us/${data.id}/`,
+                url: `${BASE_URL}${BUSINESS_API}about-us/${data.id}/`,
                 method: 'PUT',
                 params: {aboutUs: data.aboutUs}
             })
@@ -136,6 +136,37 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${BUSINESS_API}${businessId}/contact-requests/`,
                 method: 'GET'
             })
+        }),
+        createEmployeeInfo: builder.mutation({
+            query: ({businessId, employeeDTO}) => ({
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/employee-info/`,
+                method: 'POST',
+                body: employeeDTO
+            }),
+            invalidatesTags: ['employee-info']
+        }),
+        updateEmployeeInfo: builder.mutation({
+            query: ({businessId, employeeDTO}) => ({
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/employee-info/`,
+                method: 'PUT',
+                body: employeeDTO
+            }),
+            invalidatesTags: ['employee-info']
+        }),
+        getEmployees: builder.query({
+            query: ({businessId}) => ({
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/employee-info/`,
+                method: 'GET'
+            }),
+            providesTags: ['employee-info']
+        }),
+        deleteEmployee: builder.mutation({
+            query: ({businessId, employeeId}) => ({
+                url: `${BASE_URL}${BUSINESS_API}${businessId}/employee-info/`,
+                method: 'DELETE',
+                params: {'employeeId': employeeId}
+            }),
+            invalidatesTags: ['employee-info']
         })
     })
 });
@@ -158,5 +189,9 @@ export const {
     useUpdateBusinessTimingsMutation,
     useGetBusinessOperationStatusQuery,
     useUpdateBusinessOperationStatusMutation,
-    useGetAllContactRequestsQuery
+    useGetAllContactRequestsQuery,
+    useCreateEmployeeInfoMutation,
+    useUpdateEmployeeInfoMutation,
+    useGetEmployeesQuery,
+    useDeleteEmployeeMutation
 } = businessAPI
