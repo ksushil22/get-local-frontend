@@ -18,10 +18,12 @@
 .employee-form-div >div .ant-select-selector:focus,
 .employee-form-div .employee-select:focus {
     color: black !important;
-    border: none !important;
     box-shadow: none !important;
 }
 
+.employee-form-div >div .ant-select-selector {
+    border: none !important;
+}
 .employee-form-div .submit-button {
     min-width: 150px !important;
     font-weight: bolder !important;
@@ -36,5 +38,9 @@
 .employee-form-div .submit-button:focus,
 .employee-form-div .submit-button:hover{
     box-shadow: 0 5px 10px 0 rgba(0,0,0,0.24),0 5px 10px 0 rgba(0,0,0,0.19);
+    color: black !important;
+}
+
+.employee-form-div >div .ant-select-selection-item {
     color: black !important;
 }

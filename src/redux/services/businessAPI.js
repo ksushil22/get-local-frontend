@@ -23,7 +23,7 @@ export const businessAPI = rootAPI.injectEndpoints({
         }),
         updateAboutUs: builder.mutation({
             query: (data) => ({
-                url: `${BASE_URL}${PUBLIC_BUSINESS_API}about-us/${data.id}/`,
+                url: `${BASE_URL}${BUSINESS_API}about-us/${data.id}/`,
                 method: 'PUT',
                 params: {aboutUs: data.aboutUs}
             })
