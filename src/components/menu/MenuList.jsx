@@ -90,6 +90,7 @@ export default function ({categoryId, editing = false}) {
             rules={rules}
             name={"imageId"}>
             <GetUpload
+                type={"MENU"}
                 accept="image/png, image/jpeg"
                 updateInitialList={true}
                 maxUploads={1}

@@ -137,6 +137,7 @@ const EmployeeInfo = () => {
                     name={"imageId"}
                 >
                     <GetUpload
+                        type={"EMPLOYEE"}
                         accept="image/png, image/jpeg"
                         updateInitialList={true}
                         maxUploads={1}

@@ -10,6 +10,7 @@ import RequireUnAuth from "./components/authentication/RequireUnAuth";
 import GetLayout from "./components/layout/GetLayout";
 import {ConfigProvider} from "antd";
 import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
+import Template1Layout from "./components/template1/layout/Template1Layout";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -19,6 +20,7 @@ const ReviewScreen = lazy(async () => import('./screens/ReviewScreen'));
 const ContactRequestScreen = lazy(async () => import('./screens/ContactRequestScreen'));
 const EmployeeInfoScreen = lazy(async () => import('./screens/EmployeeInfoScreen'));
 const BusinessNavigator = lazy(async () => import("./screens/BusinessNavigator"));
+const Template1HomeScreen = lazy(async () => import("./screens/template1/Template1HomeScreen"));
 
 const GetLocalsRoutes = () => {
     return (
@@ -43,9 +45,9 @@ const GetLocalsRoutes = () => {
                     </Route>
                     <Route path={":businessUsername/"} element={<BusinessNavigator />} />
                     {/* Routes for template 1 */}
-                    <Route>
+                    <Route element={<Template1Layout />}>
                         <Route path={"/067b7d1e-eb92-42e9-9ba0-1021933f6b83/"}>
-                            <Route path={"home/"} element={<div>template 1</div>}/>
+                            <Route path={"home/"} element={<Template1HomeScreen />}/>
                         </Route>
                     </Route>
                     <Route path="/" element={<Navigate to="/business-admin/home/" replace />} />
