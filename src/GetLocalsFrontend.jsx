@@ -18,6 +18,7 @@ const MenuScreen = lazy(async () => import('./screens/MenuScreen'));
 const ReviewScreen = lazy(async () => import('./screens/ReviewScreen'));
 const ContactRequestScreen = lazy(async () => import('./screens/ContactRequestScreen'));
 const EmployeeInfoScreen = lazy(async () => import('./screens/EmployeeInfoScreen'));
+const BusinessNavigator = lazy(async () => import("./screens/BusinessNavigator"));
 
 const GetLocalsRoutes = () => {
     return (
@@ -26,18 +27,25 @@ const GetLocalsRoutes = () => {
                 <Routes>
                     <Route path={"*"} element={<Navigate to={"/authenticate"}/>} />
                     <Route element={<RequireUnAuth />}>
-                        <Route path={'/authenticate'} element={<LoginScreen />} />
+                        <Route path={'/authenticate/'} element={<LoginScreen />} />
                         <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
                     </Route>
                     <Route element={<RequireAuth />}>
                         <Route element={<GetLayout />}>
                             <Route path={"/business-admin/"}>
-                                <Route path="home/" element={<HomeScreen />} />
-                                <Route path="menu-items/" element={<MenuScreen />} />
-                                <Route path="reviews/" element={<ReviewScreen />} />
+                                <Route path={"home/"} element={<HomeScreen />} />
+                                <Route path={"menu-items/"} element={<MenuScreen />} />
+                                <Route path={"reviews/"} element={<ReviewScreen />} />
                                 <Route path={"contact-request/"} element={<ContactRequestScreen />} />
                                 <Route path={"employee-info/"} element={<EmployeeInfoScreen />} />
                             </Route>
+                        </Route>
+                    </Route>
+                    <Route path={":businessUsername/"} element={<BusinessNavigator />} />
+                    {/* Routes for template 1 */}
+                    <Route>
+                        <Route path={"/067b7d1e-eb92-42e9-9ba0-1021933f6b83/"}>
+                            <Route path={"home/"} element={<div>template 1</div>}/>
                         </Route>
                     </Route>
                     <Route path="/" element={<Navigate to="/business-admin/home/" replace />} />

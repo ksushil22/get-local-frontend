@@ -167,6 +167,12 @@ export const businessAPI = rootAPI.injectEndpoints({
                 params: {'employeeId': employeeId}
             }),
             invalidatesTags: ['employee-info']
+        }),
+        getTemplateInformation: builder.query({
+            query: ({businessUsername}) => ({
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessUsername}/template-information/`,
+                method: 'GET'
+            }),
         })
     })
 });
@@ -193,5 +199,6 @@ export const {
     useCreateEmployeeInfoMutation,
     useUpdateEmployeeInfoMutation,
     useGetEmployeesQuery,
-    useDeleteEmployeeMutation
+    useDeleteEmployeeMutation,
+    useGetTemplateInformationQuery
 } = businessAPI
