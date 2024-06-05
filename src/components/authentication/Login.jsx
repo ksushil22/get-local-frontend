@@ -22,11 +22,15 @@ export default function () {
 
     const onFinish = async () => {
         try {
-            const userData = await loginMutation(form.getFieldsValue()).unwrap();
-            await dispatch(setCredentials({...userData, username: form.getFieldValue("email")}));
+            loginMutation(form.getFieldsValue()).then(({data, error}) => {
+                if (data) {
+                    dispatch(setCredentials({...data, username: form.getFieldValue("email")}));
 
-            const {from} = location.state || {from: {pathname: "/business-admin/home"}};
-            navigate(from);
+                    const {from} = location.state || {from: {pathname: "/business-admin/home"}};
+                    navigate(from);
+                }
+            })
+
         } catch (err) {
             console.error(err)
         }

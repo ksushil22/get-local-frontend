@@ -1,0 +1,29 @@
+.navbar-item {
+    cursor: pointer;
+    height: 75px;
+    align-content: center;
+    padding: 10px;
+    transition: all ease-in-out 0.3s;
+}
+.navbar-item:hover {
+    background: white;
+    box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s;
+}
+
+.drawer-nav-item:focus .background-overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.nav-bar-drawer .ant-drawer-header {
+    border-bottom: none !important;
+}
