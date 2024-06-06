@@ -40,31 +40,50 @@ const items = [
     }
 ];
 
-const DrawerNavBar = () => {
-    const [open, setOpen] = useState(false)
-    const navigate = useNavigate();
-
-    return <div
+const Template1NavBar = () => {
+    const screens = useBreakpoint();
+    const businessId = useSelector((state) => state.business.businessId);
+    const marginLeftLogo = screens.lg || screens.xl || screens.xxl ? 50 : 20;
+    const Logo = () => (<img
+        height={75}
+        width={'auto'}
         style={{
-            cursor: "pointer",
-            float: "right",
-            alignItems: 'right',
-            justifyContent: 'right',
-            display: 'flex', // Use flex layout for the container
-            flexWrap: 'wrap', // Allow items to wrap to the next line if needed
-            width: '100%',
-        }}>
+            marginLeft: marginLeftLogo,
+            cursor: 'pointer'
+        }}
+        loading={"lazy"}
+        onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
+        src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`}
+        alt={businessId}
+    />)
+
+    const navigate = useNavigate()
+
+
+    const DrawerNavBar = () => {
+        const [open, setOpen] = useState(false)
+
+        return <div
+            style={{
+                cursor: "pointer",
+                float: "right",
+                alignItems: 'right',
+                justifyContent: 'right',
+                display: 'flex', // Use flex layout for the container
+                flexWrap: 'wrap', // Allow items to wrap to the next line if needed
+                width: '100%',
+            }}>
             <div
                 onClick={() => setOpen(true)}>
                 <FontAwesomeIcon
                     icon={open ? faXmark: faBars} size={'lg'}/>
             </div>
             <Drawer
+                rootClassName={"nav-bar-drawer"}
                 placement={'left'}
-                classNames={['nav-bar-drawer']}
                 open={open}
                 onClose={() => setOpen(false)}
-                claa
+                extra={<Logo />}
 
             >
                 <List
@@ -86,52 +105,46 @@ const DrawerNavBar = () => {
                     )}
                 />
             </Drawer>
-    </div>
-}
+        </div>
+    }
 
-const ListNavBar = () => {
+    const ListNavBar = () => {
 
-    return <List
-        style={{
-            background: 'none',
-            color: 'black',
-            float: 'right',
-            alignItems: 'right',
-            justifyContent: 'right',
-            marginRight: 100,
-            display: 'flex', // Use flex layout for the container
-            flexWrap: 'wrap', // Allow items to wrap to the next line if needed
-            width: '100%',
-            height: 75
-        }}
-        grid={{ gutter: 24, column: items.length }}
-        dataSource={items}
-        size={"large"}
-        renderItem={item => (
-            <div
-                className={'navbar-item'}
-                style={{
-                    display: 'inline-block',
-                    marginRight: 20,
-                    fontSize: 'medium',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    minWidth: 100,
-                    maxWidth: '300px',
-                    textAlign: 'center',
-                }}><span>{item.icon} {item.label}</span></div>
-        )}
-    />
+        return <List
+            style={{
+                background: 'none',
+                color: 'black',
+                float: 'right',
+                alignItems: 'right',
+                justifyContent: 'right',
+                marginRight: 100,
+                display: 'flex', // Use flex layout for the container
+                flexWrap: 'wrap', // Allow items to wrap to the next line if needed
+                width: '100%',
+                height: 75
+            }}
+            grid={{ gutter: 24, column: items.length }}
+            dataSource={items}
+            size={"large"}
+            renderItem={item => (
+                <div
+                    className={'navbar-item'}
+                    style={{
+                        display: 'inline-block',
+                        marginRight: 20,
+                        fontSize: 'medium',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        minWidth: 100,
+                        maxWidth: '300px',
+                        textAlign: 'center',
+                    }}><span>{item.icon} {item.label}</span></div>
+            )}
+        />
+    }
 
-}
-
-const Template1NavBar = () => {
-    const screens = useBreakpoint();
-    const businessId = useSelector((state) => state.business.businessId);
-    const NavBar = screens.lg || screens.xl || screens.xxl ? ListNavBar : DrawerNavBar;
-    const marginLeftLogo = screens.lg || screens.xl || screens.xxl ? 50 : 20;
-    const navigate = useNavigate()
+    const NavBar = screens.lg || screens.xl || screens.xxl ? ListNavBar : DrawerNavBar ;
 
     return <div style={{
         background: COLORS.PRIMARY_BACKGROUND,
@@ -142,17 +155,7 @@ const Template1NavBar = () => {
         alignItems: 'center',
         padding: '0 20px'
     }}>
-        <img
-            height={75}
-            width={'auto'}
-            style={{
-                marginLeft: marginLeftLogo,
-                cursor: 'pointer'
-            }}
-            onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
-            src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`}
-            alt={businessId}
-        />
+        <Logo />
         <div style={{
             flex: 1,
             height: 75,
