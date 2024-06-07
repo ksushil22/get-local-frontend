@@ -11,11 +11,7 @@ const Template1Layout = () => {
             minHeight: '100vh'
         }}>
             <Template1NavBar />
-            <Content
-                style={{
-                    padding: 20
-                }}
-            >
+            <Content>
                 <Outlet />
             </Content>
             <Footer>
