@@ -10,8 +10,9 @@ import CustomPopover from "../util/CustomPopover";
 import BusinessSelector from "../util/BusinessSelector";
 import BusinessHeading from "../util/BusinessHeading";
 import Timings from "./Timings";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
+import ContactInformation from "./ContactInformation";
 
 export default function Home() {
     const {data: userProfileData, isLoading} = useUserProfileQuery();
@@ -63,6 +64,7 @@ export default function Home() {
 
             </div>
             <AboutUs aboutUs={businessData?.aboutUs} isLoading={loadingBusinessData}/>
+            <ContactInformation businessId={businessId}/>
             <div style={{
                 width: '100%'
             }}>

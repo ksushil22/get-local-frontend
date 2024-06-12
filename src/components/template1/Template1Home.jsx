@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Carousel, Row} from "antd";
 import {useGetBusinessImagesQuery} from "../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import GetCarousel from "../util/carousel/GetCarousel";
+import {COLORS} from "./constants";
 
 const Template1Home = ({
    businessId
@@ -30,11 +31,12 @@ const Template1Home = ({
 
     return <Row>
         {loadingCarouselImages ? (
-            <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA} />
+            <GetLoader spinner={SPINNERS.MOVING_DOT_SPINNER} display={DISPLAY.AREA} />
         ) : (
-            <GetCarousel images={images} />
+            <GetCarousel images={images} background={COLORS.PRIMARY_BACKGROUND}/>
         )}
-
+        <Row>
+        </Row>
     </Row>
 }
 

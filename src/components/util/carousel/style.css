@@ -1,16 +1,3 @@
-.carousel {
-    position: relative;
-    border: 10px solid white;
-    background: #808080;
-    width: 100%;
-    height: calc(100vh - 75px); /* Adjust height to account for navbar */
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-}
-
 .carousel-inner {
     display: flex;
     width: 100%;

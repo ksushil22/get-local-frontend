@@ -2,7 +2,7 @@ import React from 'react'
 import BusinessHeading from "../util/BusinessHeading";
 import {useGetBusinessReviewsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import {Image, List, Row, Space} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +22,7 @@ const BusinessReview = () => {
         isLoading: loadingReviews
     } = useGetBusinessReviewsQuery({businessId: businessId})
     if (loadingReviews) {
-        return <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
+        return <GetLoader spinner={SPINNERS.SKELETON_LIST} display={DISPLAY.AREA}/>
     }
 
     return (

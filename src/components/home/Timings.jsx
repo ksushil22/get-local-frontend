@@ -7,7 +7,7 @@ import {
     useUpdateBusinessTimingsMutation
 } from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import "./home.css"
 import CustomPopover from "../util/CustomPopover";
 
@@ -134,7 +134,7 @@ const TimingsForm = () => {
 
     return (
         (isLoadingBusinessTimings) ?
-            <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/> :
+            <GetLoader spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/> :
             (
                 <div className={"timings-container"}>
                     <div style={{
@@ -239,7 +239,7 @@ const Timings = ({businessId}) => {
             <p style={{fontSize: '20px'}}>Business Timings</p>
             {businessId ?
                 <TimingsForm businessId={businessId}/> :
-                <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
+                <GetLoader spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
             }
         </div>
     );

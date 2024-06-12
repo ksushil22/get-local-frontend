@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Input, Select} from "antd";
 import {useGetTypesQuery, useRegisterBusinessMutation} from "../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logOut} from "../../redux/slicers/authSlicer";
@@ -14,7 +14,7 @@ export default function () {
     const [isRegistrationModalVisible, setIsRegistrationModalVisible] = useState(false);
 
     if (isLoading) {
-        return <CustomSpinner
+        return <GetLoader
             display={DISPLAY.AREA}
             spinner={SPINNERS.SKELETON}
         />
@@ -51,6 +51,7 @@ export default function () {
             <Form.Item
                 name={'name'}
                 rules={rules}
+                validateTrigger="onBlur"
             >
                 <div className={'hover-input'}>
                     <Input rootClassName={"authentication"} placeholder={'Business Name'}/>
@@ -59,6 +60,7 @@ export default function () {
             <Form.Item
                 name={'businessType'}
                 rules={rules}
+                validateTrigger="onBlur"
             >
                 <div className={'hover-input'} style={{border: '1px solid #f2f2f2', color: '#ece7e2'}}>
                     <Select
@@ -73,6 +75,7 @@ export default function () {
             <Form.Item
                 name={'street'}
                 rules={rules}
+                validateTrigger="onBlur"
             >
                 <div className={'hover-input'}>
                     <Input rootClassName={"authentication"} placeholder={'Street Address'}/>
@@ -81,6 +84,7 @@ export default function () {
             <Form.Item
                 name={'city'}
                 rules={rules}
+                validateTrigger="onBlur"
             >
                 <div className={'hover-input'}>
                     <Input rootClassName={"authentication"} placeholder={'City'}/>
@@ -89,6 +93,7 @@ export default function () {
             <Form.Item
                 name={'province'}
                 rules={rules}
+                validateTrigger="onBlur"
             >
                 <div className={'hover-input'}>
                     <Input rootClassName={"authentication"} placeholder={'State/Province'}/>

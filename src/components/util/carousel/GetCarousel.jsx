@@ -1,15 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
+import {current} from "@reduxjs/toolkit";
+import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 
-const GetCarousel = ({ images, timer = 5000}) => {
+const GetCarousel = ({ images, time = 5000, background = "#808080" }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [autoRotationCompleted, setAutoRotationCompleted] = useState(false);
+
+    const screens = useBreakpoint();
+    const largeScreen = (screens.md || screens.lg || screens.xl || screens.xxl);
 
     useEffect(() => {
+        if (!autoRotationCompleted) {
             const timer = setTimeout(() => {
                 goToNext();
-            }, 3000)
-            return () => clearTimeout(timer)
-    }, [currentIndex]);
+            }, time);
+            return () => clearTimeout(timer);
+        }
+    }, [currentIndex, autoRotationCompleted, time]);
 
     const goToPrevious = () => {
         const isFirstSlide = currentIndex === 0;
@@ -19,8 +27,11 @@ const GetCarousel = ({ images, timer = 5000}) => {
 
     const goToNext = () => {
         const isLastSlide = currentIndex === images.length - 1;
+        if (isLastSlide) {
+            setAutoRotationCompleted(true);
+        }
         const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
+        setCurrentIndex(newIndex)
     };
 
     const goToSlide = (index) => {
@@ -28,7 +39,18 @@ const GetCarousel = ({ images, timer = 5000}) => {
     };
 
     return (
-        <div className="carousel">
+        <div style={{
+            background: background,
+            position: 'relative',
+            border: '10px solid white',
+            width: '100%',
+            height: largeScreen ? 'calc(100vh - 120px)' : '80vh',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 0
+        }} className="carousel">
             <div
                 className="carousel-inner"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}

@@ -13,7 +13,7 @@ import NoDataGIF from "../util/NoDataGIF";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDeleteLeft, faEdit, faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
 import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import DeleteConfirmationModal from "../util/modals/DeleteConfirmationModal";
 
@@ -147,12 +147,14 @@ const EmployeeInfo = () => {
                 <Form.Item
                     name={"firstName"}
                     rules={rules}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Fist Name"} />
                 </Form.Item>
                 <Form.Item
                     rules={rules}
                     name={"lastName"}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Last Name"} />
                 </Form.Item>
@@ -163,6 +165,11 @@ const EmployeeInfo = () => {
                 </Form.Item>
                 <Form.Item
                     name={"email"}
+                    rules={[{
+                        type: 'email',
+                        message: 'Invalid email format'
+                    }]}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Email"} />
                 </Form.Item>
@@ -175,6 +182,7 @@ const EmployeeInfo = () => {
 
                     initialValue={"Choose from options"}
                     rules={rules}
+                    validateTrigger="onBlur"
                     name={"position"}>
                     <Select
                         rootClassName={"employee-select"}
@@ -255,7 +263,7 @@ const EmployeeInfo = () => {
             <EmployeeForm />
         </div>
         <div className={"employee-list"}>
-            {loadingEmployeeList ? <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA} /> :
+            {loadingEmployeeList ? <GetLoader spinner={SPINNERS.SKELETON_LIST} display={DISPLAY.AREA} /> :
                 <List
                     itemLayout="vertical"
                     style={{

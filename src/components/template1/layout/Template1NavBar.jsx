@@ -44,18 +44,19 @@ const Template1NavBar = () => {
     const screens = useBreakpoint();
     const businessId = useSelector((state) => state.business.businessId);
     const marginLeftLogo = screens.lg || screens.xl || screens.xxl ? 50 : 20;
-    const Logo = () => (<img
-        height={75}
-        width={'auto'}
-        style={{
-            marginLeft: marginLeftLogo,
-            cursor: 'pointer'
-        }}
-        loading={"lazy"}
-        onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
-        src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`}
-        alt={businessId}
-    />)
+    const Logo = () => (
+            <img
+                height={60}
+                width={'auto'}
+                style={{
+                    marginLeft: marginLeftLogo,
+                    cursor: 'pointer'
+                }}
+                loading={"lazy"}
+                onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
+                src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`}
+                alt={businessId}
+            />)
 
     const navigate = useNavigate()
 
@@ -80,7 +81,7 @@ const Template1NavBar = () => {
             </div>
             <Drawer
                 rootClassName={"nav-bar-drawer"}
-                placement={'left'}
+                placement={'right'}
                 open={open}
                 onClose={() => setOpen(false)}
                 extra={<Logo />}
@@ -121,7 +122,7 @@ const Template1NavBar = () => {
                 display: 'flex', // Use flex layout for the container
                 flexWrap: 'wrap', // Allow items to wrap to the next line if needed
                 width: '100%',
-                height: 75
+                height: 60
             }}
             grid={{ gutter: 24, column: items.length }}
             dataSource={items}
@@ -132,7 +133,6 @@ const Template1NavBar = () => {
                     style={{
                         display: 'inline-block',
                         marginRight: 20,
-                        fontSize: 'medium',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -158,7 +158,7 @@ const Template1NavBar = () => {
         <Logo />
         <div style={{
             flex: 1,
-            height: 75,
+            height: 60,
             display: 'flex',
             alignItems: 'center',
         }}>

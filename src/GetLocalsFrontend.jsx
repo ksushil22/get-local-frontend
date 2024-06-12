@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import {BrowserRouter, Navigate, Route, Router, Routes} from 'react-router-dom';
-import CustomSpinner from './components/util/customSpinner/CustomSpinner';
+import GetLoader from './components/util/customSpinner/GetLoader';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
@@ -24,7 +24,7 @@ const Template1HomeScreen = lazy(async () => import("./screens/template1/Templat
 
 const GetLocalsRoutes = () => {
     return (
-        <Suspense fallback={<CustomSpinner />}>
+        <Suspense fallback={<GetLoader />}>
             <Provider store={store}>
                 <Routes>
                     <Route path={"*"} element={<Navigate to={"/authenticate"}/>} />

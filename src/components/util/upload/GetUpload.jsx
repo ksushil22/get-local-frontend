@@ -4,7 +4,7 @@ import {Typography, Upload} from "antd";
 import ModalPopup from "../modals/ModalPopup";
 import "./upload.css";
 import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../customSpinner/GetLoader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
 
@@ -125,7 +125,7 @@ export default function ({
     }
 
     if (loadingImages) {
-        return <CustomSpinner
+        return <GetLoader
             spinner={SPINNERS.SKELETON}
             display={DISPLAY.AREA}/>
     }

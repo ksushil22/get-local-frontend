@@ -127,4 +127,14 @@ body {
     display: none;
 }
 
+.instagram:hover {
+    color: #C13584 !important;
+}
+
+.facebook:hover {
+    color: #1877F2 !important;
+}
+.youtube:hover {
+    color: #FF0000 !important;
+}
 

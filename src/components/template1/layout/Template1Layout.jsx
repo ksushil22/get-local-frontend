@@ -3,6 +3,7 @@ import {Layout, Row} from "antd";
 import Template1NavBar from "./Template1NavBar";
 import {Content, Footer} from "antd/es/layout/layout";
 import {Outlet} from "react-router-dom";
+import BusinessContactInformation from "./BusinessContactInformation";
 
 const Template1Layout = () => {
 
@@ -10,6 +11,7 @@ const Template1Layout = () => {
         <Layout style={{
             minHeight: '100vh'
         }}>
+            <BusinessContactInformation />
             <Template1NavBar />
             <Content>
                 <Outlet />

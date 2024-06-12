@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateBusinessItemCategoryMutation, useGetBusinessItemCategoriesQuery } from "../../redux/services/businessAPI";
-import CustomSpinner, { DISPLAY } from "../util/customSpinner/CustomSpinner";
+import GetLoader, { DISPLAY } from "../util/customSpinner/GetLoader";
 import {Button, Empty, Form, Input, Row, Tabs} from "antd";
 import './businessMenu.css'
 import BusinessHeading from "../util/BusinessHeading";
@@ -56,7 +56,7 @@ export default function BusinessMenu({editing}) {
     };
 
     if (loadingBusinessCategories) {
-        return <CustomSpinner display={DISPLAY.FULLSCREEN} />;
+        return <GetLoader display={DISPLAY.FULLSCREEN} />;
     }
 
     function createCategory() {

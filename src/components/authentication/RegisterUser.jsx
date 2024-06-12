@@ -87,6 +87,7 @@ export default function ({
                 <Form.Item
                     name={'name'}
                     rules={rules}
+                    validateTrigger="onBlur"
                 >
                     <div className={'hover-input'}>
                         <Input rootClassName={"authentication"} placeholder={'Full name'} />
@@ -94,6 +95,7 @@ export default function ({
 
                 </Form.Item>
                 <Form.Item
+                    validateTrigger="onBlur"
                     name={'email'} rules={[
                     {
                         required: true,
@@ -109,6 +111,8 @@ export default function ({
                     </div>
                 </Form.Item>
                 <Form.Item
+                    rules={rules}
+                    validateTrigger="onBlur"
                     name={'password'} >
                     <div className={'hover-input'}>
                         <Input.Password
@@ -154,7 +158,9 @@ export default function ({
                     </div>
 
                 </Form.Item>
-                <Form.Item name={'confirmPassword'} rules={rules}>
+                <Form.Item
+                    validateTrigger="onBlur"
+                    name={'confirmPassword'} rules={rules}>
                     <div className={'hover-input'}>
                         <Input
                             rootClassName={"authentication"}
