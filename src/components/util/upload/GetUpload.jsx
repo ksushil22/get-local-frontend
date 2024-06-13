@@ -51,7 +51,7 @@ export default function ({
     const {
         data: images,
         isLoading: loadingImages
-    } = useGetBusinessImagesQuery({businessId, type}, {skip: type === "MENU"});
+    } = useGetBusinessImagesQuery({businessId, type}, {skip: (type === "MENU") || (type === 'EMPLOYEE')});
     const [deleteImage] = useDeleteImageMutation();
     const handleCancel = () => {
         setPreviewOpen(false);

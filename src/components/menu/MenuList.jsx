@@ -8,10 +8,10 @@ import {
 } from "../../redux/services/businessAPI";
 import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import GetUpload from "../util/upload/GetUpload";
-import {Badge, Button, Image, Form, Input, List, Space} from "antd";
+import {Button, Form, Image, Input, List, Space} from "antd";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faExclamation, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import DeleteConfirmationModal from "../util/modals/DeleteConfirmationModal";
 import "./businessMenu.css"
 import NoDataGIF from "../util/NoDataGIF";
@@ -94,8 +94,8 @@ export default function ({categoryId, editing = false}) {
                 accept="image/png, image/jpeg"
                 updateInitialList={true}
                 maxUploads={1}
-                setUploadImageId={setUploadedImageId}
-                initialFileList={updateImageFile}/>
+                initialFileList={updateImageFile}
+                setUploadImageId={setUploadedImageId}/>
         </Form.Item>
         <Form.Item
             name={"name"}

@@ -186,7 +186,10 @@ export const businessAPI = rootAPI.injectEndpoints({
                 method: 'PUT',
                 body: {...contactInformation}
             })
-        })
+        }),
+        getPublicBusinessInfo: builder.query({
+            query: ({businessId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/`
+        }),
     })
 });
 
@@ -215,5 +218,6 @@ export const {
     useDeleteEmployeeMutation,
     useGetTemplateInformationQuery,
     useGetContactInformationQuery,
-    useUpdateContactInformationMutation
+    useUpdateContactInformationMutation,
+    useGetPublicBusinessInfoQuery
 } = businessAPI

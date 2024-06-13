@@ -1,17 +1,31 @@
 import React, {useEffect, useState} from 'react';
-import {Carousel, Row} from "antd";
-import {useGetBusinessImagesQuery} from "../../redux/services/businessAPI";
+import {Row} from "antd";
+import {useGetBusinessImagesQuery, useGetPublicBusinessInfoQuery} from "../../redux/services/businessAPI";
 import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import GetCarousel from "../util/carousel/GetCarousel";
 import {COLORS} from "./constants";
+import AboutUsTemplate1 from "./AboutUsTemplate1";
 
 const Template1Home = ({
-   businessId
-}) => {
+                           businessId
+                       }) => {
+    const [images, setImages] = useState([]);
     const {data: carouselImages, isLoading: loadingCarouselImages} = useGetBusinessImagesQuery({
         'businessId': businessId, 'type': 'CAROUSEL'
     })
-    const [images, setImages] = useState([]);
+
+    const {
+        data: businessData,
+        isLoading: loadingBusinessData,
+        refetch: refetchBusinessInfo
+    } = useGetPublicBusinessInfoQuery({businessId: businessId}, {skip: businessId === null});
+
+    useEffect(() => {
+        if (businessId) {
+            refetchBusinessInfo()
+        }
+    }, [businessId, refetchBusinessInfo]);
+
     useEffect(() => {
         if (carouselImages) {
             const carouselImagesFormatted = [];
@@ -29,13 +43,17 @@ const Template1Home = ({
 
     }, [carouselImages, setImages])
 
+    if (loadingBusinessData || loadingCarouselImages) {
+        return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.MOVING_DOT_SPINNER}/>
+    }
     return <Row>
         {loadingCarouselImages ? (
-            <GetLoader spinner={SPINNERS.MOVING_DOT_SPINNER} display={DISPLAY.AREA} />
+            <GetLoader spinner={SPINNERS.MOVING_DOT_SPINNER} display={DISPLAY.AREA}/>
         ) : (
             <GetCarousel images={images} background={COLORS.PRIMARY_BACKGROUND}/>
         )}
         <Row>
+            <AboutUsTemplate1 about={businessData?.aboutUs} businessId={businessId}/>
         </Row>
     </Row>
 }

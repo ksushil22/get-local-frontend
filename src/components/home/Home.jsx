@@ -53,7 +53,7 @@ export default function Home() {
             <div>
                 <p style={{
                     fontSize:20
-                }}>Upload Logo</p>
+                }}>Business Logo</p>
                 <GetUpload
                     type={"LOGO"}
                     maxUploads={1}

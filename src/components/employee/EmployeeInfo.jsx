@@ -231,6 +231,8 @@ const EmployeeInfo = () => {
     }
 
     function setupUpdateItem(item) {
+        form.resetFields();
+        console.log("Clicked on edit")
         window.scroll({top: 0, left: 0, behavior: 'smooth' })
         setIsUpdating(true)
         if (item.imageId) {
@@ -244,6 +246,7 @@ const EmployeeInfo = () => {
             setInitialImageList([])
         }
         form.setFieldsValue(item)
+        form.setFieldValue("imageId", item?.imageId)
         setUpdateId(item.id)
     }
 
