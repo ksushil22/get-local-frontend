@@ -1,3 +1,4 @@
+import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
 
 export const MainHeadingStyle= {
     fontWeight: 'bolder',
@@ -22,4 +23,17 @@ export function formatPhoneNumber(phoneNumber) {
 export function getMapUrl(address) {
     const formattedAddress = encodeURIComponent(address)
     return `https://www.google.com/maps/search/?api=1&query=${formattedAddress}`;
+}
+
+export function getImageUrl(businessId, imageId) {
+    const BASE_URL = process.env.BASE_API_URL;
+    return `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${imageId}/`
+}
+
+export function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    console.log("going to ", sectionId)
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
 }

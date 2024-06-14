@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Drawer, List} from "antd";
+import {Drawer, Image, List} from "antd";
 import {templateIds} from "../../util/TemplateIdConstants";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {COLORS} from "../constants";
@@ -9,9 +9,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faBookOpen, faCommentDots, faHouseUser, faStar, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import "./style.css"
+import {scrollToSection} from "../../util/Commons";
+import {useGetBusinessLogoQuery} from "../../../redux/services/businessAPI";
 
 const BASE_URL = process.env.BASE_API_URL;
 const TEMPLATE_ID = templateIds.Template1;
+
 
 const items = [
     {
@@ -33,10 +36,10 @@ const items = [
         link: `/${TEMPLATE_ID}/about-us/`
     },
     {
-        label: (<Link to={`${TEMPLATE_ID}/about-us`} style={{color: COLORS.PRIMARY_COLOR}}>About Us</Link>),
+        label: (<a onClick={() => scrollToSection('about-us')} style={{color: COLORS.PRIMARY_COLOR}}>About Us</a>),
         key: 'about-us',
         icon: <FontAwesomeIcon icon={faCommentDots}/>,
-        link: `/${TEMPLATE_ID}/about-us/`
+        callback: () => scrollToSection('about-us')
     }
 ];
 
@@ -44,19 +47,20 @@ const Template1NavBar = () => {
     const screens = useBreakpoint();
     const businessId = useSelector((state) => state.business.businessId);
     const marginLeftLogo = screens.lg || screens.xl || screens.xxl ? 50 : 20;
+    const {data: logo, isLoading: loadingLogo} = useGetBusinessLogoQuery({businessId})
     const Logo = () => (
-            <img
-                height={60}
-                width={'auto'}
-                style={{
-                    marginLeft: marginLeftLogo,
-                    cursor: 'pointer'
-                }}
-                loading={"lazy"}
-                onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
-                src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`}
-                alt={businessId}
-            />)
+        <img
+            height={60}
+            width={'auto'}
+            style={{
+                marginLeft: marginLeftLogo,
+                cursor: 'pointer'
+            }}
+            loading={"lazy"}
+            onClick={() => navigate(`/${TEMPLATE_ID}/home/`)}
+            src={logo?.url}
+            alt={businessId}
+        />)
 
     const navigate = useNavigate()
 
@@ -77,15 +81,17 @@ const Template1NavBar = () => {
             <div
                 onClick={() => setOpen(true)}>
                 <FontAwesomeIcon
-                    icon={open ? faXmark: faBars} size={'lg'}/>
+                    icon={open ? faXmark : faBars} size={'lg'}/>
             </div>
             <Drawer
                 rootClassName={"nav-bar-drawer"}
                 placement={'right'}
                 open={open}
                 onClose={() => setOpen(false)}
-                extra={<Logo />}
-
+                extra={<Logo/>}
+                styles={{
+                    backgroundColor: COLORS.PRIMARY_BACKGROUND
+                }}
             >
                 <List
                     dataSource={items}
@@ -94,7 +100,11 @@ const Template1NavBar = () => {
                         <List.Item
                             className={"drawer-nav-item"}
                             onClick={() => {
-                                navigate(item.link)
+                                if (item.callback) {
+                                    item.callback()
+                                } else {
+                                    navigate(item.link)
+                                }
                                 setOpen(false)
                             }}
                             style={{
@@ -124,11 +134,18 @@ const Template1NavBar = () => {
                 width: '100%',
                 height: 60
             }}
-            grid={{ gutter: 24, column: items.length }}
+            grid={{gutter: 24, column: items.length}}
             dataSource={items}
             size={"large"}
             renderItem={item => (
                 <div
+                    onClick={() => {
+                        if (item.callback) {
+                            item.callback()
+                        } else {
+                            navigate(item.link)
+                        }
+                    }}
                     className={'navbar-item'}
                     style={{
                         display: 'inline-block',
@@ -144,18 +161,21 @@ const Template1NavBar = () => {
         />
     }
 
-    const NavBar = screens.lg || screens.xl || screens.xxl ? ListNavBar : DrawerNavBar ;
+    const NavBar = screens.lg || screens.xl || screens.xxl ? ListNavBar : DrawerNavBar;
 
     return <div style={{
-        background: COLORS.PRIMARY_BACKGROUND,
+        backgroundColor: 'rgba(245,245,245,0.8)',
+        backdropFilter: 'blur(10px)',
         width: '100%',
         height: '100%',
         display: 'flex',
-        position: 'relative',
+        position: 'sticky',
         alignItems: 'center',
-        padding: '0 20px'
+        padding: '0 20px',
+        top: 0,
+        zIndex: 1000
     }}>
-        <Logo />
+        <Logo/>
         <div style={{
             flex: 1,
             height: 60,

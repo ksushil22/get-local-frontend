@@ -237,7 +237,7 @@ const EmployeeInfo = () => {
         setIsUpdating(true)
         if (item.imageId) {
             setInitialImageList([{
-                uid: item?.id,
+                uid: item?.imageId,
                 name: item?.firstName,
                 status: 'done',
                 url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}/`

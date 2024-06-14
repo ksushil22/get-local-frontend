@@ -190,6 +190,17 @@ export const businessAPI = rootAPI.injectEndpoints({
         getPublicBusinessInfo: builder.query({
             query: ({businessId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/`
         }),
+        getBusinessLogo: builder.query({
+            query: ({businessId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/logo/`,
+            transformResponse: (logo) => {
+                return {
+                    uid: logo?.id,
+                    name: logo?.name,
+                    status: 'done',
+                    url: `data:${logo?.extension};base64,${logo?.image}`
+                }
+            }
+        })
     })
 });
 
@@ -219,5 +230,6 @@ export const {
     useGetTemplateInformationQuery,
     useGetContactInformationQuery,
     useUpdateContactInformationMutation,
-    useGetPublicBusinessInfoQuery
+    useGetPublicBusinessInfoQuery,
+    useGetBusinessLogoQuery
 } = businessAPI

@@ -53,7 +53,10 @@ const Template1Home = ({
             <GetCarousel images={images} background={COLORS.PRIMARY_BACKGROUND}/>
         )}
         <Row>
-            <AboutUsTemplate1 about={businessData?.aboutUs} businessId={businessId}/>
+            <AboutUsTemplate1 about={businessData?.aboutUs}
+                              businessId={businessId}
+                              businessOwnerImageId={businessData?.ownerImageId}
+                              businessName={businessData?.name}/>
         </Row>
     </Row>
 }
