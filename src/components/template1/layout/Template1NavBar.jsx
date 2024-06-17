@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Drawer, Image, List} from "antd";
 import {templateIds} from "../../util/TemplateIdConstants";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import {COLORS} from "../constants";
+import {COLORS, StyledDiv} from "../constants";
 import {useSelector} from "react-redux";
 import {PUBLIC_BUSINESS_API} from "../../../redux/api_url";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -111,7 +111,9 @@ const Template1NavBar = () => {
                                 cursor: 'pointer'
                             }}
                         >
-                            {item.icon} {item.label}
+                            <StyledDiv>
+                                {item.icon} {item.label}
+                            </StyledDiv>
                         </List.Item>
                     )}
                 />
@@ -138,7 +140,7 @@ const Template1NavBar = () => {
             dataSource={items}
             size={"large"}
             renderItem={item => (
-                <div
+                <StyledDiv
                     onClick={() => {
                         if (item.callback) {
                             item.callback()
@@ -156,7 +158,7 @@ const Template1NavBar = () => {
                         minWidth: 100,
                         maxWidth: '300px',
                         textAlign: 'center',
-                    }}><span>{item.icon} {item.label}</span></div>
+                    }}><span>{item.icon} {item.label}</span></StyledDiv>
             )}
         />
     }

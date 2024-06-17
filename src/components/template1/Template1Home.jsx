@@ -3,8 +3,9 @@ import {Row} from "antd";
 import {useGetBusinessImagesQuery, useGetPublicBusinessInfoQuery} from "../../redux/services/businessAPI";
 import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import GetCarousel from "../util/carousel/GetCarousel";
-import {COLORS} from "./constants";
+import {COLORS, StyledDiv} from "./constants";
 import AboutUsTemplate1 from "./AboutUsTemplate1";
+import TeamTemplate1 from "./TeamTemplate1";
 
 const Template1Home = ({
                            businessId
@@ -46,19 +47,20 @@ const Template1Home = ({
     if (loadingBusinessData || loadingCarouselImages) {
         return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.MOVING_DOT_SPINNER}/>
     }
-    return <Row>
+    return <StyledDiv style={{
+        width: '100%'
+    }}>
         {loadingCarouselImages ? (
             <GetLoader spinner={SPINNERS.MOVING_DOT_SPINNER} display={DISPLAY.AREA}/>
         ) : (
             <GetCarousel images={images} background={COLORS.PRIMARY_BACKGROUND}/>
         )}
-        <Row>
-            <AboutUsTemplate1 about={businessData?.aboutUs}
-                              businessId={businessId}
-                              businessOwnerImageId={businessData?.ownerImageId}
-                              businessName={businessData?.name}/>
-        </Row>
-    </Row>
+        <AboutUsTemplate1 about={businessData?.aboutUs}
+                          businessId={businessId}
+                          businessOwnerImageId={businessData?.ownerImageId}
+                          businessName={businessData?.name}/>
+        <TeamTemplate1 businessId={businessId} />
+    </StyledDiv>
 }
 
 export default Template1Home;

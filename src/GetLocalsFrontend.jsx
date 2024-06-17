@@ -11,6 +11,7 @@ import GetLayout from "./components/layout/GetLayout";
 import {ConfigProvider} from "antd";
 import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
 import Template1Layout from "./components/template1/layout/Template1Layout";
+import "animate.css/animate.compat.css";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));

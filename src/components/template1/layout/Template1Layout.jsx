@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Button, Layout, Row} from "antd";
+import {Layout, Row} from "antd";
 import Template1NavBar from "./Template1NavBar";
-import {Content, Footer} from "antd/es/layout/layout";
 import {Outlet} from "react-router-dom";
 import BusinessContactInformation from "./BusinessContactInformation";
+import {StyledContent, StyledDiv, StyledFooter, StyledLayout} from "../constants";
 
 const Template1Layout = () => {
 
@@ -36,21 +36,21 @@ const Template1Layout = () => {
             minHeight: '100vh',
             backgroundColor: 'white'
         }}>
-            <BusinessContactInformation />
-            <Template1NavBar />
-            <Content>
-                <Outlet />
-            </Content>
-            <Footer>
-                <Row style={{
+            <BusinessContactInformation/>
+            <Template1NavBar/>
+            <StyledContent>
+                <Outlet/>
+            </StyledContent>
+            <StyledFooter>
+                <StyledDiv style={{
                     alignItems: 'center',
                     justifyContent: 'center',
                     display: 'flex'
                 }}>
                     © 2024 Neo Corporation, All rights reserved.
-                </Row>
-            </Footer>
-            <div onClick={handleBackToTop} style={{
+                </StyledDiv>
+            </StyledFooter>
+            <StyledDiv onClick={handleBackToTop} style={{
                 position: 'fixed',
                 top: '90%',
                 right: '2%',
@@ -61,10 +61,11 @@ const Template1Layout = () => {
                 padding: 10,
                 cursor: 'pointer',
                 borderRadius: 5,
-                visibility: showBackToTop ? 'visible': 'hidden',
+                visibility: showBackToTop ? 'visible' : 'hidden',
                 opacity: showBackToTop ? 1 : 0,
                 transition: 'opacity 0.3s ease-in-out'
-            }} > &#x2191; Back to top </div>
+            }}> &#x2191; Back to top
+            </StyledDiv>
         </Layout>)
 }
 

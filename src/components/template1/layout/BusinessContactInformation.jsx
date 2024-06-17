@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import {COLORS} from "../constants";
+import {COLORS, StyledDiv} from "../constants";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {useGetContactInformationQuery} from "../../../redux/services/businessAPI";
 import {IconLink} from "../Util";
@@ -25,7 +25,7 @@ const BusinessContactInformation = () => {
     const mapUrl = getMapUrl(contactInformation?.address)
 
 
-    return <div className={"container"} style={BusinessContactInformationStyles.container}>
+    return <StyledDiv className={"container"} style={BusinessContactInformationStyles.container}>
         <div className={'content'} style={largeScreen? BusinessContactInformationStyles.contentMobile : BusinessContactInformationStyles.content}>
             <div className={"contact-info"} style={{
                 margin: '0 10px',
@@ -62,7 +62,7 @@ const BusinessContactInformation = () => {
                            href={contactInformation?.youtubeUrl}/>}
             </div>
         </div>
-    </div>
+    </StyledDiv>
 
 }
 
