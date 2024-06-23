@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 
-const GetRating = ({ onSelect, readOnly, initialRating }) => {
+const GetRating = ({ onSelect, readOnly, initialRating, color='var(--primary-color)' }) => {
     const [rating, setRating] = useState(initialRating || null);
     const [hoveredRating, setHoveredRating] = useState(null);
 
@@ -44,7 +44,7 @@ const GetRating = ({ onSelect, readOnly, initialRating }) => {
                     onMouseLeave={handleMouseLeave}
                     style={{
                         cursor: readOnly ? 'default' : 'pointer',
-                        color: (hoveredRating || rating) >= value ? 'var(--primary-color)' : 'lightgray',
+                        color: (hoveredRating || rating) >= value ? color : 'lightgray',
                         fontSize: 'x-large',
                     }}
                 >

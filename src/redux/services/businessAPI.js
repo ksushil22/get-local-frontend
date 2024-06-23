@@ -56,7 +56,10 @@ export const businessAPI = rootAPI.injectEndpoints({
             invalidatesTags: ['categories']
         }),
         getMenuItems: builder.query({
-            query: ({businessId, categoryId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/item-category/${categoryId}/item/`,
+            query: ({
+                        businessId,
+                        categoryId
+                    }) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/item-category/${categoryId}/item/`,
             transformResponse: (items) => {
                 const transformedData = [];
                 items?.map((item) => {
@@ -72,7 +75,7 @@ export const businessAPI = rootAPI.injectEndpoints({
                     transformedData.push({
                         'id': item.id,
                         'name': item.name,
-                        'displayName': item.name+" - "+item.currency+item.price,
+                        'displayName': item.name + " - " + item.currency + item.price,
                         'ingredients': item.ingredients,
                         'description': item.description,
                         'price': item.price,
@@ -99,13 +102,13 @@ export const businessAPI = rootAPI.injectEndpoints({
             invalidatesTags: ['menu-items']
         }),
         getBusinessReviews: builder.query({
-            query:({businessId}) => ({
+            query: ({businessId}) => ({
                 url: `${BASE_URL}${BUSINESS_API}${businessId}/reviews/`,
                 method: 'GET'
             })
         }),
         getBusinessTimings: builder.query({
-            query:({businessId}) => ({
+            query: ({businessId}) => ({
                 url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/timings/`,
                 method: 'GET'
             })
@@ -158,6 +161,33 @@ export const businessAPI = rootAPI.injectEndpoints({
                 url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/employee-info/`,
                 method: 'GET'
             }),
+            transformResponse: (items) => {
+                const transformedData = [];
+                items?.map((item) => {
+                    let image = item.imageDTO;
+                    if (image) {
+                        image = {
+                            uid: image?.id,
+                            name: image?.name,
+                            status: 'done',
+                            url: `data:${image?.extension};base64,${image?.image}`
+                        }
+                    }
+                    transformedData.push({
+                        'id': item.id,
+                        'firstName': item.firstName,
+                        'lastName': item.lastName,
+                        'displayName': item.firstName + " " + item.lastName,
+                        'phoneNo': item.phoneNo,
+                        'description': item.description,
+                        'email': item.email,
+                        'position': item.position,
+                        'image': image,
+                        'imageId': item.imageId
+                    })
+                })
+                return transformedData;
+            },
             providesTags: ['employee-info']
         }),
         deleteEmployee: builder.mutation({
@@ -200,6 +230,13 @@ export const businessAPI = rootAPI.injectEndpoints({
                     url: `data:${logo?.extension};base64,${logo?.image}`
                 }
             }
+        }),
+        sendBusinessReview: builder.mutation({
+            query: ({businessId, review}) => ({
+                url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/review/`,
+                method: 'POST',
+                body: review
+            })
         })
     })
 });
@@ -231,5 +268,6 @@ export const {
     useGetContactInformationQuery,
     useUpdateContactInformationMutation,
     useGetPublicBusinessInfoQuery,
-    useGetBusinessLogoQuery
+    useGetBusinessLogoQuery,
+    useSendBusinessReviewMutation
 } = businessAPI

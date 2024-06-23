@@ -34,6 +34,22 @@ export function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     console.log("going to ", sectionId)
     if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
+        const sectionHeight = section.getBoundingClientRect().height;
+        const viewportHeight = window.innerHeight;
+
+        if (sectionHeight < viewportHeight) {
+            // Center the section
+            const offset = (viewportHeight - sectionHeight) / 2;
+            window.scrollTo({
+                top: section.offsetTop - offset,
+                behavior: 'smooth'
+            });
+        } else {
+            // Leave 70px from the top
+            window.scrollTo({
+                top: section.offsetTop - 70,
+                behavior: 'smooth'
+            });
+        }
     }
 }

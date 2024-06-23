@@ -92,6 +92,7 @@ const ReviewCards = ({item, businessId}) => {
             </Space>
         ]}
         extra={
+            item.imageId ?
             <Image
                 width={200}
                 alt={item.fullName}
@@ -100,7 +101,7 @@ const ReviewCards = ({item, businessId}) => {
                     borderRadius: '5px'
                 }}
                 loading={"lazy"}
-            />}
+            /> : null}
         key={item.id}
     >
         <List.Item.Meta
@@ -108,7 +109,7 @@ const ReviewCards = ({item, businessId}) => {
             description={
                 <GetRating readOnly={true} initialRating={item.rating} onSelect={() => {}}/>}
         />
-        <p style={{fontSize: 'large'}}>{item.comment}</p>
+        <p>{item.comment}</p>
     </List.Item>
 }
 

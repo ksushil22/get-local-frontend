@@ -3,7 +3,7 @@ import {COLORS} from "./constants";
 import {Image} from "antd";
 import {getImageUrl} from "../util/Commons";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import ScrollAnimation from 'react-animate-on-scroll';
+import GetAnimation from "../util/GetAnimation";
 
 const AboutUsTemplate1 = ({about, businessOwnerImageId, businessId, businessName}) => {
     const imageUrl = getImageUrl(businessId, businessOwnerImageId)
@@ -29,7 +29,7 @@ const AboutUsTemplate1 = ({about, businessOwnerImageId, businessId, businessName
                      justifyContent: 'center',
                      flex: screens.md ? '0 0 40%' : '1'}}>
 
-                <ScrollAnimation
+                <GetAnimation
                     animateOnce={true}
                     animateIn={"fadeInLeft"}
                     duration={1}>
@@ -44,7 +44,7 @@ const AboutUsTemplate1 = ({about, businessOwnerImageId, businessId, businessName
                         loading="lazy"
                         preview={false}
                     />
-                </ScrollAnimation>
+                </GetAnimation>
             </div>
             <div className="about-us-container" style={{
                 flex: 1,
@@ -56,21 +56,24 @@ const AboutUsTemplate1 = ({about, businessOwnerImageId, businessId, businessName
                 flexWrap: 'wrap'
             }}>
 
-                <ScrollAnimation
+                <GetAnimation
                     animateIn={"fadeInRight"}
                     animateOnce={true}
                     duration={1}>
-                    <h1 style={{
+                    <span style={{
                         position: 'relative',
                         top: 10,
                         marginTop: 0,
                         color: COLORS.PRIMARY_COLOR,
-                        whiteSpace: 'nowrap'
-                    }}>About <span style={{textTransform: 'uppercase'}}>{businessName}</span></h1>
-                    <p style={{ color: COLORS.PRIMARY_COLOR }}> {/* Vertically center p */}
+                        textAlign: 'center',
+                        fontSize: 'xxx-large',
+                        fontWeight: 'bolder',
+                        textTransform: 'uppercase',
+                    }}>{businessName}</span>
+                    <p style={{ color: COLORS.PRIMARY_COLOR }}>
                         {about}
                     </p>
-                </ScrollAnimation>
+                </GetAnimation>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import GetCarousel from "../util/carousel/GetCarousel";
 import {COLORS, StyledDiv} from "./constants";
 import AboutUsTemplate1 from "./AboutUsTemplate1";
 import TeamTemplate1 from "./TeamTemplate1";
+import ReviewTemplate1 from "./ReviewTemplate1";
 
 const Template1Home = ({
                            businessId
@@ -60,6 +61,7 @@ const Template1Home = ({
                           businessOwnerImageId={businessData?.ownerImageId}
                           businessName={businessData?.name}/>
         <TeamTemplate1 businessId={businessId} />
+        <ReviewTemplate1 />
     </StyledDiv>
 }
 

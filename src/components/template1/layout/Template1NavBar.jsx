@@ -30,13 +30,13 @@ const items = [
         link: `/${TEMPLATE_ID}/menu/`
     },
     {
-        label: (<Link to={`${TEMPLATE_ID}/review`} style={{color: COLORS.PRIMARY_COLOR}}>Review</Link>),
+        label: (<span style={{color: COLORS.PRIMARY_COLOR}}>Review</span>),
         key: 'reviews',
         icon: <FontAwesomeIcon icon={faStar}/>,
-        link: `/${TEMPLATE_ID}/about-us/`
+        callback: () => scrollToSection('review')
     },
     {
-        label: (<a onClick={() => scrollToSection('about-us')} style={{color: COLORS.PRIMARY_COLOR}}>About Us</a>),
+        label: (<span style={{color: COLORS.PRIMARY_COLOR}}>About Us</span>),
         key: 'about-us',
         icon: <FontAwesomeIcon icon={faCommentDots}/>,
         callback: () => scrollToSection('about-us')
