@@ -24,5 +24,3 @@ const businessSlice = createSlice({
 export const { setCurrentBusiness, removeBusiness } = businessSlice.actions;
 
 export default businessSlice.reducer;
-
-export const selectCurrentBusiness = (state) => state.business.businessId;

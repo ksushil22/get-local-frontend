@@ -12,7 +12,7 @@ import GetLoader, {SPINNERS} from "../../util/customSpinner/GetLoader";
 import "./style.css"
 
 const BusinessContactInformation = () => {
-    const businessId = useSelector((state) => state.business.businessId);
+    const businessId = useSelector((state) => state.templateBusiness.businessId);
 
     const {data: contactInformation, isLoading: loadingContactInformation}
         = useGetContactInformationQuery({businessId: businessId})
