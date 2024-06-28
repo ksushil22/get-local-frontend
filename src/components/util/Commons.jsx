@@ -1,4 +1,5 @@
 import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
+import {useLocation} from "react-router-dom";
 
 export const MainHeadingStyle= {
     fontWeight: 'bolder',
@@ -32,7 +33,6 @@ export function getImageUrl(businessId, imageId) {
 
 export function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
-    console.log("going to ", sectionId)
     if (section) {
         const sectionHeight = section.getBoundingClientRect().height;
         const viewportHeight = window.innerHeight;

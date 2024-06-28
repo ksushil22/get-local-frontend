@@ -8,7 +8,7 @@ const templateBusiness = createSlice({
     name: "templateBusiness",
     initialState,
     reducers: {
-        setCurrentBusiness: (state, action) => {
+        setCurrentTemplateBusiness: (state, action) => {
             state.businessId = action.payload.id;
 
             localStorage.setItem("businessId", action.payload.id);
@@ -16,13 +16,11 @@ const templateBusiness = createSlice({
         removeBusiness: (state) => {
             state.businessId = null;
 
-            sessionStorage.removeItem("businessId");
+            localStorage.removeItem("businessId");
         },
     },
 });
 
-export const { setCurrentBusiness, removeBusiness } = templateBusiness.actions;
+export const { setCurrentTemplateBusiness, removeBusiness } = templateBusiness.actions;
 
 export default templateBusiness.reducer;
-
-export const selectCurrentBusiness = (state) => state.business.businessId;

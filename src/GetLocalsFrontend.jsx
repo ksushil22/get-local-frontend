@@ -12,6 +12,7 @@ import {ConfigProvider} from "antd";
 import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
 import Template1Layout from "./components/template1/layout/Template1Layout";
 import "animate.css/animate.compat.css";
+import {templateIds} from "./components/util/TemplateIdConstants";
 
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
@@ -22,6 +23,7 @@ const ContactRequestScreen = lazy(async () => import('./screens/ContactRequestSc
 const EmployeeInfoScreen = lazy(async () => import('./screens/EmployeeInfoScreen'));
 const BusinessNavigator = lazy(async () => import("./screens/BusinessNavigator"));
 const Template1HomeScreen = lazy(async () => import("./screens/template1/Template1HomeScreen"));
+const Template1MenuScreen = lazy(async () => import("./screens/template1/Template1MenuScreen"));
 
 const GetLocalsRoutes = () => {
     return (
@@ -47,8 +49,9 @@ const GetLocalsRoutes = () => {
                     <Route path={":businessUsername/"} element={<BusinessNavigator />} />
                     {/* Routes for template 1 */}
                     <Route element={<Template1Layout />}>
-                        <Route path={"/067b7d1e-eb92-42e9-9ba0-1021933f6b83/"}>
+                        <Route path={`${templateIds.Template1}`}>
                             <Route path={"home/"} element={<Template1HomeScreen />}/>
+                            <Route path={"menu/"} element={<Template1MenuScreen />} /> 
                         </Route>
                     </Route>
                     <Route path="/" element={<Navigate to="/business-admin/home/" replace />} />

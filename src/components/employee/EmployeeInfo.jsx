@@ -109,7 +109,6 @@ const EmployeeInfo = () => {
 
         function submitEmployeeInfo() {
             if (isUpdating) {
-                console.log("Updating", form.getFieldsValue())
                 updateEmployeeInfo({
                     businessId,
                     'employeeDTO': {
@@ -232,7 +231,6 @@ const EmployeeInfo = () => {
 
     function setupUpdateItem(item) {
         form.resetFields();
-        console.log("Clicked on edit")
         window.scroll({top: 0, left: 0, behavior: 'smooth' })
         setIsUpdating(true)
         if (item.imageId) {

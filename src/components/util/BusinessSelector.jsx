@@ -45,7 +45,7 @@ export default function BusinessSelector() {
         onClick: handleMenuClick,
     };
     if (isLoading) {
-        return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.MOVING_DOT_SPINNER} />
+        return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.ROTATING_DOT_SPINNER} />
     }
 
     return (

@@ -7,10 +7,13 @@ import {COLORS, StyledDiv} from "./constants";
 import AboutUsTemplate1 from "./AboutUsTemplate1";
 import TeamTemplate1 from "./TeamTemplate1";
 import ReviewTemplate1 from "./ReviewTemplate1";
+import {useLocation} from "react-router-dom";
+import {scrollToSection} from "../util/Commons";
 
 const Template1Home = ({
                            businessId
                        }) => {
+    const location = useLocation()
     const [images, setImages] = useState([]);
     const {data: carouselImages, isLoading: loadingCarouselImages} = useGetBusinessImagesQuery({
         'businessId': businessId, 'type': 'CAROUSEL'
@@ -22,6 +25,16 @@ const Template1Home = ({
         refetch: refetchBusinessInfo
     } = useGetPublicBusinessInfoQuery({businessId: businessId}, {skip: businessId === null});
 
+    useEffect(() => {
+
+        if (location.state && location.state.scrollTo) {
+            const timer = setTimeout(() => {
+                location.state.scrollTo
+                scrollToSection(location.state.scrollTo)
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, []);
     useEffect(() => {
         if (businessId) {
             refetchBusinessInfo()
@@ -46,13 +59,13 @@ const Template1Home = ({
     }, [carouselImages, setImages])
 
     if (loadingBusinessData || loadingCarouselImages) {
-        return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.MOVING_DOT_SPINNER}/>
+        return <GetLoader display={DISPLAY.FULLSCREEN} spinner={SPINNERS.ROTATING_DOT_SPINNER}/>
     }
     return <StyledDiv style={{
         width: '100%'
     }}>
         {loadingCarouselImages ? (
-            <GetLoader spinner={SPINNERS.MOVING_DOT_SPINNER} display={DISPLAY.AREA}/>
+            <GetLoader spinner={SPINNERS.ROTATING_DOT_SPINNER} display={DISPLAY.AREA}/>
         ) : (
             <GetCarousel images={images} background={COLORS.PRIMARY_BACKGROUND}/>
         )}
@@ -66,14 +79,3 @@ const Template1Home = ({
 }
 
 export default Template1Home;
-
-const Template1HomeStyles = {
-    carouselContent: {
-        margin: 0,
-        height: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79'
-    }
-}

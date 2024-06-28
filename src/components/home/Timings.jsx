@@ -113,8 +113,6 @@ const TimingsForm = () => {
                 timings: updatedTiming
             })
         }
-
-        console.log(updatedTiming);
     };
 
     const handleGetFormattedTime = (value) => {
@@ -157,7 +155,6 @@ const TimingsForm = () => {
                                 minWidth: 150
                             }}
                             onChange={(value, option) => {
-                                console.log(value, option)
                                 updateBusinessOperationStatus({businessId: businessId, status: value})
                             }}
                         />
@@ -199,7 +196,6 @@ const TimingsForm = () => {
                                                 defaultChecked={businessTimings[day] !== 'CLOSED'}
                                                 onChange={(value) => {
                                                     if (!value) {
-                                                        console.log(day)
                                                         setCurrentData({
                                                             ...currentData,
                                                             [day]: null

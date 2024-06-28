@@ -20,13 +20,14 @@ export const SPINNERS = {
             </div>
         </div>
     ),
+    SKELETON_IMAGE: <Skeleton.Image style={{ marginLeft: 30 }} />,
     OTHER: 'other'
 };
 
 export default function GetLoader({
                                    display = DISPLAY.FULLSCREEN,
                                    text = "Loading...",
-                                   spinner = SPINNERS.MOVING_DOT_SPINNER,
+                                   spinner = SPINNERS.ROTATING_DOT_SPINNER,
                                    otherSpinner = null
                                }) {
     const containerStyle =

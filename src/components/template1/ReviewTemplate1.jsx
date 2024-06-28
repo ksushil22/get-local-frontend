@@ -82,7 +82,7 @@ const ReviewTemplate1 = ({}) => {
 
     const [rating, setRating] = useState(0);
     const [form] = Form.useForm();
-    const businessId = useSelector((state) => state.business.businessId);
+    const businessId = useSelector((state) => state.templateBusiness.businessId);
 
 
     useEffect(() => {

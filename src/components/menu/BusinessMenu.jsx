@@ -23,7 +23,6 @@ export default function BusinessMenu({editing}) {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        console.log(categories)
         if (categories) {
             const initialTabContent = {};
             categories.forEach(category => {
