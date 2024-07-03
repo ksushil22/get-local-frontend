@@ -16,8 +16,13 @@ export const StyledContent = styled(Content)`
     font-family: 'Oswald', sans-serif !important;
 `;
 
-export const StyledFooter = styled(Footer)`  
+export const StyledFooter = styled(Footer)`
     font-family: 'Oswald', sans-serif !important;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 `;
 
 export const StyledDiv = styled.div`

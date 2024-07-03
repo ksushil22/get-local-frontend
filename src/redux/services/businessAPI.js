@@ -237,6 +237,9 @@ export const businessAPI = rootAPI.injectEndpoints({
                 method: 'POST',
                 body: review
             })
+        }),
+        getFooterContent: builder.query({
+            query: ({businessId}) => `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/footer/`
         })
     })
 });
@@ -269,5 +272,6 @@ export const {
     useUpdateContactInformationMutation,
     useGetPublicBusinessInfoQuery,
     useGetBusinessLogoQuery,
-    useSendBusinessReviewMutation
+    useSendBusinessReviewMutation,
+    useGetFooterContentQuery
 } = businessAPI

@@ -11,10 +11,46 @@ import "./style.css"
 import {scrollToSection} from "../../util/Commons";
 import {useGetBusinessLogoQuery} from "../../../redux/services/businessAPI";
 import GetLoader, {DISPLAY, SPINNERS} from "../../util/customSpinner/GetLoader";
-
-const BASE_URL = process.env.BASE_API_URL;
 const TEMPLATE_ID = templateIds.Template1;
 
+export const items = (lastSegment, navigate) =>  [
+    {
+        label: (<Link to={`/${TEMPLATE_ID}/home/`} style={{color: COLORS.PRIMARY_COLOR}}>Home</Link>),
+        key: 'home',
+        icon: <FontAwesomeIcon icon={faHouseUser}/>,
+        link: `/${TEMPLATE_ID}/home/`
+    },
+    {
+        label: (<Link to={`/${TEMPLATE_ID}/menu`} style={{color: COLORS.PRIMARY_COLOR}}>Menu</Link>),
+        key: 'menu',
+        icon: <FontAwesomeIcon icon={faBookOpen}/>,
+        link: `/${TEMPLATE_ID}/menu/`
+    },
+    {
+        label: (<span style={{color: COLORS.PRIMARY_COLOR}}>Review</span>),
+        key: 'reviews',
+        icon: <FontAwesomeIcon icon={faStar}/>,
+        callback: () => {
+            if (lastSegment === 'home') {
+                scrollToSection('review')
+            } else {
+                navigate(`/${TEMPLATE_ID}/home/`, { state: { scrollTo: 'review' } });
+            }
+        }
+    },
+    {
+        label: (<span style={{color: COLORS.PRIMARY_COLOR}}>About Us</span>),
+        key: 'about-us',
+        icon: <FontAwesomeIcon icon={faCommentDots}/>,
+        callback: () => {
+            if (lastSegment === 'home') {
+                scrollToSection('about-us')
+            } else {
+                navigate(`/${TEMPLATE_ID}/home/`, { state: { scrollTo: 'about-us' } });
+            }
+        }
+    }
+];
 const Template1NavBar = () => {
     const screens = useBreakpoint();
     const location = useLocation()
@@ -24,45 +60,6 @@ const Template1NavBar = () => {
 
     const pathSegments = location.pathname.split('/').filter(segment => segment)
     const lastSegment = pathSegments[pathSegments.length-1];
-
-    const items = [
-        {
-            label: (<Link to={`/${TEMPLATE_ID}/home/`} style={{color: COLORS.PRIMARY_COLOR}}>Home</Link>),
-            key: 'home',
-            icon: <FontAwesomeIcon icon={faHouseUser}/>,
-            link: `/${TEMPLATE_ID}/home/`
-        },
-        {
-            label: (<Link to={`/${TEMPLATE_ID}/menu`} style={{color: COLORS.PRIMARY_COLOR}}>Menu</Link>),
-            key: 'menu',
-            icon: <FontAwesomeIcon icon={faBookOpen}/>,
-            link: `/${TEMPLATE_ID}/menu/`
-        },
-        {
-            label: (<span style={{color: COLORS.PRIMARY_COLOR}}>Review</span>),
-            key: 'reviews',
-            icon: <FontAwesomeIcon icon={faStar}/>,
-            callback: () => {
-                if (lastSegment === 'home') {
-                    scrollToSection('review')
-                } else {
-                    navigate(`/${TEMPLATE_ID}/home/`, { state: { scrollTo: 'review' } });
-                }
-            }
-        },
-        {
-            label: (<span style={{color: COLORS.PRIMARY_COLOR}}>About Us</span>),
-            key: 'about-us',
-            icon: <FontAwesomeIcon icon={faCommentDots}/>,
-            callback: () => {
-                if (lastSegment === 'home') {
-                    scrollToSection('about-us')
-                } else {
-                    navigate(`/${TEMPLATE_ID}/home/`, { state: { scrollTo: 'about-us' } });
-                }
-            }
-        }
-    ];
 
     const Logo = () => (
         loadingLogo ? <GetLoader display={DISPLAY.AREA} spinner={SPINNERS.SKELETON_IMAGE}/>
@@ -112,7 +109,7 @@ const Template1NavBar = () => {
                 }}
             >
                 <List
-                    dataSource={items}
+                    dataSource={items(lastSegment, navigate)}
                     size={"large"}
                     renderItem={(item) => (
                         <List.Item
@@ -154,8 +151,8 @@ const Template1NavBar = () => {
                 width: '100%',
                 height: 60
             }}
-            grid={{gutter: 24, column: items.length}}
-            dataSource={items}
+            grid={{gutter: 24, column: items(lastSegment, navigate).length}}
+            dataSource={items(lastSegment, navigate)}
             size={"large"}
             renderItem={item => (
                 <StyledDiv

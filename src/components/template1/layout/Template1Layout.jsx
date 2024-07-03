@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Layout, Row} from "antd";
+import {Layout} from "antd";
 import Template1NavBar from "./Template1NavBar";
 import {Outlet} from "react-router-dom";
 import BusinessContactInformation from "./BusinessContactInformation";
-import {StyledContent, StyledDiv, StyledFooter, StyledLayout} from "../constants";
+import {StyledContent, StyledFooter} from "../constants";
+import Template1Footer from "../Template1Footer";
 
 const Template1Layout = () => {
 
@@ -42,15 +43,9 @@ const Template1Layout = () => {
                 <Outlet/>
             </StyledContent>
             <StyledFooter>
-                <StyledDiv style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    display: 'flex'
-                }}>
-                    © 2024 Neo Corporation, All rights reserved.
-                </StyledDiv>
+                <Template1Footer />
             </StyledFooter>
-            <StyledDiv onClick={handleBackToTop} style={{
+            <div onClick={handleBackToTop} style={{
                 position: 'fixed',
                 top: '90%',
                 right: '2%',
@@ -65,7 +60,7 @@ const Template1Layout = () => {
                 opacity: showBackToTop ? 1 : 0,
                 transition: 'opacity 0.3s ease-in-out'
             }}> &#x2191; Back to top
-            </StyledDiv>
+            </div>
         </Layout>)
 }
 
