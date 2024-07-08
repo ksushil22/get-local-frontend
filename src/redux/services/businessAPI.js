@@ -79,7 +79,8 @@ export const businessAPI = rootAPI.injectEndpoints({
                         'ingredients': item.ingredients,
                         'description': item.description,
                         'price': item.price,
-                        'image': image
+                        'image': image,
+                        'currency': item.currency
                     })
                 })
                 return transformedData;

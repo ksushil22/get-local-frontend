@@ -33,6 +33,11 @@ const Template1Home = ({
                 scrollToSection(location.state.scrollTo)
             }, 1000);
             return () => clearTimeout(timer);
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
     }, []);
     useEffect(() => {

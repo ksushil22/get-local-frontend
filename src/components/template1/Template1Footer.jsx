@@ -77,7 +77,6 @@ const Template1Footer = () => {
     } = useGetFooterContentQuery({businessId: businessId})
     const location = useLocation();
     const navigate = useNavigate();
-    console.log(footerContent)
     const pathSegments = location.pathname.split('/').filter(segment => segment)
     const lastSegment = pathSegments[pathSegments.length-1];
 
@@ -107,7 +106,6 @@ const Template1Footer = () => {
                     })}
                 </StyledNavMenuContainer>
                 <StyledSocialContainer>
-                    <FooterHeading>Socials</FooterHeading>
                     <div>
                         {footerContent?.contactInfo?.instagramUrl && <IconLink className={'instagram'}
                                                                                color={'#000'}

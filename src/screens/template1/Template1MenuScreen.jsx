@@ -1,5 +1,5 @@
 import React from 'react';
-import Template1Menu from "../../components/template1/Template1Menu";
+import Template1Menu from "../../components/template1/menu/Template1Menu";``
 
 const Template1MenuScreen = () => {
 

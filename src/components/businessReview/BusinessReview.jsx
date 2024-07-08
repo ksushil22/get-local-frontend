@@ -65,32 +65,36 @@ const ReviewCards = ({item, businessId}) => {
             border: '1px solid red'
         }}
         actions={[
-            <Space
-                style={{
-                    cursor: 'pointer'
-                }}
-                title={item.email}
-                onClick={() => {
-                    window.location.href = `mailto:${item.email}`
-                }}>
-                <FontAwesomeIcon icon={faReply} /> Reply
-            </Space>,
-            <Space
-                title={item.phone}
-                style={{
-                    cursor: item.phone ? 'pointer' : 'not-allowed'
-                }}
-                onClick={() => {
-                    if (item.phone) {
-                        window.location.href = `tel:${item.phone}`
-                    }
-                }}>
-                <FontAwesomeIcon icon={faPhone}  /> Call
-            </Space>,
-            <Space>
+            item?.email && (
+                <Space
+                    key="email"
+                    style={{ cursor: 'pointer' }}
+                    title={item.email}
+                    onClick={() => {
+                        window.location.href = `mailto:${item.email}`;
+                    }}
+                >
+                    <FontAwesomeIcon icon={faReply} /> {screens.lg || screens.xl || screens.xxl ? item.email : "Reply"}
+                </Space>
+            ),
+            item?.phone && (
+                <Space
+                    key="phone"
+                    title={item.phone}
+                    style={{ cursor: item.phone ? 'pointer' : 'not-allowed' }}
+                    onClick={() => {
+                        if (item.phone) {
+                            window.location.href = `tel:${item.phone}`;
+                        }
+                    }}
+                >
+                    <FontAwesomeIcon icon={faPhone} /> {screens.lg || screens.xl || screens.xxl ? item.phone : "Call"}
+                </Space>
+            ),
+            <Space key="date">
                 {item.date}
-            </Space>
-        ]}
+            </Space>,
+        ].filter(Boolean)}
         extra={
             item.imageId ?
             <Image

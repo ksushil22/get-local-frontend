@@ -16,7 +16,7 @@ export const SPINNERS = {
         <div style={{ width: '100%' }}>
             <div style={{ display: 'flex', width: '100%', margin: '10px 0' }}>
                 <Skeleton loading={true} active={true} style={{ flex: 1 }} />
-                <Skeleton.Image style={{ marginLeft: 30 }} />
+                <Skeleton.Image style={{ marginLeft: 30 }} active={true}/>
             </div>
         </div>
     ),
@@ -46,8 +46,6 @@ const loaderStyles = {
     areaContainer: {
         width: '100%',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         flexDirection: 'column',
     },
     centerAlign: {
