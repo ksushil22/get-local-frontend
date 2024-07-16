@@ -44,11 +44,13 @@ const ContactRequest = () => {
                 item?.imageId && (
                     <Image
                         preview={false}
-                        width={200}
                         alt={item.fullName}
                         src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}/`}
                         style={{
-                            borderRadius: '5px'
+                            width: 150,
+                            height: 150,
+                            objectFit: 'contain',
+                            borderRadius: 5
                         }}
                         loading={"lazy"}/>)
             }

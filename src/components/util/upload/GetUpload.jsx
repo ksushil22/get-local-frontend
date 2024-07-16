@@ -90,23 +90,7 @@ export default function ({
             setFileList(newFileList);
         }
         if (file.status === 'done') {
-            const updatedFileList = [...newFileList];
-            if (file.originFileObj) {
-                // Handle original image upload
-                getBase64(file.originFileObj).then(result => {
-                    updatedFileList.push({
-                        uid: file.response.message,
-                        status: 'done',
-                        url: result,
-                        name: file.name
-                    });
-                    setFileList(updatedFileList);
-                });
-            } else {
-                // Handle cropped image upload (if needed)
-                // No specific crop handling here, as it depends on your requirements
-                setFileList(updatedFileList);
-            }
+            setFileList(newFileList)
             if (setUploadImageId) {
                 setUploadImageId(file.response.message);
             }

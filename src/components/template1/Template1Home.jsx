@@ -31,7 +31,7 @@ const Template1Home = ({
             const timer = setTimeout(() => {
                 location.state.scrollTo
                 scrollToSection(location.state.scrollTo)
-            }, 1000);
+            }, 2000);
             return () => clearTimeout(timer);
         } else {
             window.scrollTo({

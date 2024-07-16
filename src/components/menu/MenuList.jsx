@@ -35,10 +35,15 @@ const ListItemCard = ({item, cardMargin, IconText, setupUpdateItem, setDeleteIte
         ] : null}
         extra={
             <Image
-                width={200}
                 alt={item.image?.name}
                 src={item.image?.url}
                 loading={"lazy"}
+                style={{
+                    width: 150,
+                    height: 150,
+                    objectFit: 'contain',
+                    borderRadius: 5
+                }}
             />
         }
     >

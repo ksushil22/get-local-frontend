@@ -52,11 +52,13 @@ function EmployeeCard({item, businessId, setupUpdateItem, setUpdateId, setModalV
         extra={
         item.imageId && (
             <Image
-                width={200}
                 alt={item.firstName}
                 src={`${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}/`}
                 style={{
-                    borderRadius: '5px'
+                    borderRadius: '5px',
+                    width: 150,
+                    height: 150,
+                    objectFit: 'contain'
                 }}
                 loading={"lazy"}
             />)}
@@ -71,7 +73,7 @@ function EmployeeCard({item, businessId, setupUpdateItem, setUpdateId, setModalV
         </p>}
 
         />
-        <p style={{fontSize: 'large'}}>{item.description}</p>
+        <p>{item.description}</p>
     </List.Item>
 }
 
