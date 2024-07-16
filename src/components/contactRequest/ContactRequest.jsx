@@ -3,7 +3,7 @@ import {Image, List, Row} from "antd";
 import BusinessHeading from "../util/BusinessHeading";
 import {useGetAllContactRequestsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
 import NoDataGIF from "../util/NoDataGIF";
 import ContactRequestModal from "./ContactRequestModal";
@@ -63,7 +63,7 @@ const ContactRequest = () => {
 
     return <Row>
         <BusinessHeading heading={"Contact Requests"}/>
-        {loadingContactRequests ? <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/> :
+        {loadingContactRequests ? <GetLoader spinner={SPINNERS.SKELETON_LIST} display={DISPLAY.AREA}/> :
             <List
                 itemLayout="vertical"
                 style={{

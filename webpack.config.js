@@ -2,6 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const env = dotenv.config({
     path: "./.env-react",
@@ -55,7 +56,7 @@ module.exports = function (webpackEnv, { mode }) {
                 },
                 {
                     test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
+                    use: [mode === 'production'? MiniCssExtractPlugin  : 'style-loader', 'css-loader'],
                 },
                 {
                     test: /\.(png|jpg)$/,

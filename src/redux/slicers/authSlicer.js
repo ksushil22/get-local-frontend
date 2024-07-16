@@ -14,8 +14,6 @@ const authSlice = createSlice({
             sessionStorage.setItem("refresh", refresh);
         },
         logOut: (state, action) => {
-
-            console.log("trying to logout")
             sessionStorage.removeItem("username");
             sessionStorage.removeItem("name");
             sessionStorage.removeItem("access");

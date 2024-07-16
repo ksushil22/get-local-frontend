@@ -13,7 +13,7 @@ import NoDataGIF from "../util/NoDataGIF";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDeleteLeft, faEdit, faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
 import {PUBLIC_BUSINESS_API} from "../../redux/api_url";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import DeleteConfirmationModal from "../util/modals/DeleteConfirmationModal";
 
@@ -109,7 +109,6 @@ const EmployeeInfo = () => {
 
         function submitEmployeeInfo() {
             if (isUpdating) {
-                console.log("Updating", form.getFieldsValue())
                 updateEmployeeInfo({
                     businessId,
                     'employeeDTO': {
@@ -137,6 +136,7 @@ const EmployeeInfo = () => {
                     name={"imageId"}
                 >
                     <GetUpload
+                        type={"EMPLOYEE"}
                         accept="image/png, image/jpeg"
                         updateInitialList={true}
                         maxUploads={1}
@@ -146,12 +146,14 @@ const EmployeeInfo = () => {
                 <Form.Item
                     name={"firstName"}
                     rules={rules}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Fist Name"} />
                 </Form.Item>
                 <Form.Item
                     rules={rules}
                     name={"lastName"}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Last Name"} />
                 </Form.Item>
@@ -162,6 +164,11 @@ const EmployeeInfo = () => {
                 </Form.Item>
                 <Form.Item
                     name={"email"}
+                    rules={[{
+                        type: 'email',
+                        message: 'Invalid email format'
+                    }]}
+                    validateTrigger="onBlur"
                 >
                     <Input placeholder={"Email"} />
                 </Form.Item>
@@ -174,6 +181,7 @@ const EmployeeInfo = () => {
 
                     initialValue={"Choose from options"}
                     rules={rules}
+                    validateTrigger="onBlur"
                     name={"position"}>
                     <Select
                         rootClassName={"employee-select"}
@@ -222,11 +230,12 @@ const EmployeeInfo = () => {
     }
 
     function setupUpdateItem(item) {
+        form.resetFields();
         window.scroll({top: 0, left: 0, behavior: 'smooth' })
         setIsUpdating(true)
         if (item.imageId) {
             setInitialImageList([{
-                uid: item?.id,
+                uid: item?.imageId,
                 name: item?.firstName,
                 status: 'done',
                 url: `${BASE_URL}${PUBLIC_BUSINESS_API}${businessId}/image/${item.imageId}/`
@@ -235,6 +244,7 @@ const EmployeeInfo = () => {
             setInitialImageList([])
         }
         form.setFieldsValue(item)
+        form.setFieldValue("imageId", item?.imageId)
         setUpdateId(item.id)
     }
 
@@ -254,7 +264,7 @@ const EmployeeInfo = () => {
             <EmployeeForm />
         </div>
         <div className={"employee-list"}>
-            {loadingEmployeeList ? <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA} /> :
+            {loadingEmployeeList ? <GetLoader spinner={SPINNERS.SKELETON_LIST} display={DISPLAY.AREA} /> :
                 <List
                     itemLayout="vertical"
                     style={{

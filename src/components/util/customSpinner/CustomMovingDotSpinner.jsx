@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ({
+function CustomMovingDotSpinner({
                             text="Loading..."
                          }) {
     return <svg
@@ -58,13 +58,7 @@ export default function ({
                      keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
                      begin="-0.9615384615384615s"></animate>
         </circle>
-        <text x="50%"
-              y="80%"
-              textAnchor="middle"
-              fill="#495c52"
-              fontSize="10"
-              fontWeight="bold">
-            {text}
-        </text>
     </svg>
 }
+
+export default CustomMovingDotSpinner;

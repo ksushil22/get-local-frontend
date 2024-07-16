@@ -3,7 +3,7 @@ import React, {useContext, useEffect} from "react";
 import {Navigate, Outlet, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useValidateTokenQuery} from "../../redux/services/authAPI";
-import CustomSpinner from "../util/customSpinner/CustomSpinner";
+import GetLoader from "../util/customSpinner/GetLoader";
 
 const RequireAuth = () => {
     //check if we have a token
@@ -21,7 +21,7 @@ const RequireAuth = () => {
             error
         } = useValidateTokenQuery(sessionStorage.getItem('access'));
         if (isLoading) {
-            return <CustomSpinner/>;
+            return <GetLoader/>;
         } else if (error) {
             return <Navigate to="/authenticate" state={{from: location}}/>
         }

@@ -4,7 +4,7 @@ import {Typography, Upload} from "antd";
 import ModalPopup from "../modals/ModalPopup";
 import "./upload.css";
 import {useDeleteImageMutation, useGetBusinessImagesQuery} from "../../../redux/services/businessAPI";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../customSpinner/GetLoader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
 
@@ -51,7 +51,7 @@ export default function ({
     const {
         data: images,
         isLoading: loadingImages
-    } = useGetBusinessImagesQuery({businessId, type}, {skip: type === "MENU"});
+    } = useGetBusinessImagesQuery({businessId, type}, {skip: (type === "MENU") || (type === 'EMPLOYEE')});
     const [deleteImage] = useDeleteImageMutation();
     const handleCancel = () => {
         setPreviewOpen(false);
@@ -85,23 +85,31 @@ export default function ({
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf("/") + 1));
     };
 
-    const handleChange = ({file: file, fileList: newFileList}) => {
+    const handleChange = ({file, fileList: newFileList}) => {
         if (file.status !== 'removed' && file.status === 'uploading') {
             setFileList(newFileList);
         }
         if (file.status === 'done') {
-            const fileList = newFileList.filter(item => !item.uid.startsWith('rc-upload'))
-            getBase64(file.originFileObj).then(result => {
-                fileList.push({
-                    uid: file.response.message,
-                    status: 'done',
-                    url: result,
-                    name: file.name
+            const updatedFileList = [...newFileList];
+            if (file.originFileObj) {
+                // Handle original image upload
+                getBase64(file.originFileObj).then(result => {
+                    updatedFileList.push({
+                        uid: file.response.message,
+                        status: 'done',
+                        url: result,
+                        name: file.name
+                    });
+                    setFileList(updatedFileList);
                 });
-                setFileList(fileList)
-            })
-            if (setUploadImageId)
+            } else {
+                // Handle cropped image upload (if needed)
+                // No specific crop handling here, as it depends on your requirements
+                setFileList(updatedFileList);
+            }
+            if (setUploadImageId) {
                 setUploadImageId(file.response.message);
+            }
         }
     };
 
@@ -125,8 +133,8 @@ export default function ({
     }
 
     if (loadingImages) {
-        return <CustomSpinner
-            spinner={SPINNERS.SKELETON}
+        return <GetLoader
+            spinner={SPINNERS.SKELETON_IMAGE}
             display={DISPLAY.AREA}/>
     }
 
@@ -143,10 +151,11 @@ export default function ({
                 onPreview={handlePreview}
                 onChange={handleChange}
                 onRemove={(file) => {
-                    handlePreview(file)
-                    setDeleteUid(file.uid)
-                    setDeleteFile(true)
+                    handlePreview(file);
+                    setDeleteUid(file.uid);
+                    setDeleteFile(true);
                 }}
+                maxCount={maxUploads}
                 style={{cursor: "pointer"}}
             >
                 {fileList.length >= maxUploads ? null : (

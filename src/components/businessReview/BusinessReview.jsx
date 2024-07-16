@@ -2,7 +2,7 @@ import React from 'react'
 import BusinessHeading from "../util/BusinessHeading";
 import {useGetBusinessReviewsQuery} from "../../redux/services/businessAPI";
 import {useSelector} from "react-redux";
-import CustomSpinner, {DISPLAY, SPINNERS} from "../util/customSpinner/CustomSpinner";
+import GetLoader, {DISPLAY, SPINNERS} from "../util/customSpinner/GetLoader";
 import {Image, List, Row, Space} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPhone, faReply} from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +22,7 @@ const BusinessReview = () => {
         isLoading: loadingReviews
     } = useGetBusinessReviewsQuery({businessId: businessId})
     if (loadingReviews) {
-        return <CustomSpinner spinner={SPINNERS.SKELETON} display={DISPLAY.AREA}/>
+        return <GetLoader spinner={SPINNERS.SKELETON_LIST} display={DISPLAY.AREA}/>
     }
 
     return (
@@ -65,33 +65,38 @@ const ReviewCards = ({item, businessId}) => {
             border: '1px solid red'
         }}
         actions={[
-            <Space
-                style={{
-                    cursor: 'pointer'
-                }}
-                title={item.email}
-                onClick={() => {
-                    window.location.href = `mailto:${item.email}`
-                }}>
-                <FontAwesomeIcon icon={faReply} /> Reply
-            </Space>,
-            <Space
-                title={item.phone}
-                style={{
-                    cursor: item.phone ? 'pointer' : 'not-allowed'
-                }}
-                onClick={() => {
-                    if (item.phone) {
-                        window.location.href = `tel:${item.phone}`
-                    }
-                }}>
-                <FontAwesomeIcon icon={faPhone}  /> Call
-            </Space>,
-            <Space>
+            item?.email && (
+                <Space
+                    key="email"
+                    style={{ cursor: 'pointer' }}
+                    title={item.email}
+                    onClick={() => {
+                        window.location.href = `mailto:${item.email}`;
+                    }}
+                >
+                    <FontAwesomeIcon icon={faReply} /> {screens.lg || screens.xl || screens.xxl ? item.email : "Reply"}
+                </Space>
+            ),
+            item?.phone && (
+                <Space
+                    key="phone"
+                    title={item.phone}
+                    style={{ cursor: item.phone ? 'pointer' : 'not-allowed' }}
+                    onClick={() => {
+                        if (item.phone) {
+                            window.location.href = `tel:${item.phone}`;
+                        }
+                    }}
+                >
+                    <FontAwesomeIcon icon={faPhone} /> {screens.lg || screens.xl || screens.xxl ? item.phone : "Call"}
+                </Space>
+            ),
+            <Space key="date">
                 {item.date}
-            </Space>
-        ]}
+            </Space>,
+        ].filter(Boolean)}
         extra={
+            item.imageId ?
             <Image
                 width={200}
                 alt={item.fullName}
@@ -100,7 +105,7 @@ const ReviewCards = ({item, businessId}) => {
                     borderRadius: '5px'
                 }}
                 loading={"lazy"}
-            />}
+            /> : null}
         key={item.id}
     >
         <List.Item.Meta
@@ -108,7 +113,7 @@ const ReviewCards = ({item, businessId}) => {
             description={
                 <GetRating readOnly={true} initialRating={item.rating} onSelect={() => {}}/>}
         />
-        <p style={{fontSize: 'large'}}>{item.comment}</p>
+        <p>{item.comment}</p>
     </List.Item>
 }
 

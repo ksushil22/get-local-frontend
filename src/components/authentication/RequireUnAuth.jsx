@@ -2,7 +2,7 @@ import React from 'react'
 import {Navigate, Outlet, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useValidateTokenQuery} from "../../redux/services/authAPI";
-import CustomSpinner from "../util/customSpinner/CustomSpinner";
+import GetLoader from "../util/customSpinner/GetLoader";
 import {logOut} from "../../redux/slicers/authSlicer";
 
 export default function () {
@@ -15,7 +15,7 @@ export default function () {
             error
         } = useValidateTokenQuery(sessionStorage.getItem('access'));
         if (isLoading) {
-            return <CustomSpinner />;
+            return <GetLoader />;
         }else if (error) {
             dispatch(logOut());
             return <Outlet />

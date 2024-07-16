@@ -27,8 +27,12 @@ export default function GetLayout() {
                 <Outlet/>
             </Content>
             <Footer>
-                <div >
-                        asdlfkjasldjf
+                <div style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex'
+                }}>
+                    © 2024 Neo Corporation, All rights reserved.
                 </div>
             </Footer>
         </Layout>
