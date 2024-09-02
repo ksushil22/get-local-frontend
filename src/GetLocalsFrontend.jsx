@@ -7,13 +7,14 @@ import GetLoader from './components/util/customSpinner/GetLoader';
 import RequireAuth from "./components/authentication/RequireAuth";
 import "./index.css"
 import RequireUnAuth from "./components/authentication/RequireUnAuth";
-import GetLayout from "./components/layout/GetLayout";
+import GetLayout from "./components/business/layout/GetLayout";
 import {ConfigProvider} from "antd";
 import {ActiveNavigationMenuProvider} from "./context/ActiveNavigationProvider";
 import Template1Layout from "./components/template1/layout/Template1Layout";
 import "animate.css/animate.compat.css";
 import {templateIds} from "./components/util/TemplateIdConstants";
 
+const GetLocalsHome = lazy(async () => import('./screens/GetLocalsHome'));
 const RegistrationScreen = lazy(async () => import('./screens/RegistrationScreen'));
 const LoginScreen = lazy(async () => import('./screens/LoginScreen'));
 const HomeScreen = lazy(async () => import('./screens/HomeScreen'));
@@ -30,8 +31,9 @@ const GetLocalsRoutes = () => {
         <Suspense fallback={<GetLoader />}>
             <Provider store={store}>
                 <Routes>
-                    <Route path={"*"} element={<Navigate to={"/authenticate"}/>} />
+                    <Route path={"*"} element={<Navigate to={"/home/"}/>} />
                     <Route element={<RequireUnAuth />}>
+                        <Route path={'/home/'} element={<GetLocalsHome />} />
                         <Route path={'/authenticate/'} element={<LoginScreen />} />
                         <Route path={'/authenticate/registration'} element={<RegistrationScreen />} />
                     </Route>
@@ -54,7 +56,7 @@ const GetLocalsRoutes = () => {
                             <Route path={"menu/"} element={<Template1MenuScreen />} /> 
                         </Route>
                     </Route>
-                    <Route path="/" element={<Navigate to="/business-admin/home/" replace />} />
+                    <Route path="/" element={<Navigate to="/home/" replace />} />
                 </Routes>
             </Provider>
         </Suspense>
