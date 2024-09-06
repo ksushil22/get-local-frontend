@@ -20,6 +20,8 @@ export const NavigatorDiv = styled.div`
     z-index: 1000;
     justify-content: space-between;
     transition: transform 0.1s linear; /* Quick transition to make it smooth but responsive */
+    animation: fadeInDown;
+    animation-duration: 1s;
 
     @media (max-width: 992px) {
         max-width: 100%;
@@ -63,6 +65,8 @@ export const BlockHeading = styled.h1`
     font-size: 3rem;
     text-align: center;
     text-decoration: underline;
+    animation: zoomIn;
+    animation-duration: 1s;
 `
 
 export const ListItemContainer = styled.div`
@@ -95,3 +99,11 @@ export const ListItemInfo = styled.div`
     flex-direction: column;
     justify-content: flex-end; /* Align text towards the bottom */
 `;
+
+export const CenteredHalfDiv = styled.div`
+    background: white;
+    max-width: 992px;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+`

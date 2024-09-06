@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigator from "./Navigator";
-import {MarketingInformationDiv} from "./StyledComponents";
+import {CenteredHalfDiv, MarketingInformationDiv} from "./StyledComponents";
 import "./style.css"
 import InformationDiv from "./MarketingHeadingDiv";
 import ServicesTabs from "./ServicesTabs";
@@ -21,15 +21,9 @@ const GetLocalsHome = () => {
                 }}/>
             </div>
         </MarketingInformationDiv>
-        <div style={{
-            marginTop: 50,
-            background: "white",
-            maxWidth: '992px',
-            margin: "auto",
-            paddingLeft: 10,
-            paddingRight: 10,
-        }}>
-            <p className={"animate__animated animate__slideInDown"} style={{textAlign: 'center'}}>A single dashboard for Creating your Business' Website, Ads, Marketing and
+        <CenteredHalfDiv>
+            <p className={"animate__animated animate__fadeInDown"} style={{textAlign: 'center'}}>A single dashboard for
+                Creating your Business' Website, Ads, Marketing and
                 more. <span style={{
                     background: 'var(--primary-color)',
                 }}><Link to={"/authenticate/registration/"} style={{
@@ -37,9 +31,9 @@ const GetLocalsHome = () => {
                     color: 'var(--primary-background)'
                 }}> Click here</Link></span> to get started. <br/>
                 Best thing: No Technical Knowledge required.</p>
-        </div>
+        </CenteredHalfDiv>
         <ServicesTabs/>
-    </div>
+</div>
 }
 
 export default GetLocalsHome;

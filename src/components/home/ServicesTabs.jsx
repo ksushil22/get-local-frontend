@@ -42,7 +42,7 @@ const ServicesTabs = () => {
             margin: '50px auto',
         }}>
             {services?.map((data) => (
-                <GetAnimation animateIn={"zoomIn"} duration={1} key={data.id}>
+                <GetAnimation animateIn={"fadeInUp"} duration={1} key={data.id}>
                     <ListItemContainer key={data.id} style={{
                         backgroundColor: data['background-color'],
                         color: data['color']
