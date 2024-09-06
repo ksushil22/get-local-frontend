@@ -1,7 +1,7 @@
 import React from 'react';
-
+import GetLocalsHomeView from '../components/home/GetLocalsHome'
 const GetLocalsHome = () => {
-    return <div>Get Locals</div>
+    return <GetLocalsHomeView />
 }
 
 export default GetLocalsHome;

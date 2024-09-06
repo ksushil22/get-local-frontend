@@ -1,0 +1,45 @@
+import React from 'react';
+import Navigator from "./Navigator";
+import {MarketingInformationDiv} from "./StyledComponents";
+import "./style.css"
+import InformationDiv from "./MarketingHeadingDiv";
+import ServicesTabs from "./ServicesTabs";
+import {Link} from "react-router-dom";
+
+const GetLocalsHome = () => {
+    return <div style={{
+        background: 'white',
+        fontFamily: 'Oswald'
+    }}>
+        <Navigator/>
+        <MarketingInformationDiv>
+            <InformationDiv/>
+            <div className={"animate__animated animate__fadeIn"}>
+                <img src={require('../../assets/img/business-marketing.png')} alt={"Business Image"} style={{
+                    maxWidth: '60vw',
+                    height: 'auto'
+                }}/>
+            </div>
+        </MarketingInformationDiv>
+        <div style={{
+            marginTop: 50,
+            background: "white",
+            maxWidth: '992px',
+            margin: "auto",
+            paddingLeft: 10,
+            paddingRight: 10,
+        }}>
+            <p className={"animate__animated animate__slideInDown"} style={{textAlign: 'center'}}>A single dashboard for Creating your Business' Website, Ads, Marketing and
+                more. <span style={{
+                    background: 'var(--primary-color)',
+                }}><Link to={"/authenticate/registration/"} style={{
+                    textDecoration: 'none',
+                    color: 'var(--primary-background)'
+                }}> Click here</Link></span> to get started. <br/>
+                Best thing: No Technical Knowledge required.</p>
+        </div>
+        <ServicesTabs/>
+    </div>
+}
+
+export default GetLocalsHome;

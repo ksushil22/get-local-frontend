@@ -1,0 +1,19 @@
+.InformationDiv {
+    position: relative;
+}
+
+.typing-h1 {
+    font-weight: bolder;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid;
+    animation: blink-caret 0.75s step-end infinite;
+    display: inline-block;
+    min-height: 1.5em;
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent;
+    }
+}
