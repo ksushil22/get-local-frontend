@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 
-const texts = [" Marketing ", " Website Builder ", " Advertisement "];
+const texts = [" Marketing ", " Website Builder ", " Advertisement ", "Search Engine Optimization", "Social Media Marketing"];
 
 const InformationDiv = () => {
     const [currentText, setCurrentText] = useState('');
@@ -45,8 +45,7 @@ const InformationDiv = () => {
     return (
         <div className="InformationDiv" style={{textAlign: 'right', flex: 1}}>
             <h1 className="typing-h1" style={{
-                background: 'grey',
-                color: 'white',
+                color: '#333',
             }}>{currentText}</h1>
             <p className={"animate__animated animate__slideInDown"}>One Subscription for all your Digital Business needs</p>
         </div>

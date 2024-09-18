@@ -14,7 +14,7 @@ const GetLocalsHome = () => {
         <Navigator/>
         <MarketingInformationDiv>
             <InformationDiv/>
-            <div className={"animate__animated animate__fadeIn"}>
+            <div className={"animate__animated animate__zoomIn"}>
                 <img src={require('../../assets/img/business-marketing.png')} alt={"Business Image"} style={{
                     maxWidth: '60vw',
                     height: 'auto'
@@ -33,7 +33,7 @@ const GetLocalsHome = () => {
                 Best thing: No Technical Knowledge required.</p>
         </CenteredHalfDiv>
         <ServicesTabs/>
-</div>
+    </div>
 }
 
 export default GetLocalsHome;

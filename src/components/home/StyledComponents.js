@@ -71,7 +71,7 @@ export const BlockHeading = styled.h1`
 
 export const ListItemContainer = styled.div`
     width: 300px;
-    height: auto;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     background-color: #f0f0f0;
