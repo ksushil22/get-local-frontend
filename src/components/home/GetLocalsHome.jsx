@@ -4,9 +4,10 @@ import {CenteredHalfDiv, MarketingInformationDiv} from "./StyledComponents";
 import "./style.css"
 import InformationDiv from "./MarketingHeadingDiv";
 import ServicesTabs from "./ServicesTabs";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const GetLocalsHome = () => {
+    const navigate = useNavigate();
     return <div style={{
         background: 'white',
         fontFamily: 'Oswald'
@@ -32,6 +33,23 @@ const GetLocalsHome = () => {
                 }}> Click here</Link></span> to get started. <br/>
                 Best thing: No Technical Knowledge required.</p>
         </CenteredHalfDiv>
+        <CenteredHalfDiv
+            className={"digitized-div animate__animated animate__zoomIn"}
+            style={{
+                backgroundColor: 'var(--primary-background)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingLeft: 20,
+                borderRadius: 2,
+                cursor: 'pointer',
+                fontSize: 'larger',
+                padding: 20
+            }}
+            onClick={()=> navigate('/authenticate/registration/')}
+        >Lets get you digitalized...
+        </CenteredHalfDiv>
+
         <ServicesTabs/>
     </div>
 }
