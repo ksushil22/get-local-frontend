@@ -8,7 +8,7 @@ export const NavigatorDiv = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    max-width: ${screenSize / 2}px;
+    max-width: 50%;
     margin: 10px auto;
     border-radius: 2px;
     min-height: 50px;
@@ -23,7 +23,7 @@ export const NavigatorDiv = styled.div`
     animation: fadeInDown;
     animation-duration: 1s;
 
-    @media (max-width: 992px) {
+    @media (max-width: 1200px) {
         max-width: 100%;
     }
 `;
@@ -33,7 +33,7 @@ export const MarketingInformationDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: auto 20px;
+    margin: auto 10px;
     flex-wrap: wrap-reverse;
 
     & > div:nth-child(2) img {
@@ -106,4 +106,35 @@ export const CenteredHalfDiv = styled.div`
     margin: auto;
     padding-left: 10px;
     padding-right: 10px;
+`
+
+export const TakeYourBusinessDiv = styled.div`
+    display: flex;
+    padding: 20px;
+    flex-direction: row-reverse;
+    @media (max-width: 1298px) {
+        flex-direction: column;
+    }
+`
+
+export const TakeYourBusinessHeadingDiv = styled.div`
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    @media (max-width: 1298px) {
+        text-align: center;
+    }
+`
+
+export const VisualsDiv = styled.div`
+    flex: 0.7;
+    display: flex;
+    justify-content: center;
+`
+
+export const FooterDiv = styled.div`
+    width: 100%;
+    background: var(--primary-background);
 `

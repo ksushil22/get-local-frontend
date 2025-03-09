@@ -5,6 +5,8 @@ import "./style.css"
 import InformationDiv from "./MarketingHeadingDiv";
 import ServicesTabs from "./ServicesTabs";
 import {Link, useNavigate} from "react-router-dom";
+import TakeYourBusiness from "./TakeYourBusiness";
+import Footer from "./Footer";
 
 const GetLocalsHome = () => {
     const navigate = useNavigate();
@@ -51,6 +53,8 @@ const GetLocalsHome = () => {
         </CenteredHalfDiv>
 
         <ServicesTabs/>
+        <TakeYourBusiness />
+        <Footer />
     </div>
 }
 

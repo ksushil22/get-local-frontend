@@ -4,9 +4,10 @@
 
 .typing-h1 {
     font-weight: bolder;
-    white-space: nowrap;
-    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
     border-right: 2px solid;
+    overflow: hidden;
     animation: blink-caret 0.75s step-end infinite;
     display: inline-block;
     min-height: 1.5em;
